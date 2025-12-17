@@ -1,7 +1,7 @@
 /* =========================================================
    Universal Navbar Component — CronoTools 3.3.1 FINAL
-   - Crono ID Section
-   - Dynamic-only Controls
+   - Crono ID
+   - Dynamic Bar Config (always visible)
    - Accessibility
    - Minimal / Dynamic Mode
    ========================================================= */
@@ -20,7 +20,6 @@ class GlobalNavbar extends HTMLElement {
 
     render() {
         const user = window.CronoID?.currentUser || null;
-        const isMinimal = document.body.classList.contains('old-design-mode');
 
         const authBlock = user
             ? `
@@ -31,13 +30,6 @@ class GlobalNavbar extends HTMLElement {
             <a href="/login/index.html" class="menu-item" style="color:var(--accent);">
                 Accedi / Registrati
             </a>`;
-
-        const dynamicBarLink = !isMinimal ? `
-            <div class="menu-item highlight"
-                 onclick="location.href='/dynamic-bar/index.html'">
-                Personalizza Dynamic Bar
-            </div>
-        ` : '';
 
         this.innerHTML = `
         <nav id="global-navbar">
@@ -52,8 +44,8 @@ class GlobalNavbar extends HTMLElement {
                         ${this.getMenuLinks('nav-link')}
                     </div>
                     <div class="nav-mini-logo">
-                        <img class="logo-light" src="/css/IMG_0623.png" height="24">
-                        <img class="logo-dark" src="/css/IMG_0624.png" height="24">
+                        <img class="logo-light" src="/css/IMG_0623.png" height="24" alt="">
+                        <img class="logo-dark" src="/css/IMG_0624.png" height="24" alt="">
                         <span>CronoTools</span>
                     </div>
                 </div>
@@ -80,17 +72,21 @@ class GlobalNavbar extends HTMLElement {
                     ${authBlock}
                 </div>
 
-                ${dynamicBarLink ? `
+                <!-- DYNAMIC BAR -->
                 <h4 class="settings-group-title">Dynamic Bar</h4>
                 <div class="menu-list">
-                    ${dynamicBarLink}
-                </div>` : ''}
+                    <a href="/dynamic-bar/index.html" class="menu-item highlight">
+                        Personalizza Dynamic Bar
+                    </a>
+                </div>
 
+                <!-- TOOLS -->
                 <h4 class="settings-group-title">Strumenti</h4>
                 <div class="menu-list">
                     ${this.getMenuLinks('menu-item')}
                 </div>
 
+                <!-- INFO -->
                 <h4 class="settings-group-title">Altro</h4>
                 <div class="menu-list">
                     <a href="/info/index.html" class="menu-item">Info & Release Notes</a>
