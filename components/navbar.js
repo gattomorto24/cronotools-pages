@@ -1,10 +1,9 @@
 /* =========================================================
-   Universal Navbar Component — CronoTools 3.3 FINAL
-   - Auth (CronoID)
-   - Dynamic Menu
+   Universal Navbar Component — CronoTools 3.3.1 FINAL
+   - Crono ID Section
+   - Dynamic-only Controls
    - Accessibility
-   - Minimal Mode
-   - Full Fallback
+   - Minimal / Dynamic Mode
    ========================================================= */
 
 class GlobalNavbar extends HTMLElement {
@@ -21,36 +20,31 @@ class GlobalNavbar extends HTMLElement {
 
     render() {
         const user = window.CronoID?.currentUser || null;
+        const isMinimal = document.body.classList.contains('old-design-mode');
 
         const authBlock = user
             ? `
             <div class="menu-item" onclick="CronoID.logout()" style="color:var(--danger); cursor:pointer;">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:12px">
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
-                    <polyline points="16 17 21 12 16 7"></polyline>
-                    <line x1="21" y1="12" x2="9" y2="12"></line>
-                </svg>
                 Esci (${user.username})
             </div>`
             : `
             <a href="/login/index.html" class="menu-item" style="color:var(--accent);">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-right:12px">
-                    <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
-                    <circle cx="12" cy="7" r="4"></circle>
-                </svg>
                 Accedi / Registrati
             </a>`;
+
+        const dynamicBarLink = !isMinimal ? `
+            <div class="menu-item highlight"
+                 onclick="location.href='/dynamic-bar/index.html'">
+                Personalizza Dynamic Bar
+            </div>
+        ` : '';
 
         this.innerHTML = `
         <nav id="global-navbar">
             <div class="nav-pill" id="dynamic-pill">
 
-                <button class="nav-btn" aria-label="Menu" onclick="UI.toggleSidebar('left')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <line x1="3" y1="12" x2="21" y2="12"></line>
-                        <line x1="3" y1="6" x2="21" y2="6"></line>
-                        <line x1="3" y1="18" x2="21" y2="18"></line>
-                    </svg>
+                <button class="nav-btn" onclick="UI.toggleSidebar('left')" aria-label="Menu">
+                    ☰
                 </button>
 
                 <div class="nav-center">
@@ -58,67 +52,54 @@ class GlobalNavbar extends HTMLElement {
                         ${this.getMenuLinks('nav-link')}
                     </div>
                     <div class="nav-mini-logo">
-                        <img class="logo-light" src="/css/IMG_0623.png" alt="CronoTools" height="24">
-                        <img class="logo-dark" src="/css/IMG_0624.png" alt="CronoTools" height="24">
+                        <img class="logo-light" src="/css/IMG_0623.png" height="24">
+                        <img class="logo-dark" src="/css/IMG_0624.png" height="24">
                         <span>CronoTools</span>
                     </div>
                 </div>
 
-                <button class="nav-btn" aria-label="Settings" onclick="UI.toggleSidebar('right')">
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
-                        <circle cx="12" cy="12" r="3"></circle>
-                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06
-                                 a2 2 0 0 1 0 2.83
-                                 a2 2 0 0 1-2.83 0l-.06-.06
-                                 a1.65 1.65 0 0 0-1.82-.33
-                                 a1.65 1.65 0 0 0-1 1.51V21
-                                 a2 2 0 0 1-2 2
-                                 a2 2 0 0 1-2-2v-.09
-                                 a1.65 1.65 0 0 0-1-1.51
-                                 a1.65 1.65 0 0 0-1.82.33l-.06.06
-                                 a2 2 0 0 1-2.83 0
-                                 a2 2 0 0 1 0-2.83l.06-.06
-                                 a1.65 1.65 0 0 0 .33-1.82
-                                 a1.65 1.65 0 0 0-1.51-1H3
-                                 a2 2 0 0 1-2-2
-                                 a2 2 0 0 1 2-2h.09
-                                 a1.65 1.65 0 0 0 1.51-1
-                                 a1.65 1.65 0 0 0-.33-1.82l-.06-.06
-                                 a2 2 0 0 1 0-2.83
-                                 a2 2 0 0 1 2.83 0l.06.06
-                                 a1.65 1.65 0 0 0 1.82.33H9
-                                 a1.65 1.65 0 0 0 1-1.51V3
-                                 a2 2 0 0 1 2-2
-                                 a2 2 0 0 1 2 2v.09
-                                 a1.65 1.65 0 0 0 1 1.51
-                                 a1.65 1.65 0 0 0 1.82-.33l.06-.06
-                                 a2 2 0 0 1 2.83 0
-                                 a2 2 0 0 1 0 2.83l-.06.06
-                                 a1.65 1.65 0 0 0-.33 1.82V9
-                                 a1.65 1.65 0 0 0 1.51 1H21
-                                 a2 2 0 0 1 2 2
-                                 a2 2 0 0 1-2 2h-.09
-                                 a1.65 1.65 0 0 0-1.51 1z"></path>
-                    </svg>
+                <button class="nav-btn" onclick="UI.toggleSidebar('right')" aria-label="Settings">
+                    ⚙
                 </button>
 
             </div>
         </nav>
 
+        <!-- LEFT MENU -->
         <aside class="sidebar" id="sidebar-left">
             <div class="sidebar-header">
                 <span class="sidebar-title">Menu</span>
                 <button class="nav-btn" onclick="UI.closeAllSidebars()">✕</button>
             </div>
+
             <div class="sidebar-content">
+
+                <!-- CRONO ID -->
+                <h4 class="settings-group-title">Crono ID</h4>
                 <div class="menu-list">
                     ${authBlock}
-                    <div class="separator"></div>
+                </div>
+
+                ${dynamicBarLink ? `
+                <h4 class="settings-group-title">Dynamic Bar</h4>
+                <div class="menu-list">
+                    ${dynamicBarLink}
+                </div>` : ''}
+
+                <h4 class="settings-group-title">Strumenti</h4>
+                <div class="menu-list">
                     ${this.getMenuLinks('menu-item')}
                 </div>
+
+                <h4 class="settings-group-title">Altro</h4>
+                <div class="menu-list">
+                    <a href="/info/index.html" class="menu-item">Info & Release Notes</a>
+                </div>
+
             </div>
         </aside>
 
+        <!-- RIGHT MENU -->
         <aside class="sidebar right" id="sidebar-right">
             <div class="sidebar-header">
                 <span class="sidebar-title">Impostazioni</span>
@@ -143,8 +124,7 @@ class GlobalNavbar extends HTMLElement {
             { href: '/ridimensiona/index.html', text: 'Ridimensiona' },
             { href: '/colora/index.html', text: 'Colora' },
             { href: '/taglia-video/index.html', text: 'Taglia Video' },
-            { href: '/qr/index.html', text: 'QR Code' },
-            { href: '/info/index.html', text: 'Info' }
+            { href: '/qr/index.html', text: 'QR Code' }
         ];
 
         const menu = window.CronoID?.getMenu
@@ -172,7 +152,7 @@ class GlobalNavbar extends HTMLElement {
         ${['motion','transparency','contrast','bold'].map(t => `
             <div class="ios-toggle-wrapper" onclick="UI.toggleAccessibility('${t}')">
                 <div class="ios-toggle-label">${this.labelFor(t)}</div>
-                <input type="checkbox" class="ios-toggle" id="check-${t}"
+                <input type="checkbox" class="ios-toggle"
                        onclick="event.stopPropagation(); UI.toggleAccessibility('${t}');">
             </div>
         `).join('')}
@@ -195,9 +175,7 @@ class GlobalNavbar extends HTMLElement {
     getThemeButtons() {
         const themes = ['light','dark','midnight','slate','latte','sunset','forest','lavanda','cyberpunk','high-contrast'];
         return themes.map(t =>
-            `<button class="menu-item" data-set-theme="${t}">
-                <span class="theme-dot"></span> ${t}
-            </button>`
+            `<button class="menu-item" data-set-theme="${t}">${t}</button>`
         ).join('');
     }
 
