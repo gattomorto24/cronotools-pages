@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>QR Code Generator Pro - CronoTools</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <!-- QR Library Avanzata -->
+    <script type="text/javascript" src="https://unpkg.com/qr-code-styling@1.5.0/lib/qr-code-styling.js"></script>
+    <style>
+        .control-group { margin-bottom: 20px; text-align: left; }
+        .control-label { display: block; font-size: 13px; font-weight: 600; color: var(--text-secondary); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        .input-text, .input-select { width: 100%; padding: 12px; border-radius: 12px; border: 1px solid var(--separator); background: var(--bg-tertiary); color: var(--text-primary); font-size: 15px; outline: none; transition: border-color 0.2s; }
+        .input-text:focus, .input-select:focus { border-color: var(--accent); }
+        
+        .color-row { display: flex; gap: 12px; margin-bottom: 12px; }
+        .color-picker-wrapper { flex: 1; display: flex; align-items: center; gap: 8px; background: var(--bg-tertiary); padding: 8px; border-radius: 10px; border: 1px solid var(--separator); }
+        input[type="color"] { border: none; width: 32px; height: 32px; cursor: pointer; background: none; padding: 0; }
+        
+        .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+        
+        #qr-canvas { background: transparent; padding: 10px; display: inline-block; margin-top: 20px; }
+        
+        .type-tabs { display: flex; gap: 8px; margin-bottom: 16px; overflow-x: auto; padding-bottom: 4px; }
+        .type-tab { padding: 8px 16px; background: var(--bg-tertiary); border: none; border-radius: 20px; color: var(--text-secondary); font-size: 13px; font-weight: 500; cursor: pointer; white-space: nowrap; }
+        .type-tab.active { background: var(--accent); color: white; }
+    </style>
+</head>
+<body>
+    <crono-navbar></crono-navbar>
+
+    <div class="content-wrapper">
+        <header class="main-header">
+            <h1>QR Generator Pro</h1>
+            <p class="description">Crea codici QR unici. Personalizza colori, forme e aggiungi il tuo logo.</p>
+        </header>
+
+        <main>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; align-items: start;">
+                
+                <!-- Controls Column -->
+                <div class="glass-card" style="padding: 24px;">
+                    
+                    <div class="control-group">
+                        <label class="control-label">Tipo Contenuto</label>
+                        <div class="type-tabs" id="type-tabs">
+                            <button class="type-tab active" onclick="setType('url')">URL</button>
+                            <button class="type-tab" onclick="setType('text')">Testo</button>
+                            <button class="type-tab" onclick="setType('wifi')">Wi-Fi</button>
+                            <button class="type-tab" onclick="setType('email')">Email</button>
+                        </div>
+                        
+                        <!-- Dynamic Inputs -->
+                        <div id="input-container">
+                            <input type="text" id="data-input" class="input-text" placeholder="https://tuosito.com">
+                        </div>
+                    </div>
+
+                    <div class="options-grid">
+                        <div class="control-group">
+                            <label class="control-label">Stile Punti</label>
+                            <select id="dots-style" class="input-select" onchange="updateQR()">
+                                <option value="square">Quadrati</option>
+                                <option value="dots">Pallini</option>
+                                <option value="rounded">Arrotondati</option>
+                                <option value="extra-rounded">Extra Tondi</option>
+                                <option value="classy">Classy</option>
+                                <option value="classy-rounded">Classy Rounded</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <label class="control-label">Forma Angoli</label>
+                            <select id="corners-style" class="input-select" onchange="updateQR()">
+                                <option value="square">Quadrati</option>
+                                <option value="dot">Cerchi</option>
+                                <option value="extra-rounded">Arrotondati</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Colori</label>
+                        <div class="color-row">
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="color-dots" value="#000000" onchange="updateQR()">
+                                <span style="font-size: 13px;">Punti</span>
+                            </div>
+                            <div class="color-picker-wrapper">
+                                <input type="color" id="color-bg" value="#ffffff" onchange="updateQR()">
+                                <span style="font-size: 13px;">Sfondo</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">Logo Centrale</label>
+                        <div class="upload-area" style="padding: 20px; margin: 0; min-height: auto;" onclick="document.getElementById('logo-input').click()">
+                            <span style="font-size: 14px; font-weight: 500;">Carica immagine logo</span>
+                            <input type="file" id="logo-input" accept="image/*" hidden onchange="handleLogo(this)">
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Preview Column -->
+                <div class="glass-card" style="padding: 40px; text-align: center; position: sticky; top: 100px;">
+                    <h3 style="margin-bottom: 20px; font-size: 18px;">Anteprima</h3>
+                    <div id="qr-canvas"></div>
+                    
+                    <div style="display: flex; gap: 10px; margin-top: 30px;">
+                        <button class="alert-btn primary" onclick="downloadQR('png')">Scarica PNG</button>
+                        <button class="alert-btn" onclick="downloadQR('svg')">SVG</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/ui.js"></script>
+    <script src="../components/navbar.js"></script>
+    <script>
+        let qrCode;
+        let logoUrl = "";
+        let currentType = 'url';
+
+        const defaultOptions = {
+            width: 300,
+            height: 300,
+            type: "svg",
+            data: "https://cronotools.com",
+            image: "",
+            dotsOptions: { color: "#000000", type: "rounded" },
+            backgroundOptions: { color: "#ffffff" },
+            imageOptions: { crossOrigin: "anonymous", margin: 10 },
+            cornersSquareOptions: { type: "extra-rounded" }
+        };
+
+        document.addEventListener('DOMContentLoaded', () => {
+            qrCode = new QRCodeStyling(defaultOptions);
+            qrCode.append(document.getElementById("qr-canvas"));
+            updateQR();
+            
+            // Live update for text input
+            document.addEventListener('input', (e) => {
+                if(e.target.matches('#data-input, .wifi-input')) updateQR();
+            });
+        });
+
+        function setType(type) {
+            currentType = type;
+            document.querySelectorAll('.type-tab').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            const container = document.getElementById('input-container');
+            
+            if (type === 'wifi') {
+                container.innerHTML = `
+                    <div style="display: flex; flex-direction: column; gap: 10px;">
+                        <input type="text" id="wifi-ssid" class="input-text wifi-input" placeholder="Nome Rete (SSID)">
+                        <input type="text" id="wifi-pass" class="input-text wifi-input" placeholder="Password">
+                        <select id="wifi-auth" class="input-select wifi-input">
+                            <option value="WPA">WPA/WPA2</option>
+                            <option value="WEP">WEP</option>
+                            <option value="nopass">Nessuna</option>
+                        </select>
+                    </div>
+                `;
+            } else if (type === 'email') {
+                container.innerHTML = `<input type="text" id="data-input" class="input-text" placeholder="indirizzo@email.com">`;
+            } else {
+                container.innerHTML = `<input type="text" id="data-input" class="input-text" placeholder="${type === 'url' ? 'https://...' : 'Scrivi testo qui...'}">`;
+            }
+        }
+
+        function getData() {
+            if (currentType === 'wifi') {
+                const ssid = document.getElementById('wifi-ssid').value;
+                const pass = document.getElementById('wifi-pass').value;
+                const auth = document.getElementById('wifi-auth').value;
+                return `WIFI:T:${auth};S:${ssid};P:${pass};;`;
+            } else if (currentType === 'email') {
+                return `mailto:${document.getElementById('data-input').value}`;
+            }
+            return document.getElementById('data-input').value || "https://cronotools.com";
+        }
+
+        function updateQR() {
+            if(!qrCode) return;
+            
+            const data = getData();
+            const dotsStyle = document.getElementById('dots-style').value;
+            const cornersStyle = document.getElementById('corners-style').value;
+            const colorDots = document.getElementById('color-dots').value;
+            const colorBg = document.getElementById('color-bg').value;
+
+            qrCode.update({
+                data: data,
+                image: logoUrl,
+                dotsOptions: {
+                    color: colorDots,
+                    type: dotsStyle
+                },
+                backgroundOptions: {
+                    color: colorBg,
+                },
+                cornersSquareOptions: {
+                    type: cornersStyle,
+                    color: colorDots 
+                }
+            });
+        }
+
+        function handleLogo(input) {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    logoUrl = e.target.result;
+                    updateQR();
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function downloadQR(format) {
+            qrCode.download({ name: "custom-qr", extension: format });
+        }
+    </script>
+</body>
+</html>

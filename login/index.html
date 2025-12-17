@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>CronoID - Accedi</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <crono-navbar></crono-navbar>
+
+    <div class="content-wrapper">
+        <header class="main-header">
+            <h1>CronoID</h1>
+            <p class="description">La tua identità creativa.</p>
+        </header>
+
+        <main>
+            <div class="glass-card login-container">
+                <div class="tabs" style="display:flex; margin-bottom: 20px; border-bottom: 1px solid var(--separator);">
+                    <button class="btn btn-secondary" id="tab-login" onclick="switchTab('login')" style="flex:1; border-radius:0; border:none; background:transparent;">Accedi</button>
+                    <button class="btn btn-secondary" id="tab-register" onclick="switchTab('register')" style="flex:1; border-radius:0; border:none; background:transparent; opacity:0.6;">Registrati</button>
+                </div>
+
+                <form id="form-login" onsubmit="handleLogin(event)">
+                    <div class="form-group">
+                        <label class="form-label">Username</label>
+                        <input type="text" id="login-user" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="login-pass" class="form-input" required>
+                    </div>
+                    <button type="submit" class="alert-btn primary" style="width:100%">Entra</button>
+                </form>
+
+                <form id="form-register" onsubmit="handleRegister(event)" class="hidden">
+                    <div class="form-group">
+                        <label class="form-label">Scegli Username</label>
+                        <input type="text" id="reg-user" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Password</label>
+                        <input type="password" id="reg-pass" class="form-input" required>
+                    </div>
+                    <button type="submit" class="alert-btn primary" style="width:100%">Crea Account</button>
+                </form>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/auth.js"></script> <script src="../js/ui.js"></script>
+    <script src="../components/navbar.js"></script>
+    <script>
+        function switchTab(tab) {
+            const loginForm = document.getElementById('form-login');
+            const regForm = document.getElementById('form-register');
+            const tabLogin = document.getElementById('tab-login');
+            const tabReg = document.getElementById('tab-register');
+
+            if(tab === 'login') {
+                loginForm.classList.remove('hidden');
+                regForm.classList.add('hidden');
+                tabLogin.style.opacity = '1';
+                tabLogin.style.borderBottom = '2px solid var(--accent)';
+                tabReg.style.opacity = '0.6';
+                tabReg.style.borderBottom = 'none';
+            } else {
+                loginForm.classList.add('hidden');
+                regForm.classList.remove('hidden');
+                tabReg.style.opacity = '1';
+                tabReg.style.borderBottom = '2px solid var(--accent)';
+                tabLogin.style.opacity = '0.6';
+                tabLogin.style.borderBottom = 'none';
+            }
+        }
+
+        function handleLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('login-user').value;
+            const p = document.getElementById('login-pass').value;
+            
+            const result = CronoID.login(u, p);
+            if(result.success) {
+                window.location.href = '/index.html';
+            } else {
+                UI.showAlert('Errore', result.message);
+            }
+        }
+
+        function handleRegister(e) {
+            e.preventDefault();
+            const u = document.getElementById('reg-user').value;
+            const p = document.getElementById('reg-pass').value;
+            
+            const result = CronoID.register(u, p);
+            if(result.success) {
+                UI.showAlert('Successo', result.message);
+                switchTab('login');
+            } else {
+                UI.showAlert('Errore', result.message);
+            }
+        }
+        
+        // Init Tab Style
+        switchTab('login');
+    </script>
+</body>
+</html>

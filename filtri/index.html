@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Filtri Immagine - CronoTools 3.3</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <crono-navbar></crono-navbar>
+
+    <div class="content-wrapper">
+        <header class="main-header">
+            <h1>Filtri</h1>
+            <p class="description">Regola stile, luminosità e contrasto.</p>
+        </header>
+
+        <main>
+            <div id="upload-stage" class="upload-area">
+                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                <div class="upload-title">Carica Immagine</div>
+                <input type="file" id="file-input" accept="image/*" hidden>
+            </div>
+
+            <div id="workspace-stage" class="workspace-container">
+                <div class="canvas-wrapper">
+                    <canvas id="editor-canvas"></canvas>
+                </div>
+
+                <div class="glass-card" style="padding: 20px; max-width: 600px; margin: 0 auto;">
+                    
+                    <div class="filter-presets">
+                        <div class="filter-chip active" onclick="setPreset('none')">Normale</div>
+                        <div class="filter-chip" onclick="setPreset('bw')">B&N</div>
+                        <div class="filter-chip" onclick="setPreset('sepia')">Sepia</div>
+                        <div class="filter-chip" onclick="setPreset('vintage')">Vintage</div>
+                        <div class="filter-chip" onclick="setPreset('cyber')">Cyber</div>
+                        <div class="filter-chip" onclick="setPreset('warm')">Caldo</div>
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-header"><span>Luminosità</span> <span id="val-bright">100%</span></div>
+                        <input type="range" id="rng-bright" min="0" max="200" value="100" oninput="updateFilter()">
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-header"><span>Contrasto</span> <span id="val-contrast">100%</span></div>
+                        <input type="range" id="rng-contrast" min="0" max="200" value="100" oninput="updateFilter()">
+                    </div>
+
+                    <div class="slider-group">
+                        <div class="slider-header"><span>Saturazione</span> <span id="val-saturate">100%</span></div>
+                        <input type="range" id="rng-saturate" min="0" max="200" value="100" oninput="updateFilter()">
+                    </div>
+                    
+                    <div class="slider-group">
+                        <div class="slider-header"><span>Sfocatura</span> <span id="val-blur">0px</span></div>
+                        <input type="range" id="rng-blur" min="0" max="10" value="0" step="0.5" oninput="updateFilter()">
+                    </div>
+
+                    <button id="btn-download" class="alert-btn primary" style="width:100%; margin-top:20px;">Scarica Immagine</button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../components/navbar.js"></script>
+    <script>
+        const canvas = document.getElementById('editor-canvas');
+        const ctx = canvas.getContext('2d');
+        let img = new Image();
+        let fileName = 'edited.png';
+
+        document.getElementById('upload-stage').addEventListener('click', () => document.getElementById('file-input').click());
+        document.getElementById('file-input').addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if(file) {
+                const url = URL.createObjectURL(file);
+                img.onload = () => {
+                    canvas.width = img.width;
+                    canvas.height = img.height;
+                    updateFilter();
+                    document.getElementById('upload-stage').style.display = 'none';
+                    document.getElementById('workspace-stage').style.display = 'block';
+                };
+                img.src = url;
+                fileName = file.name;
+            }
+        });
+
+        function updateFilter() {
+            const b = document.getElementById('rng-bright').value;
+            const c = document.getElementById('rng-contrast').value;
+            const s = document.getElementById('rng-saturate').value;
+            const bl = document.getElementById('rng-blur').value;
+
+            document.getElementById('val-bright').textContent = b + '%';
+            document.getElementById('val-contrast').textContent = c + '%';
+            document.getElementById('val-saturate').textContent = s + '%';
+            document.getElementById('val-blur').textContent = bl + 'px';
+
+            // Costruisci stringa filtro CSS
+            const filterString = `brightness(${b}%) contrast(${c}%) saturate(${s}%) blur(${bl}px)`;
+            
+            ctx.clearRect(0,0, canvas.width, canvas.height);
+            ctx.filter = filterString;
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        }
+
+        function setPreset(name) {
+            document.querySelectorAll('.filter-chip').forEach(c => c.classList.remove('active'));
+            event.target.classList.add('active');
+
+            // Reset base
+            document.getElementById('rng-bright').value = 100;
+            document.getElementById('rng-contrast').value = 100;
+            document.getElementById('rng-saturate').value = 100;
+            document.getElementById('rng-blur').value = 0;
+
+            if (name === 'bw') document.getElementById('rng-saturate').value = 0;
+            if (name === 'sepia') { 
+                document.getElementById('rng-saturate').value = 60; 
+                document.getElementById('rng-bright').value = 90;
+                // Nota: Sepia vero richiede color matrix, qui simuliamo con warm params
+            }
+            if (name === 'vintage') {
+                document.getElementById('rng-contrast').value = 120;
+                document.getElementById('rng-saturate').value = 80;
+                document.getElementById('rng-bright').value = 90;
+            }
+            if (name === 'cyber') {
+                document.getElementById('rng-contrast').value = 130;
+                document.getElementById('rng-saturate').value = 150;
+            }
+            if (name === 'warm') {
+                document.getElementById('rng-bright').value = 105;
+                document.getElementById('rng-saturate').value = 110;
+            }
+
+            updateFilter();
+        }
+
+        document.getElementById('btn-download').addEventListener('click', () => {
+            const link = document.createElement('a');
+            link.download = 'filtered-' + fileName;
+            link.href = canvas.toDataURL();
+            link.click();
+        });
+    </script>
+</body>
+</html>

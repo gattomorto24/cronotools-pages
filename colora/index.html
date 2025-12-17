@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Colora Immagine - CronoTools 3.2</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <crono-navbar></crono-navbar>
+    <div class="content-wrapper">
+        <header class="main-header">
+            <h1>Colora</h1>
+            <p class="description">Ricolora icone e loghi monocromatici o trasparenti.</p>
+        </header>
+        <main>
+            <div id="upload-stage" class="upload-area">
+                <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path></svg>
+                <div class="upload-title">Carica PNG/SVG</div>
+                <input type="file" id="file-input" accept="image/*" hidden>
+            </div>
+            <div id="workspace-stage" class="workspace-container">
+                <div class="canvas-wrapper"><canvas id="editor-canvas"></canvas></div>
+                <div class="glass-card" style="padding: 20px; text-align: center;">
+                    <label style="display:block; margin-bottom:10px; font-weight:600;">Seleziona Colore</label>
+                    <input type="color" id="color-picker" value="#007aff" style="width: 100%; height: 50px; border:none; cursor: pointer;">
+                    <button id="btn-apply" class="alert-btn primary" style="width: 100%; margin-top: 15px;">Applica Colore</button>
+                </div>
+                <div style="text-align: center; margin-top: 20px;">
+                    <button id="btn-download" class="alert-btn primary">Scarica PNG</button>
+                </div>
+            </div>
+        </main>
+    </div>
+    <script src="../js/ui.js"></script>
+    <script src="../js/core.js"></script>
+    <script src="../components/navbar.js"></script>
+    <script>
+        // Custom Recolor Logic extending Core
+        const engine = new CronoEngine('editor-canvas');
+        document.getElementById('upload-stage').addEventListener('click', () => document.getElementById('file-input').click());
+        document.getElementById('file-input').addEventListener('change', (e) => { if(e.target.files.length) engine.loadImage(e.target.files[0]); });
+        engine.on('imageLoaded', () => {
+            document.getElementById('upload-stage').style.display = 'none';
+            document.getElementById('workspace-stage').style.display = 'block';
+        });
+
+        document.getElementById('btn-apply').addEventListener('click', () => {
+            if(!engine.currentImage) return;
+            const color = document.getElementById('color-picker').value;
+            const offCanvas = document.createElement('canvas');
+            offCanvas.width = engine.currentImage.width;
+            offCanvas.height = engine.currentImage.height;
+            const ctx = offCanvas.getContext('2d');
+            
+            // Draw original
+            ctx.drawImage(engine.currentImage, 0, 0);
+            // Composite "source-in" retains alpha but fills with new color
+            ctx.globalCompositeOperation = 'source-in';
+            ctx.fillStyle = color;
+            ctx.fillRect(0, 0, offCanvas.width, offCanvas.height);
+            
+            engine.currentImage = offCanvas;
+            engine.render();
+            engine.pushHistory();
+        });
+
+        document.getElementById('btn-download').addEventListener('click', async () => engine.download(await engine.export('png'), 'recolor.png'));
+    </script>
+</body>
+</html>

@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Info & Release Notes - CronoTools</title>
+    
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <style>
+        /* Stili locali per la timeline delle versioni */
+        .version-timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--separator);
+            margin-left: 10px;
+        }
+        .version-entry {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .version-dot {
+            position: absolute;
+            left: -27px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--text-secondary);
+            border-radius: 50%;
+        }
+        .version-entry.current .version-dot {
+            background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-dim);
+        }
+        .version-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .version-tag {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        .version-tag.latest {
+            background: var(--accent);
+            color: var(--on-accent);
+        }
+        .release-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .changes-list {
+            list-style: none;
+            padding: 0;
+        }
+        .changes-list li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .changes-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <crono-navbar></crono-navbar>
+
+    <div class="content-wrapper">
+        <header class="main-header">
+            <h1>Informazioni</h1>
+            <p class="description">Note di rilascio e aggiornamenti di CronoTools.</p>
+        </header>
+
+       <main>
+            <div class="glass-card" style="padding: 30px;">
+                
+                <h2 style="margin-bottom: 30px; font-size: 20px;">Release Notes</h2>
+                
+                <div class="version-timeline">
+
+                    <div class="version-entry current">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag latest">3.3.0</span>
+                            <span class="release-date">Febbraio 2026</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>CronoID:</strong> Sistema account per salvare le preferenze in modo persistente.</li>
+                            <li><strong>Personalizzazione:</strong> Il tema, i menu e le opzioni di accessibilità sono ora salvate nel profilo.</li>
+                            <li><strong>Filtri 2.0:</strong> Nuovo motore di rendering filtri con anteprima live.</li>
+                            <li><strong>Bold Text:</strong> Nuova opzione globale per migliorare la leggibilità.</li>
+                            <li><strong>UI Stability:</strong> La "Barra Minimale" ora è una modalità completa che influenza tutto il layout.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.2</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Piena Integrazione delle aggiunte in fase beta:</strong></li>
+                            <li><strong>Correzioni di Bug:</strong> Risolti vari problemi segnalati dagli utenti per garantire un'esperienza più fluida.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.2 Beta 2</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Home Major Bug Fixing:</strong> Ricerca rapida tool nella Home, implementata correttamente e sistemazione gravi bug visualizzazione della pagina home</li>
+                            <li><strong>Fixing Cut Video Tool</strong> "Taglia Video" sistemato completamente.</li>
+                            <li><strong>Ridimensiona+:</strong> Aggiunti ulteriori preset rapidi per social media e di vita comune</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.2 Beta 1</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Accessibilità Globale:</strong> Nuovi controlli per ridurre movimento, trasparenza e aumentare il contrasto.</li>
+                            <li><strong>Discovery:</strong> Ricerca rapida tool nella Home.</li>
+                            <li><strong>Nuovi Tool:</strong> Aggiunti "Colora Immagine" e "Taglia Video" (UI).</li>
+                            <li><strong>Convertitore Pro:</strong> Slider qualità e supporto formati esteso.</li>
+                            <li><strong>Ridimensiona+:</strong> Aggiunti preset rapidi per social media.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.1 Beta 3</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Smart Navbar Scroll:</strong> La barra di navigazione ora si riduce allo scroll verso il basso e riappare immediatamente appena si scorre verso l'alto.</li>
+                            <li><strong>UI Polish:</strong> Migliorata la fluidità delle transizioni dei menu laterali.</li>
+                            <li><strong>Nuova Pagina Info:</strong> Aggiunta sezione dedicata alle note di rilascio.</li>
+                            <li><strong>Bugfix:</strong> Risolti problemi di layout su schermi ultra-wide.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.1 Beta 2</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Branding Dinamico:</strong> Implementato sistema dual-logo (Nero/Bianco) che si adatta automaticamente al tema scelto.</li>
+                            <li><strong>Mobile Default:</strong> La barra minimale si attiva automaticamente su dispositivi mobili per migliorare l'usabilità.</li>
+                            <li><strong>Scroll Clean:</strong> I pulsanti laterali scompaiono durante lo scroll per una maggiore pulizia visiva.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.1 Beta 1</span>
+                            <span class="release-date">Novembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Refactoring UI:</strong> Nuova architettura CSS basata su variabili CSS e Design System v20.</li>
+                            <li><strong>Temi Multipli:</strong> Introduzione dei temi Midnight, Slate, Latte, Cyberpunk e altri.</li>
+                            <li><strong>AI Remover:</strong> Aggiunto tool sperimentale per rimozione sfondo con elaborazione locale.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.0.0</span>
+                            <span class="release-date">Ottobre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li>Rilascio iniziale della suite CronoTools rinnovata.</li>
+                            <li>Integrazione tool: Ritaglia, Filtri, Ridimensiona, QR Code.</li>
+                            <li>Convertitore Base64 universale.</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div style="margin-top: 40px; text-align: center; font-size: 13px; color: var(--text-tertiary);">
+                    CronoTools &copy; 2025 - Made with precision.
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/ui.js"></script>
+    <script src="../components/navbar.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Configura Dynamic Bar - CronoTools</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <style>
+        .config-card { padding: 24px; max-width: 600px; margin: 0 auto; }
+        .config-group { margin-bottom: 24px; }
+        .config-label { display: block; font-weight: 600; font-size: 14px; margin-bottom: 8px; color: var(--text-secondary); text-transform: uppercase; letter-spacing: 0.5px; }
+        
+        /* Radio Cards for Style Selection */
+        .style-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .style-option {
+            background: var(--bg-tertiary);
+            border: 2px solid transparent;
+            border-radius: 16px;
+            padding: 16px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.2s;
+        }
+        .style-option:hover { background: var(--bg-secondary); }
+        .style-option.active { border-color: var(--accent); background: var(--bg-secondary); }
+        .preview-pill {
+            height: 12px; width: 60%; margin: 0 auto 10px; border-radius: 99px;
+        }
+        
+        /* Sliders */
+        .range-wrap { display: flex; align-items: center; gap: 12px; }
+        input[type=range] { flex: 1; accent-color: var(--accent); cursor: pointer; }
+        .val-display { font-family: monospace; width: 40px; text-align: right; }
+
+        input[type=color] { border: none; width: 100%; height: 40px; border-radius: 8px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <crono-navbar></crono-navbar>
+
+    <div class="content-wrapper">
+        <header class="main-header">
+            <h1>Dynamic Bar</h1>
+            <p class="description">Personalizza l'aspetto e il comportamento della barra di navigazione.</p>
+        </header>
+
+        <main>
+            <div class="glass-card config-card">
+                
+                <!-- Stile -->
+                <div class="config-group">
+                    <label class="config-label">Stile Visivo</label>
+                    <div class="style-grid">
+                        <div class="style-option active" onclick="selectStyle('glass')" id="opt-glass">
+                            <div class="preview-pill" style="background: #ddd; border: 1px solid #ccc;"></div>
+                            <span style="font-weight: 600;">Glass (Default)</span>
+                        </div>
+                        <div class="style-option" onclick="selectStyle('island')" id="opt-island">
+                            <div class="preview-pill" style="background: #000;"></div>
+                            <span style="font-weight: 600;">Dynamic Island</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dimensioni -->
+                <div class="config-group">
+                    <label class="config-label">Larghezza (% Schermo)</label>
+                    <div class="range-wrap">
+                        <input type="range" id="inp-width" min="30" max="98" value="94">
+                        <span class="val-display" id="val-width">94%</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <label class="config-label">Altezza (px)</label>
+                    <div class="range-wrap">
+                        <input type="range" id="inp-height" min="40" max="80" value="60">
+                        <span class="val-display" id="val-height">60</span>
+                    </div>
+                </div>
+
+                <div class="config-group">
+                    <label class="config-label">Posizione Verticale (Offset)</label>
+                    <div class="range-wrap">
+                        <input type="range" id="inp-offset" min="0" max="40" value="10">
+                        <span class="val-display" id="val-offset">10</span>
+                    </div>
+                </div>
+
+                <!-- Custom Color (Show only if not Island) -->
+                <div class="config-group" id="group-color">
+                    <label class="config-label">Colore Personalizzato</label>
+                    <div style="display: flex; gap: 10px; align-items: center;">
+                        <input type="checkbox" id="check-custom-color">
+                        <label for="check-custom-color">Attiva colore custom</label>
+                        <input type="color" id="inp-color" value="#007aff" disabled>
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 12px; margin-top: 30px;">
+                    <button class="alert-btn primary" onclick="saveSettings()">Salva Modifiche</button>
+                    <button class="alert-btn" onclick="resetSettings()">Reset Default</button>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/ui.js"></script>
+    <script src="../components/navbar.js"></script>
+    <script>
+        // State
+        let currentStyle = 'glass';
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadSettings();
+            
+            // Live Preview Listeners
+            document.getElementById('inp-width').addEventListener('input', (e) => {
+                document.getElementById('val-width').textContent = e.target.value + '%';
+                updateLiveCSS('--bar-width', e.target.value + '%');
+            });
+            
+            document.getElementById('inp-height').addEventListener('input', (e) => {
+                document.getElementById('val-height').textContent = e.target.value;
+                updateLiveCSS('--bar-height', e.target.value + 'px');
+            });
+
+            document.getElementById('inp-offset').addEventListener('input', (e) => {
+                document.getElementById('val-offset').textContent = e.target.value;
+                // Apply top offset to body padding so navbar CSS isn't overridden
+                document.body.style.paddingTop = e.target.value + 'px';
+            });
+
+            document.getElementById('check-custom-color').addEventListener('change', (e) => {
+                document.getElementById('inp-color').disabled = !e.target.checked;
+                if(e.target.checked) selectStyle('custom');
+            });
+        });
+
+        function selectStyle(style) {
+            currentStyle = style;
+            document.querySelectorAll('.style-option').forEach(el => el.classList.remove('active'));
+            
+            if (style === 'glass') {
+                document.getElementById('opt-glass').classList.add('active');
+                document.body.classList.remove('dynamic-island-mode');
+                document.getElementById('check-custom-color').checked = false;
+            } else if (style === 'island') {
+                document.getElementById('opt-island').classList.add('active');
+                document.body.classList.add('dynamic-island-mode');
+                document.getElementById('check-custom-color').checked = false;
+            } else if (style === 'custom') {
+                document.body.classList.remove('dynamic-island-mode');
+            }
+        }
+
+        function updateLiveCSS(prop, val) {
+            document.documentElement.style.setProperty(prop, val);
+        }
+
+        function saveSettings() {
+            const settings = {
+                style: currentStyle,
+                width: document.getElementById('inp-width').value,
+                height: document.getElementById('inp-height').value,
+                topOffset: document.getElementById('inp-offset').value,
+                customColor: document.getElementById('check-custom-color').checked ? document.getElementById('inp-color').value : null
+            };
+            
+            localStorage.setItem('crono-bar-prefs', JSON.stringify(settings));
+            
+            // Dispatch event so Navbar component updates itself
+            window.dispatchEvent(new Event('crono-bar-update'));
+            
+            // Visual feedback
+            const btn = document.querySelector('.alert-btn.primary');
+            const originalText = btn.textContent;
+            btn.textContent = 'Salvato!';
+            setTimeout(() => btn.textContent = originalText, 1500);
+        }
+
+        function loadSettings() {
+            const prefs = JSON.parse(localStorage.getItem('crono-bar-prefs') || '{}');
+            
+            if (prefs.style) selectStyle(prefs.style);
+            if (prefs.width) {
+                document.getElementById('inp-width').value = prefs.width;
+                document.getElementById('val-width').textContent = prefs.width + '%';
+            }
+            if (prefs.height) {
+                document.getElementById('inp-height').value = prefs.height;
+                document.getElementById('val-height').textContent = prefs.height;
+            }
+            if (prefs.topOffset) {
+                document.getElementById('inp-offset').value = prefs.topOffset;
+                document.getElementById('val-offset').textContent = prefs.topOffset;
+                // Respect previously saved top offset (unless in beta, CSS will override)
+                document.body.style.paddingTop = prefs.topOffset + 'px';
+            }
+            if (prefs.customColor) {
+                document.getElementById('check-custom-color').checked = true;
+                document.getElementById('inp-color').value = prefs.customColor;
+                document.getElementById('inp-color').disabled = false;
+                currentStyle = 'custom';
+            }
+        }
+
+        function resetSettings() {
+            localStorage.removeItem('crono-bar-prefs');
+            window.location.reload();
+        }
+    </script>
+</body>
+</html>
