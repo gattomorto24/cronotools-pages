@@ -19,6 +19,7 @@
    14. TOOL SPECIFIC: CONVERTER & INFO
    15. AUTH & ACCOUNT PAGES
    16. UTILITIES, ANIMATIONS & MEDIA QUERIES
+   17. ULTRA MOBILE OPTIMIZATION (Default Minimal, Toggleable)
 */
 
 /* =========================================
@@ -630,4 +631,140 @@ input[type="color"] { -webkit-appearance: none; border: none; width: 32px; heigh
     body.bar-bottom { padding-top: 40px; padding-bottom: 100px; }
     body.bar-bottom #global-navbar { top: auto; bottom: 0; padding-top: 0; padding-bottom: 20px; }
     body.bar-bottom #global-navbar.scrolled { padding-bottom: 10px; }
+}
+
+/* =========================================
+   17. ULTRA MOBILE OPTIMIZATION & DEFAULT MINIMAL
+   ========================================= */
+
+@media (max-width: 768px) {
+    /* --- DEFAULT MINIMAL NAVBAR FOR MOBILE (Se NON è Dynamic Mode) --- */
+    /* La logica è invertita: 
+       - Di default su mobile applica stile minimale.
+       - Se l'utente VUOLE la Dynamic Bar (quindi NON ha la classe .old-design-mode), 
+         allora NON applichiamo queste forzature.
+       - MA, siccome hai chiesto "minimale default", assumiamo che l'utente debba attivare esplicitamente la dynamic.
+       
+       Tuttavia, il tuo JS aggiunge o rimuove 'old-design-mode'. 
+       Se l'utente *disattiva* la "Modalità minimale" nel menu, la classe 'old-design-mode' sparisce.
+       Quindi dobbiamo applicare questo stile SOLO se c'è la classe 'old-design-mode' O se vogliamo forzarlo sempre tranne eccezioni.
+       
+       SOLUZIONE RICHIESTA: "Minimale di default ma se uno vuole la può disattivare".
+       Questo significa che dobbiamo rispettare la classe 'old-design-mode'.
+       Per renderlo "default", dovresti assicurarti che il tuo JS aggiunga quella classe all'avvio su mobile.
+       
+       Tuttavia, per ottimizzare l'esperienza "App-Like" indipendentemente dalla navbar scelta,
+       applichiamo stili globali di layout qui sotto.
+    */
+
+    /* FORZATURA MINIMALE (Solo se è attiva la modalità o di default se non gestito da JS) 
+       Per ora, applichiamo lo stile "Full Width" alla navbar quando è in modalità minimale su mobile.
+    */
+    body.old-design-mode #global-navbar {
+        padding: 0 !important;
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border-bottom: 1px solid var(--border-light);
+    }
+    
+    [data-theme="dark"].old-design-mode #global-navbar {
+        background: rgba(20, 20, 20, 0.85);
+    }
+
+    body.old-design-mode .nav-pill {
+        width: 100% !important;
+        max-width: 100% !important;
+        border-radius: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        box-shadow: none !important;
+        height: 60px;
+        padding: 0 16px !important;
+        justify-content: space-between;
+    }
+
+    /* Fix Logo Centering on Mobile (Sempre valido) */
+    .nav-center {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        width: auto !important;
+    }
+    
+    .nav-brand-fixed {
+        display: flex !important;
+    }
+
+    /* --- UI & TOUCH OPTIMIZATIONS (Sempre attivi su mobile) --- */
+    
+    /* Better Touch Targets */
+    .btn, .nav-btn, .menu-item, .tool-card, input, select {
+        min-height: 44px; /* Apple Human Interface Guidelines */
+    }
+
+    /* Adjust Layout Spacing */
+    .content-wrapper {
+        padding: 0 16px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    body {
+        padding-top: 80px; /* Default mobile padding */
+    }
+
+    /* Tool Grid Optimization */
+    .tools-grid {
+        grid-template-columns: repeat(2, 1fr) !important; /* Force 2 columns */
+        gap: 12px;
+    }
+
+    .tool-card {
+        height: 110px; /* Slightly more compact */
+        padding: 16px 8px;
+    }
+
+    /* Text Readability */
+    h1, .hero-title {
+        font-size: 2.2rem !important; /* Prevent overflow */
+    }
+    
+    .hero-subtitle {
+        font-size: 1rem !important;
+        padding: 0 10px;
+    }
+
+    /* Hide Desktop Elements */
+    .desktop-only {
+        display: none !important;
+    }
+
+    /* Floating Toolbar Mobile Fix */
+    .toolbar-floating {
+        position: fixed;
+        bottom: 20px;
+        left: 16px;
+        right: 16px;
+        background: var(--bg-glass-heavy);
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+        border: 1px solid var(--border-light);
+        border-radius: 20px;
+        padding: 12px;
+        z-index: 1000;
+        box-shadow: var(--shadow-lg);
+        justify-content: space-around;
+        animation: fadeUp 0.3s ease-out;
+    }
+
+    .workspace-container {
+        padding-bottom: 100px; /* Space for floating toolbar */
+    }
+
+    /* Sidebar Full Width on Small Screens */
+    .sidebar {
+        width: 85%;
+        max-width: 320px;
+    }
 }
