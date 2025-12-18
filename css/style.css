@@ -659,18 +659,17 @@ input[type="color"] { -webkit-appearance: none; border: none; width: 32px; heigh
 
     /* FORZATURA MINIMALE (Solo se è attiva la modalità o di default se non gestito da JS) 
        Per ora, applichiamo lo stile "Full Width" alla navbar quando è in modalità minimale su mobile.
+       FIX COLORE TEMA: Usiamo var(--nav-bg) invece di valori fissi per supportare i temi colorati (Aurora, ecc.)
     */
     body.old-design-mode #global-navbar {
         padding: 0 !important;
-        background: rgba(255, 255, 255, 0.85);
+        background: var(--nav-bg) !important; /* COLORE DINAMICO DEL TEMA */
         backdrop-filter: blur(20px);
         -webkit-backdrop-filter: blur(20px);
         border-bottom: 1px solid var(--border-light);
     }
     
-    [data-theme="dark"].old-design-mode #global-navbar {
-        background: rgba(20, 20, 20, 0.85);
-    }
+    /* Rimosso override specifico per dark mode, ora var(--nav-bg) gestisce tutto */
 
     body.old-design-mode .nav-pill {
         width: 100% !important;
