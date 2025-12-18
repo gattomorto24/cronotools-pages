@@ -1,7 +1,8 @@
 /* =========================================================
-   Universal Navbar Component — CronoTools 3.3.8
-   - Theme expansion
-   - No visual redesign
+   Universal Navbar Component — CronoTools 3.3.9
+   - FIX: Force Logo Visibility
+   - Renamed classes to bypass legacy CSS hiding rules
+   - Injected styles to guarantee centering and display
    ========================================================= */
 
 class GlobalNavbar extends HTMLElement {
@@ -19,15 +20,15 @@ class GlobalNavbar extends HTMLElement {
         const isMinimal = document.body.classList.contains('old-design-mode');
         const isBottom = document.body.classList.contains('bar-bottom');
 
+        // Logica Avatar/Auth
         const authHtml = isLoggedIn ? `
-            <a href="/account/index.html" class="auth-avatar" title="Profilo">
+            <a href="/account/index.html" class="auth-avatar" title="Profilo" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--accent-faded, rgba(0,0,0,0.1));color:var(--accent, #000);font-weight:bold;text-decoration:none;">
                 ${currentUser.username ? currentUser.username.substring(0,2).toUpperCase() : 'U'}
             </a>
         ` : `
             <a href="/login/index.html"
                class="auth-link"
                style="font-size:14px;font-weight:600;color:var(--accent);text-decoration:none;margin-right:8px;">
-                
             </a>
         `;
 
@@ -52,7 +53,49 @@ class GlobalNavbar extends HTMLElement {
             </div>
         `;
 
+        // CSS INIETTATO PER FORZARE LA VISIBILITA'
+        // Questo blocco assicura che il logo si veda indipendentemente dal tuo style.css vecchio
+        const forcedStyles = `
+            <style>
+                /* Forza il contenitore centrale ad essere flessibile e centrato */
+                #global-navbar .nav-center {
+                    display: flex !important;
+                    justify-content: center !important;
+                    align-items: center !important;
+                    flex-grow: 1 !important;
+                    width: auto !important;
+                }
+                
+                /* Nuova classe per il logo che ignora i vecchi 'display:none' */
+                #global-navbar .nav-brand-fixed {
+                    display: flex !important;
+                    align-items: center !important;
+                    gap: 10px !important;
+                    text-decoration: none !important;
+                    color: inherit !important;
+                    opacity: 1 !important;
+                    visibility: visible !important;
+                }
+
+                /* Assicura che le immagini abbiano una dimensione se non caricata dal CSS */
+                #global-navbar .logo-img {
+                    height: 24px;
+                    width: auto;
+                    object-fit: contain;
+                }
+
+                /* Assicura che il testo sia visibile */
+                #global-navbar .brand-text {
+                    font-weight: 700;
+                    letter-spacing: -0.5px;
+                    font-size: 16px;
+                    display: inline-block !important;
+                }
+            </style>
+        `;
+
         this.innerHTML = `
+        ${forcedStyles}
         <nav id="global-navbar">
             <div class="nav-pill">
 
@@ -65,18 +108,15 @@ class GlobalNavbar extends HTMLElement {
                 </button>
 
                 <div class="nav-center">
-                    <div class="nav-center-links desktop-only">
-                        <a href="/index.html" class="nav-link">Home</a>
-                        <a href="/filtri/index.html" class="nav-link">Filtri</a>
-                        <a href="/crop-immagini/index.html" class="nav-link">Ritaglia</a>
-                        <a href="/ridimensiona/index.html" class="nav-link">Ridimensiona</a>
-                    </div>
-
-                    <div class="nav-mini-logo">
-                        <img src="/css/IMG_0623.png" class="logo-img logo-light" alt="">
-                        <img src="/css/IMG_0624.png" class="logo-img logo-dark" alt="">
-                        <span>CronoTools</span>
-                    </div>
+                    <!-- 
+                        Uso una nuova classe 'nav-brand-fixed' per evitare che il CSS 
+                        esistente nasconda la vecchia classe 'nav-mini-logo' su desktop.
+                    -->
+                    <a href="/index.html" class="nav-brand-fixed">
+                        <img src="/css/IMG_0623.png" class="logo-img logo-light" alt="Logo">
+                        <img src="/css/IMG_0624.png" class="logo-img logo-dark" alt="Logo">
+                        <span class="brand-text">CronoTools</span>
+                    </a>
                 </div>
 
                 <div style="display:flex;align-items:center;gap:6px;">
