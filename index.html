@@ -13,11 +13,16 @@
     <style>
         /* --- Home Specific Overrides --- */
         
-        /* Hero Section Animation */
+        /* Hero Section Animation & Centering */
         .hero-section {
             opacity: 0;
             animation: fadeInDown 0.8s forwards ease-out;
             margin-bottom: 40px;
+            text-align: center; /* FORZATURA CENTRAMENTO */
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .hero-title {
@@ -28,6 +33,7 @@
             background: linear-gradient(135deg, var(--text-primary) 0%, var(--text-secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            text-align: center;
         }
 
         .hero-subtitle {
@@ -35,12 +41,14 @@
             color: var(--text-secondary);
             margin-bottom: 30px;
             font-weight: 400;
+            text-align: center;
         }
 
         /* Tool Search Bar Styling */
         .tool-search-wrapper {
             position: relative;
             max-width: 500px;
+            width: 100%; /* Ensure width */
             margin: 0 auto;
             transform-origin: center;
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
@@ -253,6 +261,7 @@
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
             gap: 12px;
+            justify-content: center; /* FORZATURA CENTRAMENTO GRIGLIA */
         }
 
         .tool-card {
@@ -456,12 +465,10 @@
 
                 cards.forEach(card => {
                     const name = card.querySelector('.tool-name').textContent.toLowerCase();
-                    // Controlla se il nome contiene la query
                     const match = name.includes(query);
                     
                     if (match) {
                         card.classList.remove('hidden-tool');
-                        // Reset animazione per feedback visivo
                         card.style.animation = 'none';
                         card.offsetHeight; /* trigger reflow */
                         card.style.animation = 'fadeIn 0.3s forwards';
@@ -477,16 +484,14 @@
            2. CONVERTER LOGIC (ROBUST)
            ========================================= */
         function initConverter() {
-            // Stato interno
             const state = {
                 file: null,
                 imgObject: null,
-                mime: 'image/png', // Default PNG
+                mime: 'image/png',
                 ext: 'PNG',
                 quality: 0.9
             };
 
-            // Elementi DOM
             const uploadArea = document.getElementById('upload-stage');
             const fileInput = document.getElementById('file-input');
             const resultStage = document.getElementById('result-stage');
@@ -501,52 +506,38 @@
             const btnDownload = document.getElementById('btn-download');
             const btnReset = document.getElementById('btn-reset');
 
-            // --- Gestione Formati ---
             formatOpts.forEach(opt => {
                 opt.addEventListener('click', () => {
-                    // UI Update
                     formatOpts.forEach(o => o.classList.remove('active'));
                     opt.classList.add('active');
-
-                    // State Update
                     state.mime = opt.dataset.mime;
                     state.ext = opt.dataset.ext;
-
-                    // Toggle Quality Slider
                     const supportsQuality = (state.mime === 'image/jpeg' || state.mime === 'image/webp');
                     if (supportsQuality) {
                         qualityWrap.classList.add('visible');
                     } else {
                         qualityWrap.classList.remove('visible');
                     }
-
-                    // Se abbiamo già un'immagine, rigeneriamo il risultato
                     if (state.imgObject) processImage();
                 });
             });
 
-            // --- Gestione Quality Slider ---
             qualityInput.addEventListener('input', (e) => {
                 state.quality = parseInt(e.target.value) / 100;
                 qualityVal.textContent = e.target.value + '%';
-                
-                // Debounce leggero per performance su immagini grandi
                 if (window.renderTimeout) clearTimeout(window.renderTimeout);
                 window.renderTimeout = setTimeout(() => {
                     if (state.imgObject) processImage();
                 }, 50);
             });
 
-            // --- Gestione Upload (Click) ---
             uploadArea.addEventListener('click', () => fileInput.click());
-
             fileInput.addEventListener('change', (e) => {
                 if (e.target.files && e.target.files[0]) {
                     loadFile(e.target.files[0]);
                 }
             });
 
-            // --- Gestione Upload (Drag & Drop) ---
             ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
                 uploadArea.addEventListener(eventName, preventDefaults, false);
             });
@@ -570,29 +561,22 @@
                 if (files && files[0]) loadFile(files[0]);
             });
 
-
-            // --- Core Functions ---
-
             function loadFile(file) {
-                // Check tipo file
                 if (!file.type.match('image.*')) {
                     alert("Per favore carica solo file immagine.");
                     return;
                 }
-
                 state.file = file;
                 const reader = new FileReader();
-
                 reader.onload = (e) => {
                     const img = new Image();
                     img.onload = () => {
                         state.imgObject = img;
                         showResultStage();
-                        processImage(); // Prima elaborazione
+                        processImage();
                     };
                     img.src = e.target.result;
                 };
-
                 reader.readAsDataURL(file);
             }
 
@@ -603,43 +587,29 @@
 
             function processImage() {
                 if (!state.imgObject) return;
-
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
-
                 canvas.width = state.imgObject.width;
                 canvas.height = state.imgObject.height;
 
-                // Gestione Trasparenza per JPG (Sfondo Bianco)
                 if (state.mime === 'image/jpeg') {
                     ctx.fillStyle = '#FFFFFF';
                     ctx.fillRect(0, 0, canvas.width, canvas.height);
                 }
-
-                // Disegno immagine
                 ctx.drawImage(state.imgObject, 0, 0);
 
-                // Export
                 if (state.mime === 'base64') {
-                    // Modalità Base64 (usa PNG come sorgente dati)
                     const dataUrl = canvas.toDataURL('image/png');
-                    
                     previewContainer.classList.add('hidden');
                     base64Container.classList.remove('hidden');
-                    btnDownload.classList.add('hidden'); // Non si scarica il base64 come file qui
-                    
+                    btnDownload.classList.add('hidden');
                     base64Output.value = dataUrl;
                 } else {
-                    // Modalità Immagine (PNG, JPG, WEBP)
                     const dataUrl = canvas.toDataURL(state.mime, state.quality);
-                    
                     previewContainer.classList.remove('hidden');
                     base64Container.classList.add('hidden');
                     btnDownload.classList.remove('hidden');
-
                     resultImg.src = dataUrl;
-
-                    // Setup Download Button
                     btnDownload.onclick = () => {
                         const link = document.createElement('a');
                         link.download = `crono-converted-${Date.now()}.${state.ext.toLowerCase()}`;
@@ -649,12 +619,10 @@
                 }
             }
 
-            // --- Reset ---
             btnReset.addEventListener('click', () => {
                 state.file = null;
                 state.imgObject = null;
-                fileInput.value = ''; // Reset input
-                
+                fileInput.value = '';
                 resultStage.classList.add('hidden');
                 uploadArea.classList.remove('hidden');
             });

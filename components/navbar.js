@@ -1,201 +1,158 @@
 /* =========================================================
-   Universal Navbar Component — CronoTools 3.3.1 FINAL
-   - Crono ID
-   - Dynamic Bar Config (always visible)
-   - Accessibility
-   - Minimal / Dynamic Mode
+   Universal Navbar Component — CronoTools 3.3.8
+   - Theme expansion
+   - No visual redesign
    ========================================================= */
 
 class GlobalNavbar extends HTMLElement {
 
     connectedCallback() {
         this.render();
-        this.applyUserPreferences();
-
-        window.addEventListener('crono-bar-update', () => this.applyUserPreferences());
-        window.addEventListener('crono-profile-sync', () => this.render());
+        window.addEventListener('crono-auth-change', () => this.render());
+        window.addEventListener('crono-pref-sync', () => this.render());
     }
 
-    /* ---------------- RENDER ---------------- */
-
     render() {
-        const user = window.CronoID?.currentUser || null;
+        const isLoggedIn = window.CronoID?.state?.isLoggedIn || false;
+        const currentUser = window.CronoID?.state?.currentUser || {};
 
-        const authBlock = user
-            ? `
-            <div class="menu-item" onclick="CronoID.logout()" style="color:var(--danger); cursor:pointer;">
-                Esci (${user.username})
-            </div>`
-            : `
-            <a href="/login/index.html" class="menu-item" style="color:var(--accent);">
-                Accedi / Registrati
-            </a>`;
+        const isMinimal = document.body.classList.contains('old-design-mode');
+        const isBottom = document.body.classList.contains('bar-bottom');
+
+        const authHtml = isLoggedIn ? `
+            <a href="/account/index.html" class="auth-avatar" title="Profilo">
+                ${currentUser.username ? currentUser.username.substring(0,2).toUpperCase() : 'U'}
+            </a>
+        ` : `
+            <a href="/login/index.html"
+               class="auth-link"
+               style="font-size:14px;font-weight:600;color:var(--accent);text-decoration:none;margin-right:8px;">
+                
+            </a>
+        `;
+
+        const widgetHtml = isLoggedIn ? `
+            <div class="cronoid-widget logged-in" onclick="location.href='/account/index.html'">
+                <div class="widget-avatar">
+                    ${currentUser.username ? currentUser.username.substring(0,2).toUpperCase() : 'U'}
+                </div>
+                <div class="widget-info">
+                    <span class="widget-name">${currentUser.username}</span>
+                    <span class="widget-email">${currentUser.email || 'Nessuna email'}</span>
+                    <span class="widget-cta">Gestisci account →</span>
+                </div>
+            </div>
+        ` : `
+            <div class="cronoid-widget guest" onclick="location.href='/login/index.html'">
+                <div class="widget-avatar">?</div>
+                <div class="widget-info">
+                    <span class="widget-name">Non connesso</span>
+                    <span class="widget-cta">Accedi a CronoID</span>
+                </div>
+            </div>
+        `;
 
         this.innerHTML = `
         <nav id="global-navbar">
-            <div class="nav-pill" id="dynamic-pill">
+            <div class="nav-pill">
 
-                <button class="nav-btn" onclick="UI.toggleSidebar('left')" aria-label="Menu">
-                    ☰
+                <button class="nav-btn" onclick="UI.openSidebar('left')" aria-label="Menu">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
                 </button>
 
                 <div class="nav-center">
                     <div class="nav-center-links desktop-only">
-                        ${this.getMenuLinks('nav-link')}
+                        <a href="/index.html" class="nav-link">Home</a>
+                        <a href="/filtri/index.html" class="nav-link">Filtri</a>
+                        <a href="/crop-immagini/index.html" class="nav-link">Ritaglia</a>
+                        <a href="/ridimensiona/index.html" class="nav-link">Ridimensiona</a>
                     </div>
+
                     <div class="nav-mini-logo">
-                        <img class="logo-light" src="/css/IMG_0623.png" height="24" alt="">
-                        <img class="logo-dark" src="/css/IMG_0624.png" height="24" alt="">
+                        <img src="/css/IMG_0623.png" class="logo-img logo-light" alt="">
+                        <img src="/css/IMG_0624.png" class="logo-img logo-dark" alt="">
                         <span>CronoTools</span>
                     </div>
                 </div>
 
-                <button class="nav-btn" onclick="UI.toggleSidebar('right')" aria-label="Settings">
-                    ⚙
-                </button>
-
+                <div style="display:flex;align-items:center;gap:6px;">
+                    ${authHtml}
+                    <button class="nav-btn" onclick="UI.openSidebar('right')" aria-label="Impostazioni">
+                        ⚙️
+                    </button>
+                </div>
             </div>
         </nav>
 
-        <!-- LEFT MENU -->
         <aside class="sidebar" id="sidebar-left">
             <div class="sidebar-header">
                 <span class="sidebar-title">Menu</span>
-                <button class="nav-btn" onclick="UI.closeAllSidebars()">✕</button>
+                <button class="nav-btn" onclick="UI.closeSidebars()">✕</button>
             </div>
+            <div style="padding:20px">
+                <a href="/index.html" class="menu-item">Home</a>
+                <a href="/filtri/index.html" class="menu-item">Filtri</a>
+                <a href="/crop-immagini/index.html" class="menu-item">Ritaglia</a>
+                <a href="/ridimensiona/index.html" class="menu-item">Ridimensiona</a>
+                <a href="/taglia-video/index.html" class="menu-item">Taglia Video</a>
+                <a href="/base64/index.html" class="menu-item">Convertitore</a>
+                <a href="/Ai/index.html" class="menu-item">AI Remover</a>
 
-            <div class="sidebar-content">
-
-                <!-- CRONO ID -->
-                <h4 class="settings-group-title">Crono ID</h4>
-                <div class="menu-list">
-                    ${authBlock}
+                <div style="margin-top:20px;border-top:1px solid var(--border-light);padding-top:20px">
+                    ${isLoggedIn ? `<a href="/account/index.html" class="menu-item" style="color:var(--accent)">Profilo</a>` : ''}
+                    <a href="/info/index.html" class="menu-item">Info & Aggiornamenti</a>
                 </div>
-
-                <!-- DYNAMIC BAR -->
-                <h4 class="settings-group-title">Dynamic Bar</h4>
-                <div class="menu-list">
-                    <a href="/dynamic-bar/index.html" class="menu-item highlight">
-                        Personalizza Dynamic Bar
-                    </a>
-                </div>
-
-                <!-- TOOLS -->
-                <h4 class="settings-group-title">Strumenti</h4>
-                <div class="menu-list">
-                    ${this.getMenuLinks('menu-item')}
-                </div>
-
-                <!-- INFO -->
-                <h4 class="settings-group-title">Altro</h4>
-                <div class="menu-list">
-                    <a href="/info/index.html" class="menu-item">Info & Release Notes</a>
-                </div>
-
             </div>
         </aside>
 
-        <!-- RIGHT MENU -->
         <aside class="sidebar right" id="sidebar-right">
             <div class="sidebar-header">
-                <span class="sidebar-title">Impostazioni</span>
-                <button class="nav-btn" onclick="UI.closeAllSidebars()">✕</button>
+                <span class="sidebar-title">Personalizza</span>
+                <button class="nav-btn" onclick="UI.closeSidebars()">✕</button>
             </div>
-            <div class="sidebar-content">
-                ${this.getSettings()}
+
+            <div style="padding:20px">
+                ${widgetHtml}
+
+                <h4 class="settings-title">Layout</h4>
+                <div class="ios-toggle-wrapper" onclick="UI.toggleMinimal()">
+                    <span class="ios-toggle-label">Modalità minimale</span>
+                    <input type="checkbox" class="ios-toggle" ${isMinimal ? 'checked' : ''}>
+                </div>
+
+                <div class="ios-toggle-wrapper" onclick="UI.toggleBarPosition()">
+                    <span class="ios-toggle-label">Barra in basso</span>
+                    <input type="checkbox" class="ios-toggle" ${isBottom ? 'checked' : ''}>
+                </div>
+
+                <h4 class="settings-title">Temi</h4>
+
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+                    <!-- Temi esistenti -->
+                    <button class="menu-item" onclick="UI.setTheme('light')">Light</button>
+                    <button class="menu-item" onclick="UI.setTheme('dark')">Dark</button>
+                    <button class="menu-item" onclick="UI.setTheme('midnight')">Midnight</button>
+                    <button class="menu-item" onclick="UI.setTheme('slate')">Slate</button>
+                    <button class="menu-item" onclick="UI.setTheme('latte')">Latte</button>
+                    <button class="menu-item" onclick="UI.setTheme('cyberpunk')">Cyberpunk</button>
+
+                    <!-- NUOVI TEMI 3.3.8 -->
+                    <button class="menu-item" onclick="UI.setTheme('aurora')">Aurora</button>
+                    <button class="menu-item" onclick="UI.setTheme('forest')">Forest</button>
+                    <button class="menu-item" onclick="UI.setTheme('sunset')">Sunset</button>
+                    <button class="menu-item" onclick="UI.setTheme('ocean')">Ocean</button>
+                    <button class="menu-item" onclick="UI.setTheme('graphite')">Graphite</button>
+                </div>
             </div>
         </aside>
 
         <div class="backdrop" id="backdrop"></div>
         `;
     }
-
-    /* ---------------- MENU ---------------- */
-
-    getMenuLinks(className) {
-        const fallbackMenu = [
-            { href: '/index.html', text: 'Home' },
-            { href: '/filtri/index.html', text: 'Filtri' },
-            { href: '/crop-immagini/index.html', text: 'Ritaglia' },
-            { href: '/ridimensiona/index.html', text: 'Ridimensiona' },
-            { href: '/colora/index.html', text: 'Colora' },
-            { href: '/taglia-video/index.html', text: 'Taglia Video' },
-            { href: '/qr/index.html', text: 'QR Code' }
-        ];
-
-        const menu = window.CronoID?.getMenu
-            ? CronoID.getMenu().filter(i => i.visible)
-            : fallbackMenu;
-
-        return menu.map(link => {
-            const active = location.pathname.startsWith(link.href.replace('/index.html', '')) ? 'active' : '';
-            return `<a href="${link.href}" class="${className} ${active}">${link.text}</a>`;
-        }).join('');
-    }
-
-    /* ---------------- SETTINGS ---------------- */
-
-    getSettings() {
-        return `
-        <h4 class="settings-group-title">Layout</h4>
-        <div class="ios-toggle-wrapper" onclick="toggleOldDesign()">
-            <div class="ios-toggle-label">Barra Minimale</div>
-            <input type="checkbox" class="ios-toggle" id="oldDesignCheckbox"
-                   onclick="event.stopPropagation(); toggleOldDesign();">
-        </div>
-
-        <h4 class="settings-group-title">Accessibilità</h4>
-        ${['motion','transparency','contrast','bold'].map(t => `
-            <div class="ios-toggle-wrapper" onclick="UI.toggleAccessibility('${t}')">
-                <div class="ios-toggle-label">${this.labelFor(t)}</div>
-                <input type="checkbox" class="ios-toggle"
-                       onclick="event.stopPropagation(); UI.toggleAccessibility('${t}');">
-            </div>
-        `).join('')}
-
-        <h4 class="settings-group-title">Tema</h4>
-        <div class="menu-list theme-list">
-            ${this.getThemeButtons()}
-        </div>`;
-    }
-
-    labelFor(t) {
-        return {
-            motion: 'Riduci Movimento',
-            transparency: 'Riduci Trasparenza',
-            contrast: 'Contrasto Elevato',
-            bold: 'Testo in Grassetto'
-        }[t];
-    }
-
-    getThemeButtons() {
-        const themes = ['light','dark','midnight','slate','latte','sunset','forest','lavanda','cyberpunk','high-contrast'];
-        return themes.map(t =>
-            `<button class="menu-item" data-set-theme="${t}">${t}</button>`
-        ).join('');
-    }
-
-    /* ---------------- PREFS ---------------- */
-
-    applyUserPreferences() {
-        const body = document.body;
-        const isOld = localStorage.getItem('old-design-active') === 'true'
-            || (localStorage.getItem('old-design-active') === null && innerWidth <= 768);
-
-        body.classList.toggle('old-design-mode', isOld);
-
-        const cb = this.querySelector('#oldDesignCheckbox');
-        if (cb) cb.checked = isOld;
-    }
 }
-
-/* ---------------- GLOBAL ---------------- */
-
-window.toggleOldDesign = function () {
-    const active = document.body.classList.contains('old-design-mode');
-    localStorage.setItem('old-design-active', !active);
-    window.CronoID?.setPreference?.('minimalMode', !active);
-    dispatchEvent(new Event('crono-bar-update'));
-};
 
 customElements.define('crono-navbar', GlobalNavbar);

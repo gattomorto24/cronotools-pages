@@ -1,147 +1,112 @@
-/* --- CronoTools ID Manager v3.3 --- */
+/* --- CronoTools Universal Auth v3.3.1 --- */
 
 const CronoID = {
-    currentUser: null,
-    
-    // Configurazione Menu Default
-    defaultMenu: [
-        { id: 'home', href: '/index.html', text: 'Home', visible: true },
-        { id: 'filtri', href: '/filtri/index.html', text: 'Filtri', visible: true },
-        { id: 'crop', href: '/crop-immagini/index.html', text: 'Ritaglia', visible: true },
-        { id: 'resize', href: '/ridimensiona/index.html', text: 'Ridimensiona', visible: true },
-        { id: 'colora', href: '/colora/index.html', text: 'Colora', visible: true },
-        { id: 'video', href: '/taglia-video/index.html', text: 'Taglia Video', visible: true },
-        { id: 'convert', href: '/base64/index.html', text: 'Convertitore', visible: true },
-        { id: 'qr', href: '/qr/index.html', text: 'QR Code', visible: true },
-        { id: 'info', href: '/info/index.html', text: 'Info', visible: true }
-    ],
+    state: {
+        currentUser: null,
+        isLoggedIn: false
+    },
 
     init() {
-        const session = localStorage.getItem('crono_session');
-        if (session) {
-            this.currentUser = JSON.parse(localStorage.getItem(`crono_user_${session}`));
-            // Se l'utente esiste, applica le sue preferenze
-            if (this.currentUser) {
-                console.log(`CronoID: Benvenuto ${this.currentUser.username}`);
-                this.syncSystemWithProfile();
+        // Recupera la sessione persistente
+        const activeUser = localStorage.getItem('crono_active_session');
+        
+        if (activeUser) {
+            const userData = JSON.parse(localStorage.getItem(`crono_db_${activeUser}`));
+            if (userData) {
+                this.state.currentUser = userData;
+                this.state.isLoggedIn = true;
+                this.syncPreferences();
+                console.log(`[CronoID] Session restored: ${userData.username}`);
             } else {
-                this.logout(); // Sessione non valida
+                // Database corrotto o utente cancellato
+                this.logout();
             }
         }
+        
+        this.emitAuthChange();
     },
 
     register(username, password) {
-        if (localStorage.getItem(`crono_user_${username}`)) {
-            return { success: false, message: "Utente già esistente." };
+        if (!username || !password) return { success: false, message: "Dati mancanti." };
+        
+        if (localStorage.getItem(`crono_db_${username}`)) {
+            return { success: false, message: "Username già in uso." };
         }
 
         const newUser = {
             username: username,
-            password: password, // In un'app reale, questo andrebbe hashato
-            preferences: {
+            password: password, // In real world this must be hashed
+            joined: new Date().toLocaleDateString(),
+            prefs: {
                 theme: 'light',
                 minimalMode: false,
-                boldText: false,
-                reduceMotion: false,
-                reduceTransparency: false,
-                highContrast: false,
-                menuOrder: JSON.parse(JSON.stringify(this.defaultMenu)) // Clone profondo
-            },
-            createdAt: new Date().toISOString()
+                barBottom: false,
+                reduceMotion: false
+            }
         };
 
-        localStorage.setItem(`crono_user_${username}`, JSON.stringify(newUser));
-        return { success: true, message: "Account creato! Ora puoi accedere." };
+        localStorage.setItem(`crono_db_${username}`, JSON.stringify(newUser));
+        return { success: true, message: "Account creato. Accedi ora." };
     },
 
     login(username, password) {
-        const userJson = localStorage.getItem(`crono_user_${username}`);
+        const userJson = localStorage.getItem(`crono_db_${username}`);
+        
         if (!userJson) return { success: false, message: "Utente non trovato." };
-
+        
         const user = JSON.parse(userJson);
         if (user.password !== password) return { success: false, message: "Password errata." };
 
-        this.currentUser = user;
-        localStorage.setItem('crono_session', username);
-        this.syncSystemWithProfile();
+        // Success Login
+        this.state.currentUser = user;
+        this.state.isLoggedIn = true;
+        localStorage.setItem('crono_active_session', username); // Persistent Session
+        
+        this.syncPreferences();
+        this.emitAuthChange();
+        
         return { success: true };
     },
 
     logout() {
-        this.currentUser = null;
-        localStorage.removeItem('crono_session');
+        this.state.currentUser = null;
+        this.state.isLoggedIn = false;
+        localStorage.removeItem('crono_active_session');
+        
+        // Reset to system defaults potentially, or keep last used
+        this.emitAuthChange();
         window.location.href = '/index.html';
     },
 
-    // Salva una preferenza specifica nel profilo utente
-    setPreference(key, value) {
-        if (!this.currentUser) return; // Se ospite, non salva su profilo (usa solo localStorage standard gestito da UI)
-        
-        this.currentUser.preferences[key] = value;
-        this.saveProfile();
+    updatePref(key, value) {
+        if (!this.state.isLoggedIn) {
+            // Guest mode: save to temp localstorage logic handled by UI.js
+            return;
+        }
+
+        this.state.currentUser.prefs[key] = value;
+        this.saveDB();
     },
 
-    saveProfile() {
-        if (this.currentUser) {
-            localStorage.setItem(`crono_user_${this.currentUser.username}`, JSON.stringify(this.currentUser));
+    syncPreferences() {
+        if (!this.state.isLoggedIn) return;
+        
+        const p = this.state.currentUser.prefs;
+        
+        // Dispatch events for UI to pick up
+        window.dispatchEvent(new CustomEvent('crono-pref-sync', { detail: p }));
+    },
+
+    saveDB() {
+        if (this.state.isLoggedIn && this.state.currentUser) {
+            localStorage.setItem(`crono_db_${this.state.currentUser.username}`, JSON.stringify(this.state.currentUser));
         }
     },
 
-    // Applica le preferenze salvate all'interfaccia
-    syncSystemWithProfile() {
-        if (!this.currentUser) return;
-        const p = this.currentUser.preferences;
-
-        // Dispatch eventi o setta localStorage temporaneo per UI.js
-        if(p.theme) UI.setTheme(p.theme);
-        
-        // Accessibilità
-        this.applyClass('reduce-motion', p.reduceMotion);
-        this.applyClass('solid-ui', p.reduceTransparency);
-        this.applyClass('high-contrast', p.highContrast);
-        this.applyClass('bold-text', p.boldText);
-        this.applyClass('old-design-mode', p.minimalMode);
-
-        // Sync Checkbox visivi (inviando evento custom)
-        window.dispatchEvent(new Event('crono-profile-sync'));
-    },
-
-    applyClass(cls, active) {
-        if (active) document.body.classList.add(cls);
-        else document.body.classList.remove(cls);
-        
-        // Sync local storage keys for UI.js compatibility
-        /* Nota: UI.js legge da localStorage per compatibilità ospite. 
-           Quando siamo loggati, sovrascriviamo quelle chiavi per mantenerle sincronizzate */
-        let storageKey = '';
-        if(cls === 'reduce-motion') storageKey = 'crono-acc-motion';
-        if(cls === 'solid-ui') storageKey = 'crono-acc-transparency';
-        if(cls === 'high-contrast') storageKey = 'crono-acc-contrast';
-        if(cls === 'bold-text') storageKey = 'crono-acc-bold';
-        if(cls === 'old-design-mode') storageKey = 'old-design-active';
-
-        if(storageKey) localStorage.setItem(storageKey, active);
-    },
-
-    getMenu() {
-        if (this.currentUser && this.currentUser.preferences.menuOrder) {
-            return this.currentUser.preferences.menuOrder;
-        }
-        return this.defaultMenu;
-    },
-
-    toggleMenuItem(toolId) {
-        if (!this.currentUser) return false;
-        const menu = this.currentUser.preferences.menuOrder;
-        const item = menu.find(i => i.id === toolId);
-        if (item) {
-            item.visible = !item.visible;
-            this.saveProfile();
-            return true;
-        }
-        return false;
+    emitAuthChange() {
+        window.dispatchEvent(new Event('crono-auth-change'));
     }
 };
 
-// Auto-init
+// Initialize immediately
 CronoID.init();

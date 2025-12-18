@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Info & Release Notes - CronoTools</title>
-    
+
     <link rel="stylesheet" href="../css/style.css">
-    
+
     <style>
         /* Stili locali per la timeline delle versioni */
         .version-timeline {
@@ -86,28 +86,126 @@
             <p class="description">Note di rilascio e aggiornamenti di CronoTools.</p>
         </header>
 
-       <main>
+        <main>
             <div class="glass-card" style="padding: 30px;">
-                
+
                 <h2 style="margin-bottom: 30px; font-size: 20px;">Release Notes</h2>
-                
+
                 <div class="version-timeline">
 
+                    <!-- 3.3.x ROADMAP (3.3.0 → 3.3.8) -->
                     <div class="version-entry current">
                         <div class="version-dot"></div>
                         <div class="version-header">
-                            <span class="version-tag latest">3.3.0</span>
-                            <span class="release-date">Febbraio 2026</span>
+                            <span class="version-tag latest">3.3.8</span>
+                            <span class="release-date">Dicembre 2025</span>
                         </div>
                         <ul class="changes-list">
-                            <li><strong>CronoID:</strong> Sistema account per salvare le preferenze in modo persistente.</li>
-                            <li><strong>Personalizzazione:</strong> Il tema, i menu e le opzioni di accessibilità sono ora salvate nel profilo.</li>
-                            <li><strong>Filtri 2.0:</strong> Nuovo motore di rendering filtri con anteprima live.</li>
-                            <li><strong>Bold Text:</strong> Nuova opzione globale per migliorare la leggibilità.</li>
-                            <li><strong>UI Stability:</strong> La "Barra Minimale" ora è una modalità completa che influenza tutto il layout.</li>
+                            <li><strong>Temi aggiornati:</strong> aggiunti nuovi tasti tema senza cambiare stile.</li>
+                            <li><strong>Nuovi temi:</strong> aurora, forest, sunset, ocean, graphite.</li>
+                            <li><strong>Obiettivo:</strong> nessun refactoring estetico, solo estensione funzionale.</li>
                         </ul>
                     </div>
 
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.7</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>CronoID preview nel side menu:</strong> nel menu sinistro, primo blocco CronoID con anteprima nome + email.</li>
+                            <li><strong>CTA:</strong> accesso rapido alle azioni account (login / gestione).</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.6</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Account hub:</strong> prevista pagina <code>/account/index.html</code> come hub per impostazioni, password, numero, ecc.</li>
+                            <li><strong>Navbar:</strong> deve solo puntare alla pagina account e mostrare lo stato (loggato/non loggato).</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.5</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Scroll behaviour:</strong> barra si assottiglia e nasconde tasti in scroll down.</li>
+                            <li><strong>Ripristino rapido:</strong> basta un minimo scroll up per ripristinare (sia minimal che dynamic).</li>
+                            <li><strong>Nota tecnica:</strong> logica tipicamente in <code>ui.js</code>; navbar predisposta con classi/agganci eventi senza rompere nulla.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.4</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Menu più completo e ordinato:</strong> link menu completi (Home, Filtri, Ritaglia, Ridimensiona, Taglia Video, Convertitore/Base64, AI Remover, QR, Info).</li>
+                            <li><strong>Info/Profilo:</strong> sezione info/profilo nel menu sinistro.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.3</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Auth UI pulita:</strong> quando loggato sparisce “Login” e compare avatar (iniziali) link a <code>/account/index.html</code>.</li>
+                            <li><strong>Stato guest:</strong> quando non loggato appare link Login.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.2</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Fix “barra in basso”:</strong> toggle Barra in basso (classe <code>bar-bottom</code>) gestito in UI con checkbox sincronizzato.</li>
+                            <li><strong>Toggle coerenti:</strong> <code>old-design-mode</code> (minimal) e <code>bar-bottom</code> restano separati.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.1</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Stabilizzazione:</strong> fix logica re-render su cambiamenti (eventi) e fallback più robusto quando CronoID non è caricato.</li>
+                            <li><strong>Sidebar destra:</strong> impostazioni consolidate (minimal mode, accessibilità, temi).</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.0</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>CronoID & integrazione:</strong> stato login + preferenze.</li>
+                            <li><strong>Navbar reattiva:</strong> re-render su eventi auth/preferenze.</li>
+                            <li><strong>Menu predisposto:</strong> pronto a diventare dinamico via <code>CronoID.getMenu()</code> con fallback hard-coded.</li>
+                        </ul>
+                    </div>
+
+                    <!-- VERSIONI PRECEDENTI (lasciate invariate) -->
                     <div class="version-entry">
                         <div class="version-dot"></div>
                         <div class="version-header">
@@ -132,7 +230,7 @@
                             <li><strong>Ridimensiona+:</strong> Aggiunti ulteriori preset rapidi per social media e di vita comune</li>
                         </ul>
                     </div>
-                    
+
                     <div class="version-entry">
                         <div class="version-dot"></div>
                         <div class="version-header">
