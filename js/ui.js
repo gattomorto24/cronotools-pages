@@ -1,4 +1,4 @@
-/* --- CronoTools UI Manager v3.3.5 (Scroll Logic Patch) --- */
+/* --- CronoTools UI Manager v3.4.0 (Dynamic Bar Logic) --- */
 
 const UI = {
     init() {
@@ -7,11 +7,8 @@ const UI = {
         this.initTheme();
         this.initLayout();
         
-        // Inizializza variabile per tracking scroll
         this.lastScrollY = window.scrollY;
-        this.ticking = false; // Per ottimizzazione requestAnimationFrame
-        
-        // Esegue un check iniziale
+        this.ticking = false; 
         this.handleScroll();
     },
 
@@ -22,18 +19,83 @@ const UI = {
     },
 
     bindEvents() {
-        // Usa passive: true per performance scroll
         window.addEventListener('scroll', () => this.requestTick(), { passive: true });
         
-        if (this.backDrop) this.backDrop.addEventListener('click', () => this.closeSidebars());
-        document.addEventListener('keydown', (e) => { if (e.key === 'Escape') this.closeSidebars(); });
+        if (this.backDrop) this.backDrop.addEventListener('click', () => {
+            this.closeSidebars();
+            this.closeDynamicMenu();
+        });
         
-        // Eventi di sincronizzazione preferenze
+        document.addEventListener('keydown', (e) => { 
+            if (e.key === 'Escape') {
+                this.closeSidebars();
+                this.closeDynamicMenu();
+            }
+        });
+        
         window.addEventListener('crono-pref-sync', (e) => this.applyPrefs(e.detail));
         window.addEventListener('crono-auth-change', () => this.updateUIState());
     },
 
-    /* --- SCROLL LOGIC ENGINE --- */
+    /* --- INTELLIGENT MENU TOGGLE --- */
+    toggleMenu(side) {
+        const isMinimal = this.body.classList.contains('old-design-mode');
+
+        if (isMinimal) {
+            // Legacy Mode: Open Sidebar
+            this.openSidebar(side);
+        } else {
+            // Dynamic Mode: Expand Navbar
+            this.expandNavbar(side);
+        }
+    },
+
+    /* --- DYNAMIC NAVBAR EXPANSION --- */
+    expandNavbar(side) {
+        if (!this.navbar) return;
+        
+        const container = document.getElementById('dyn-menu-container');
+        const template = document.getElementById(`tpl-menu-${side}`);
+        
+        if (container && template) {
+            container.innerHTML = template.innerHTML;
+            this.navbar.classList.add('expanded');
+            this.backDrop.classList.add('active');
+            this.body.classList.add('no-scroll');
+        }
+    },
+
+    closeDynamicMenu() {
+        if (this.navbar) {
+            this.navbar.classList.remove('expanded');
+            // Ritardo pulizia HTML per permettere animazione chiusura
+            setTimeout(() => {
+                const container = document.getElementById('dyn-menu-container');
+                if(container && !this.navbar.classList.contains('expanded')) container.innerHTML = '';
+            }, 300);
+        }
+        if (this.backDrop) this.backDrop.classList.remove('active');
+        this.body.classList.remove('no-scroll');
+    },
+
+    /* --- LEGACY SIDEBARS --- */
+    openSidebar(side) {
+        this.closeSidebars(); 
+        const el = document.getElementById(side === 'left' ? 'sidebar-left' : 'sidebar-right');
+        if (el) {
+            el.classList.add('open');
+            if (this.backDrop) this.backDrop.classList.add('active');
+            this.body.classList.add('no-scroll');
+        }
+    },
+
+    closeSidebars() {
+        document.querySelectorAll('.sidebar').forEach(s => s.classList.remove('open'));
+        if (this.backDrop) this.backDrop.classList.remove('active');
+        this.body.classList.remove('no-scroll');
+    },
+
+    /* --- SCROLL LOGIC --- */
     requestTick() {
         if (!this.ticking) {
             window.requestAnimationFrame(() => {
@@ -47,40 +109,28 @@ const UI = {
     handleScroll() {
         if (!this.navbar) return;
         
+        // Se la navbar è espansa (menu aperto), ignora lo scroll
+        if (this.navbar.classList.contains('expanded')) return;
+
         const currentScrollY = window.scrollY;
-        // Soglia di "sicurezza" in alto per evitare flickering a 0px
         const threshold = 10; 
-        // Delta minimo per considerare lo scroll intenzionale (evita micro-movimenti touch)
         const scrollDelta = 5;
 
-        // 1. TOP PAGINA ASSOLUTO (Stato Reset)
-        // Se siamo in cima, la barra DEVE essere sempre completa
         if (currentScrollY <= threshold) {
             this.navbar.classList.remove('scrolled');
-        }
-        // 2. LOGICA DINAMICA (Se non siamo al top)
-        else {
+        } else {
             const diff = currentScrollY - this.lastScrollY;
-
-            // SCROLL VERSO IL BASSO (Diff positiva)
-            // Se scendiamo e non siamo già "scrolled", compattiamo
             if (diff > scrollDelta) {
                 this.navbar.classList.add('scrolled');
-            }
-            // SCROLL VERSO L'ALTO (Diff negativa)
-            // Se saliamo (anche di poco) e siamo "scrolled", espandiamo SUBITO
-            else if (diff < -scrollDelta) {
+            } else if (diff < -scrollDelta) {
                 this.navbar.classList.remove('scrolled');
             }
         }
-
-        // Aggiorna ultimo punto noto (gestione rimbalzo iOS con Math.max)
         this.lastScrollY = Math.max(0, currentScrollY);
     },
 
     /* --- LAYOUT & THEME --- */
     initLayout() {
-        // Lettura sicura da localStorage con fallback
         const isMinimal = localStorage.getItem('crono-minimal') === 'true';
         const isBottom = localStorage.getItem('crono-bar-bottom') === 'true';
         this.setMinimalMode(isMinimal);
@@ -91,7 +141,10 @@ const UI = {
         this.body.classList.toggle('old-design-mode', active);
         localStorage.setItem('crono-minimal', active);
         if(window.CronoID) CronoID.updatePref('minimalMode', active);
-        // Forza ricalcolo immediato dello stato navbar
+        
+        // Se cambiamo modalità mentre qualcosa è aperto, chiudiamo tutto per sicurezza
+        this.closeDynamicMenu();
+        this.closeSidebars();
         this.handleScroll();
     },
 
@@ -99,7 +152,6 @@ const UI = {
         this.body.classList.toggle('bar-bottom', bottom);
         localStorage.setItem('crono-bar-bottom', bottom);
         if(window.CronoID) CronoID.updatePref('barBottom', bottom);
-        // Ricalcolo per posizionamento
         this.handleScroll();
     },
     
@@ -116,23 +168,6 @@ const UI = {
         document.documentElement.setAttribute('data-theme', t);
         localStorage.setItem('crono-theme', t);
         if(window.CronoID) CronoID.updatePref('theme', t);
-    },
-
-    /* --- SIDEBARS --- */
-    openSidebar(side) {
-        this.closeSidebars(); // Chiude altre eventuali aperte
-        const el = document.getElementById(side === 'left' ? 'sidebar-left' : 'sidebar-right');
-        if (el) {
-            el.classList.add('open');
-            if (this.backDrop) this.backDrop.classList.add('active');
-            this.body.classList.add('no-scroll');
-        }
-    },
-
-    closeSidebars() {
-        document.querySelectorAll('.sidebar').forEach(s => s.classList.remove('open'));
-        if (this.backDrop) this.backDrop.classList.remove('active');
-        this.body.classList.remove('no-scroll');
     },
 
     /* --- ACCESSIBILITY --- */
