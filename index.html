@@ -60,7 +60,7 @@
 
         .tool-search-input {
             width: 100%;
-            /* Aumentato padding sinistro a 60px per evitare sovrapposizione con icona */
+            /* FIX: Padding sinistro aumentato a 60px per l'icona */
             padding: 18px 24px 18px 60px; 
             font-size: 16px;
             border-radius: 20px;
@@ -90,7 +90,7 @@
             color: var(--text-secondary);
             pointer-events: none;
             opacity: 0.8;
-            z-index: 5; /* Assicura che l'icona stia sopra */
+            z-index: 5; /* FIX: Z-Index aumentato per stare sopra al testo scrollato */
             width: 24px;
             height: 24px;
         }
@@ -363,7 +363,7 @@
                         
                         <div class="upload-content" style="pointer-events: none;">
                             <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width: 48px; height: 48px; margin-bottom: 12px; color: var(--accent);">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
                                 <polyline points="17 8 12 3 7 8"></polyline>
                                 <line x1="12" y1="3" x2="12" y2="15"></line>
                             </svg>
