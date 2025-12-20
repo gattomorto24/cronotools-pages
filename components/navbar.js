@@ -51,6 +51,7 @@ class GlobalNavbar extends HTMLElement {
         
         const menuLeftContent = `
             <a href="/index.html" class="dyn-link">🏠 Home</a>
+            <a href="/dynamic-bar/index.html" class="dyn-link">💊 Dynamic Bar</a>
             <a href="/filtri/index.html" class="dyn-link">🎨 Filtri</a>
             <a href="/crop-immagini/index.html" class="dyn-link">✂️ Ritaglia</a>
             <a href="/ridimensiona/index.html" class="dyn-link">📐 Ridimensiona</a>
