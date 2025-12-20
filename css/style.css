@@ -14,6 +14,7 @@
    9.  EDITOR WORKSPACE
    10. TOOLS SPECIFIC CSS
    11. MEDIA QUERIES
+   12. ANIMATIONS (NEW)
 */
 
 /* =========================================
@@ -710,4 +711,23 @@ input[type=range]::-webkit-slider-thumb { height: 20px; width: 20px; border-radi
         margin-top: -16px; /* Compensate navbar padding top */
         min-height: 100vh; /* Full screen menu on mobile */
     }
+}
+
+/* =========================================
+   12. ANIMATIONS (GLOBAL DEFINITIONS)
+   ========================================= */
+
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
 }
