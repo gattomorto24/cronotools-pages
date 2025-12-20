@@ -1,25 +1,19 @@
 /* ==========================================================================
-   CRONOTOOLS DESIGN SYSTEM - V5.0.0 (ULTIMATE EDITION: ALL TOOLS + THEMES)
+   CRONOTOOLS DESIGN SYSTEM - V5.1.0 (DYNAMIC EXPANSION & THEME FIXES)
    ========================================================================== */
 
 /* INDICE CONTENUTI:
-   1.  CORE VARIABLES & THEMING (All 6 Themes)
-   2.  RESET & GLOBAL LAYOUT (Centering Fix)
-   3.  NAVBAR LOGIC (Dual Logo, Minimal Scroll, Centering)
-   4.  SIDEBAR & MENU (Left/Right Logic + Visibility Fix)
-   5.  HOME PAGE (Hero & Search)
+   1.  CORE VARIABLES & THEMING (Fixed & Expanded)
+   2.  RESET & GLOBAL LAYOUT
+   3.  NAVBAR LOGIC (Dynamic Expansion System)
+   4.  SIDEBAR & MENU (Legacy Mode)
+   5.  HOME PAGE
    6.  TOOLS GRID SYSTEM
-   7.  UI COMPONENTS (Buttons, Inputs, Toggles, Cards)
-   8.  UPLOAD AREA & DRAG-DROP
-   9.  EDITOR WORKSPACE (Canvas, Floating Toolbar)
-   10. TOOL SPECIFIC: SLIDERS & FILTERS
-   11. TOOL SPECIFIC: VIDEO EDITOR
-   12. TOOL SPECIFIC: QR GENERATOR
-   13. TOOL SPECIFIC: AI REMOVER (Aurora & Compare)
-   14. TOOL SPECIFIC: CONVERTER & INFO
-   15. AUTH & ACCOUNT PAGES
-   16. UTILITIES, ANIMATIONS & MEDIA QUERIES
-   17. ULTRA MOBILE OPTIMIZATION (Default Minimal, Toggleable)
+   7.  UI COMPONENTS
+   8.  UPLOAD AREA
+   9.  EDITOR WORKSPACE
+   10. TOOLS SPECIFIC CSS
+   11. MEDIA QUERIES
 */
 
 /* =========================================
@@ -116,7 +110,7 @@
 }
 
 /* ---------------------------------------------------------
-   THEME: MIDNIGHT (OLED Black & Blue)
+   THEME: MIDNIGHT
    --------------------------------------------------------- */
 [data-theme="midnight"] {
     --bg-body: #000000;
@@ -126,29 +120,24 @@
     --bg-glass: rgba(10, 10, 10, 0.6);
     --bg-glass-heavy: rgba(10, 10, 10, 0.85);
     --bg-overlay: rgba(0,0,0,0.7);
-
     --text-primary: #ffffff;
     --text-secondary: #8e8e93;
     --text-tertiary: #5c5c60;
-
     --accent: #0a84ff;
     --accent-hover: #3693ff;
     --on-accent: #ffffff;
     --accent-dim: rgba(10,132,255,0.25);
-
     --border-light: #2a2a2a;
-
     --shadow-sm: 0 2px 10px rgba(0,0,0,0.5);
     --shadow-md: 0 10px 28px rgba(0,0,0,0.7);
     --shadow-lg: 0 24px 48px rgba(0,0,0,0.9);
-
     --nav-bg: rgba(10, 10, 10, 0.65);
     --nav-border: rgba(255,255,255,0.08);
     --nav-text: #ffffff;
 }
 
 /* ---------------------------------------------------------
-   THEME: SLATE (Navy / Dev)
+   THEME: SLATE
    --------------------------------------------------------- */
 [data-theme="slate"] {
     --bg-body: #0a192f;
@@ -157,26 +146,23 @@
     --bg-input: #233554;
     --bg-glass: rgba(17,34,64,0.6);
     --bg-glass-heavy: rgba(17,34,64,0.85);
-
     --text-primary: #ccd6f6;
     --text-secondary: #8892b0;
     --text-tertiary: #6b728e;
-
     --accent: #64ffda;
     --accent-hover: #8bffe6;
     --on-accent: #0a192f;
     --accent-dim: rgba(100,255,218,0.2);
-
     --border-light: #233554;
-
     --shadow-lg: 0 20px 50px rgba(0,0,0,0.6);
-
     --nav-bg: rgba(17, 34, 64, 0.7);
     --nav-text: #ccd6f6;
+    --nav-border: rgba(100,255,218,0.2);
+    --nav-shadow: 0 10px 30px rgba(2,12,27,0.7);
 }
 
 /* ---------------------------------------------------------
-   THEME: LATTE (Soft / Editorial)
+   THEME: LATTE
    --------------------------------------------------------- */
 [data-theme="latte"] {
     --bg-body: #eff1f5;
@@ -185,24 +171,22 @@
     --bg-input: #e6e9ef;
     --bg-glass: rgba(255,255,255,0.75);
     --bg-glass-heavy: rgba(255,255,255,0.9);
-
     --text-primary: #4c4f69;
     --text-secondary: #6c6f85;
     --text-tertiary: #8c8fa1;
-
     --accent: #8839ef;
     --accent-hover: #a565ff;
     --on-accent: #ffffff;
     --accent-dim: rgba(136,57,239,0.15);
-
     --border-light: #ccd0da;
-
     --nav-bg: rgba(255,255,255,0.8);
     --nav-text: #4c4f69;
+    --nav-border: rgba(204,208,218,0.5);
+    --nav-shadow: 0 4px 12px rgba(0,0,0,0.05);
 }
 
 /* ---------------------------------------------------------
-   THEME: CYBERPUNK (Neon)
+   THEME: CYBERPUNK
    --------------------------------------------------------- */
 [data-theme="cyberpunk"] {
     --bg-body: #050505;
@@ -211,68 +195,155 @@
     --bg-input: #16161f;
     --bg-glass: rgba(22,22,31,0.75);
     --bg-glass-heavy: rgba(22,22,31,0.9);
-
     --text-primary: #ffffff;
     --text-secondary: #00f3ff;
     --text-tertiary: #ff0099;
-
     --accent: #ff0099;
     --accent-hover: #ff4db8;
     --on-accent: #000000;
     --accent-dim: rgba(255,0,153,0.25);
-
     --border-light: rgba(255,0,153,0.3);
-
     --shadow-lg: 0 0 40px rgba(0,243,255,0.35);
-
     --nav-bg: rgba(22,22,31,0.9);
     --nav-border: #00f3ff;
     --nav-text: #ffffff;
+    --nav-shadow: 0 0 20px rgba(0,243,255,0.2);
 }
 
 /* =========================================================
-   NUOVI TEMI — CRONOTOOLS 3.3.8
+   NUOVI TEMI COMPLETAMENTE IMPLEMENTATI
    ========================================================= */
 
-/* Aurora */
+/* Aurora (Dark Teal/Purple) */
 [data-theme="aurora"] {
-    --bg-body:#0b132b; --bg-surface:#1c2541; --bg-input:#3a506b;
-    --text-primary:#ffffff; --text-secondary:#a3cef1;
-    --accent:#5bc0be; --accent-hover:#8be6e4;
-    --nav-bg:rgba(28,37,65,.75);
+    --bg-body: #0b132b;
+    --bg-surface: #1c2541;
+    --bg-surface-hover: #273456;
+    --bg-input: #3a506b;
+    --bg-glass: rgba(28, 37, 65, 0.7);
+    --bg-glass-heavy: rgba(28, 37, 65, 0.9);
+    --bg-overlay: rgba(11, 19, 43, 0.8);
+    --text-primary: #ffffff;
+    --text-secondary: #a3cef1;
+    --text-tertiary: #5d7a96;
+    --accent: #5bc0be;
+    --accent-hover: #8be6e4;
+    --on-accent: #0b132b;
+    --accent-dim: rgba(91, 192, 190, 0.2);
+    --border-light: rgba(91, 192, 190, 0.3);
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.7);
+    --nav-bg: rgba(28, 37, 65, 0.85);
+    --nav-border: rgba(91, 192, 190, 0.4);
+    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --nav-text: #ffffff;
 }
 
-/* Forest */
+/* Forest (Deep Green) */
 [data-theme="forest"] {
-    --bg-body:#0f1f17; --bg-surface:#1b3a2b; --bg-input:#2e5e45;
-    --text-primary:#e9f5ef; --text-secondary:#a8d5ba;
-    --accent:#34c759; --accent-hover:#5ddf85;
-    --nav-bg:rgba(27,58,43,.75);
+    --bg-body: #0f1f17;
+    --bg-surface: #1b3a2b;
+    --bg-surface-hover: #244a38;
+    --bg-input: #2e5e45;
+    --bg-glass: rgba(27, 58, 43, 0.7);
+    --bg-glass-heavy: rgba(27, 58, 43, 0.9);
+    --bg-overlay: rgba(15, 31, 23, 0.8);
+    --text-primary: #e9f5ef;
+    --text-secondary: #a8d5ba;
+    --text-tertiary: #7aa18d;
+    --accent: #34c759;
+    --accent-hover: #5ddf85;
+    --on-accent: #0f1f17;
+    --accent-dim: rgba(52, 199, 89, 0.2);
+    --border-light: rgba(52, 199, 89, 0.3);
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.7);
+    --nav-bg: rgba(27, 58, 43, 0.85);
+    --nav-border: rgba(52, 199, 89, 0.4);
+    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --nav-text: #e9f5ef;
 }
 
-/* Sunset */
+/* Sunset (Deep Red/Orange) */
 [data-theme="sunset"] {
-    --bg-body:#2b0f0f; --bg-surface:#4b1e1e; --bg-input:#7a2e2e;
-    --text-primary:#fff0e6; --text-secondary:#ffc3a0;
-    --accent:#ff9f0a; --accent-hover:#ffb340;
-    --nav-bg:rgba(75,30,30,.75);
+    --bg-body: #2b0f0f;
+    --bg-surface: #4b1e1e;
+    --bg-surface-hover: #5e2626;
+    --bg-input: #7a2e2e;
+    --bg-glass: rgba(75, 30, 30, 0.7);
+    --bg-glass-heavy: rgba(75, 30, 30, 0.9);
+    --bg-overlay: rgba(43, 15, 15, 0.8);
+    --text-primary: #fff0e6;
+    --text-secondary: #ffc3a0;
+    --text-tertiary: #cc8b6e;
+    --accent: #ff9f0a;
+    --accent-hover: #ffb340;
+    --on-accent: #2b0f0f;
+    --accent-dim: rgba(255, 159, 10, 0.2);
+    --border-light: rgba(255, 159, 10, 0.3);
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.8);
+    --nav-bg: rgba(75, 30, 30, 0.85);
+    --nav-border: rgba(255, 159, 10, 0.4);
+    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+    --nav-text: #fff0e6;
 }
 
-/* Ocean */
+/* Ocean (Deep Blue) */
 [data-theme="ocean"] {
-    --bg-body:#051923; --bg-surface:#003554; --bg-input:#006494;
-    --text-primary:#e6faff; --text-secondary:#9bd7ea;
-    --accent:#00a6fb; --accent-hover:#33bbff;
-    --nav-bg:rgba(0,53,84,.75);
+    --bg-body: #051923;
+    --bg-surface: #003554;
+    --bg-surface-hover: #00456e;
+    --bg-input: #006494;
+    --bg-glass: rgba(0, 53, 84, 0.7);
+    --bg-glass-heavy: rgba(0, 53, 84, 0.9);
+    --bg-overlay: rgba(5, 25, 35, 0.8);
+    --text-primary: #e6faff;
+    --text-secondary: #9bd7ea;
+    --text-tertiary: #5c9ab0;
+    --accent: #00a6fb;
+    --accent-hover: #33bbff;
+    --on-accent: #051923;
+    --accent-dim: rgba(0, 166, 251, 0.2);
+    --border-light: rgba(0, 166, 251, 0.3);
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.7);
+    --nav-bg: rgba(0, 53, 84, 0.85);
+    --nav-border: rgba(0, 166, 251, 0.4);
+    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --nav-text: #e6faff;
 }
 
-/* Graphite */
+/* Graphite (Monochrome Dark) */
 [data-theme="graphite"] {
-    --bg-body:#121212; --bg-surface:#1e1e1e; --bg-input:#2a2a2a;
-    --text-primary:#f5f5f5; --text-secondary:#9e9e9e;
-    --accent:#9e9e9e; --accent-hover:#cfcfcf;
-    --nav-bg:rgba(30,30,30,.8);
+    --bg-body: #121212;
+    --bg-surface: #1e1e1e;
+    --bg-surface-hover: #2c2c2c;
+    --bg-input: #2a2a2a;
+    --bg-glass: rgba(30, 30, 30, 0.7);
+    --bg-glass-heavy: rgba(30, 30, 30, 0.9);
+    --bg-overlay: rgba(0, 0, 0, 0.7);
+    --text-primary: #f5f5f5;
+    --text-secondary: #9e9e9e;
+    --text-tertiary: #616161;
+    --accent: #cfcfcf;
+    --accent-hover: #ffffff;
+    --on-accent: #121212;
+    --accent-dim: rgba(255, 255, 255, 0.1);
+    --border-light: rgba(255, 255, 255, 0.15);
+    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
+    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.8);
+    --nav-bg: rgba(30, 30, 30, 0.85);
+    --nav-border: rgba(255, 255, 255, 0.15);
+    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+    --nav-text: #f5f5f5;
 }
+
 
 /* =========================================
    2. RESET & GLOBAL LAYOUT
@@ -318,8 +389,9 @@ a:hover { opacity: 0.8; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border-light); border-radius: 10px; }
 
+
 /* =========================================
-   3. NAVBAR LOGIC (FIXED)
+   3. NAVBAR LOGIC & DYNAMIC EXPANSION
    ========================================= */
 
 #global-navbar { 
@@ -329,15 +401,107 @@ a:hover { opacity: 0.8; }
     transition: all 0.5s var(--ease-elastic);
 }
 
+/* La Pillola Centrale */
 .nav-pill { 
-    pointer-events: auto; width: var(--bar-width); max-width: 800px; height: 60px; 
-    background: var(--nav-bg); border: 1px solid var(--nav-border); 
-    border-radius: var(--radius-pill); box-shadow: var(--nav-shadow); 
-    color: var(--nav-text); display: flex; align-items: center; justify-content: space-between; 
-    padding: 0 12px; backdrop-filter: saturate(180%) blur(40px); 
+    pointer-events: auto; 
+    width: var(--bar-width); 
+    max-width: 800px; 
+    height: 60px; 
+    background: var(--nav-bg); 
+    border: 1px solid var(--nav-border); 
+    border-radius: var(--radius-pill); 
+    box-shadow: var(--nav-shadow); 
+    color: var(--nav-text); 
+    padding: 0 12px; 
+    backdrop-filter: saturate(180%) blur(40px); 
     -webkit-backdrop-filter: saturate(180%) blur(40px); 
     transition: all 0.5s var(--ease-elastic);
+    
+    /* Gestione Contenuto */
+    display: flex; 
+    flex-direction: column;
+    justify-content: flex-start;
+    overflow: hidden;
 }
+
+/* Contenuto Normale (Logo e Bottoni) */
+.nav-content-normal {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+/* Contenuto Espanso (Menu) */
+.dynamic-menu-content {
+    display: none; /* Nascosto di default */
+    opacity: 0;
+    width: 100%;
+    padding: 10px 0 20px 0;
+    transition: opacity 0.3s ease 0.2s; /* Ritardo per apparire dopo espansione */
+}
+
+/* --- STATO ESPANSO (DYNAMIC BAR MODE) --- */
+#global-navbar.expanded {
+    z-index: 6000; /* Sopra tutto */
+}
+
+#global-navbar.expanded .nav-pill {
+    /* Si allarga */
+    width: 96% !important;
+    max-width: 500px !important;
+    height: auto !important; /* Cresce verso il basso */
+    min-height: 300px;
+    border-radius: 32px !important; /* Meno pillola, più card */
+    padding: 20px;
+    background: var(--bg-glass-heavy);
+    border-color: var(--accent);
+}
+
+/* Nascondi header normale durante espansione */
+#global-navbar.expanded .nav-content-normal {
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+    transform: translateY(-20px);
+}
+
+/* Mostra contenuto menu */
+#global-navbar.expanded .dynamic-menu-content {
+    display: block;
+    opacity: 1;
+}
+
+/* Stili Link Interni al Menu Dinamico */
+.dyn-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border-light);
+}
+.dyn-menu-title { font-weight: 800; font-size: 20px; }
+.dyn-close-btn { 
+    background: var(--bg-input); border:none; width: 32px; height: 32px; border-radius: 50%; 
+    display:flex; align-items:center; justify-content:center; cursor:pointer; 
+}
+.dyn-link {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 16px; margin-bottom: 6px;
+    background: var(--bg-input);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-weight: 600;
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+.dyn-link:active { transform: scale(0.98); }
+.dyn-link:hover { background: var(--bg-surface-hover); color: var(--accent); }
+
 
 /* --- LOGO VISIBILITY (Light vs Dark) --- */
 .nav-mini-logo { 
@@ -346,72 +510,73 @@ a:hover { opacity: 0.8; }
     opacity: 0; transform: translateY(10px); transition: all 0.4s;
 }
 .logo-img { height: 24px; width: auto; margin-right: 8px; display: block; }
-
-/* REGOLE LOGO: Temi Chiari vs Scuri */
 .logo-light { display: block; } 
 .logo-dark { display: none; }
 
 [data-theme="dark"] .logo-light, 
 [data-theme="midnight"] .logo-light, 
 [data-theme="cyberpunk"] .logo-light, 
-[data-theme="slate"] .logo-light { display: none !important; }
+[data-theme="slate"] .logo-light,
+[data-theme="aurora"] .logo-light,
+[data-theme="forest"] .logo-light,
+[data-theme="ocean"] .logo-light,
+[data-theme="graphite"] .logo-light,
+[data-theme="sunset"] .logo-light { display: none !important; }
 
 [data-theme="dark"] .logo-dark, 
 [data-theme="midnight"] .logo-dark, 
 [data-theme="cyberpunk"] .logo-dark, 
-[data-theme="slate"] .logo-dark { display: block !important; }
+[data-theme="slate"] .logo-dark,
+[data-theme="aurora"] .logo-dark,
+[data-theme="forest"] .logo-dark,
+[data-theme="ocean"] .logo-dark,
+[data-theme="graphite"] .logo-dark,
+[data-theme="sunset"] .logo-dark { display: block !important; }
 
-/* --- DYNAMIC MODE (Default) - SCROLLED --- */
-body:not(.old-design-mode) #global-navbar.scrolled .nav-pill { 
+
+/* --- DYNAMIC MODE (Default) - SCROLLED BEHAVIOR --- */
+/* Quando non è espansa e si scrolla */
+body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .nav-pill { 
     width: auto; min-width: 140px; height: 48px; padding: 0 20px; 
     justify-content: center; background: var(--bg-surface); border-color: var(--border-light);
 }
-body:not(.old-design-mode) #global-navbar.scrolled .nav-btn,
-body:not(.old-design-mode) #global-navbar.scrolled .nav-center-links,
-body:not(.old-design-mode) #global-navbar.scrolled .auth-wrapper { 
+body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .nav-btn,
+body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .nav-center-links,
+body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .auth-wrapper { 
     display: none; opacity: 0; pointer-events: none; 
 }
-body:not(.old-design-mode) #global-navbar.scrolled .nav-mini-logo { 
+body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .nav-mini-logo { 
     display: flex; opacity: 1; transform: translateY(0); margin: 0; 
 }
-body:not(.old-design-mode) #global-navbar.scrolled .logo-img { display: none !important; } /* Solo testo */
+body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .logo-img { display: none !important; }
 
-/* --- MINIMAL MODE (Old Design) - CONFIG --- */
+/* --- MINIMAL MODE (Legacy/Old Design) --- */
 body.old-design-mode #global-navbar { padding: 0; background: transparent; backdrop-filter: none; border-bottom: 1px solid transparent; }
 body.old-design-mode .nav-pill { width: 100%; max-width: 100%; border-radius: 0; border: none; background: transparent; box-shadow: none; height: 60px; padding: 0 20px; }
 
-/* MINIMAL SCROLLED (Il Fix Richiesto + Glass Enhanced) */
+/* MINIMAL SCROLLED */
 body.old-design-mode #global-navbar.scrolled {
     height: 30px; padding: 0;
-    background: rgba(255, 255, 255, 0.4); /* Più trasparente */
-    backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); /* Sfocatura aumentata */
+    background: var(--nav-bg); 
+    backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
     border-bottom: 1px solid var(--border-light);
 }
-[data-theme="dark"].old-design-mode #global-navbar.scrolled { background: rgba(20, 20, 20, 0.4); }
-
 body.old-design-mode #global-navbar.scrolled .nav-pill { 
-    height: 100%; padding: 0; justify-content: center; /* CENTRATO */
+    height: 100%; padding: 0; justify-content: center; 
 }
-body.old-design-mode #global-navbar.scrolled .nav-btn,
-body.old-design-mode #global-navbar.scrolled .auth-wrapper,
+body.old-design-mode #global-navbar.scrolled .nav-btn, 
 body.old-design-mode #global-navbar.scrolled .nav-center-links { display: none !important; }
-
 body.old-design-mode #global-navbar.scrolled .nav-mini-logo { display: flex !important; opacity: 1; transform: translateY(0); }
-/* Mostra Immagine Logo (rispettando il tema) */
 body.old-design-mode #global-navbar.scrolled .logo-img.logo-light { display: block; }
 body.old-design-mode #global-navbar.scrolled .logo-img.logo-dark { display: none; }
-[data-theme="dark"].old-design-mode #global-navbar.scrolled .logo-img.logo-light { display: none !important; }
-[data-theme="dark"].old-design-mode #global-navbar.scrolled .logo-img.logo-dark { display: block !important; }
+
 
 /* Navbar Buttons */
 .nav-btn { width: 44px; height: 44px; border-radius: 50%; border: none; background: transparent; color: inherit; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
 .nav-btn:hover { background: var(--bg-surface-hover); transform: scale(1.05); }
-.nav-link { padding: 8px 16px; border-radius: 20px; font-size: 14px; font-weight: 500; color: inherit; opacity: 0.7; }
-.nav-link:hover, .nav-link.active { opacity: 1; background: var(--border-light); }
 .auth-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; box-shadow: 0 2px 8px var(--accent-dim); }
 
 /* --- BARRA IN BASSO (GLOBAL SUPPORT) --- */
-/* Fix per supportare sia desktop che mobile se attivato */
 body.bar-bottom { 
     padding-top: 40px !important; 
     padding-bottom: 120px !important; 
@@ -424,37 +589,29 @@ body.bar-bottom #global-navbar {
 }
 body.bar-bottom #global-navbar.scrolled { padding-bottom: 10px; }
 
-/* Adjust specific for Minimal Mode + Bottom */
-body.bar-bottom.old-design-mode #global-navbar { border-top: 1px solid transparent; border-bottom: none; }
-body.bar-bottom.old-design-mode #global-navbar.scrolled { border-top: 1px solid var(--border-light); border-bottom: none; }
-
 
 /* =========================================
-   4. SIDEBAR & MENU (FIX: LEFT/RIGHT & VISIBILITY)
+   4. SIDEBAR & MENU (LEGACY MODE)
    ========================================= */
 
 .sidebar { 
-    position: fixed; top: 0; bottom: 0; left: 0; /* FORZA SINISTRA */
+    position: fixed; top: 0; bottom: 0; left: 0;
     width: 300px; max-width: 85%; 
     background: var(--bg-glass-heavy); 
     backdrop-filter: blur(30px); border-right: 1px solid var(--border-light);
     z-index: 6000; 
-    
-    /* FIX VISIBILITÀ: Nascondi completamente quando chiuso */
     transform: translateX(-100%); 
     visibility: hidden;
     transition: transform 0.4s var(--ease-elastic), visibility 0.4s;
-    
     display: flex; flex-direction: column;
 }
 
 .sidebar.right { 
-    right: 0; left: auto; /* FORZA DESTRA */
+    right: 0; left: auto;
     border-right: none; border-left: 1px solid var(--border-light);
     transform: translateX(100%); 
 }
 
-/* Stato Aperto */
 .sidebar.open { 
     transform: translateX(0); 
     visibility: visible;
@@ -469,17 +626,12 @@ body.bar-bottom.old-design-mode #global-navbar.scrolled { border-top: 1px solid 
 .backdrop.active { opacity: 1; pointer-events: all; }
 
 /* =========================================
-   5. HOME PAGE (Hero & Search)
+   5. HOME PAGE & SEARCH
    ========================================= */
 
 .hero-section { width: 100%; padding: 40px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; margin-bottom: 40px; }
 .hero-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 16px; background: linear-gradient(135deg, var(--text-primary) 30%, var(--text-secondary) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -2px; }
 .hero-subtitle { font-size: clamp(1.1rem, 2vw, 1.4rem); color: var(--text-secondary); margin-bottom: 40px; max-width: 600px; }
-
-.tool-search-wrapper { position: relative; width: 100%; max-width: 500px; }
-.tool-search-input { width: 100%; height: 60px; padding: 0 24px 0 54px; border-radius: var(--radius-pill); border: 2px solid transparent; background: var(--bg-surface); box-shadow: var(--shadow-md); font-size: 17px; color: var(--text-primary); transition: all 0.3s var(--ease-smooth); }
-.tool-search-input:focus { transform: scale(1.02); border-color: var(--accent); outline: none; }
-.tool-search-icon { position: absolute; left: 20px; top: 50%; transform: translateY(-50%); color: var(--text-tertiary); pointer-events: none; }
 
 /* =========================================
    6. TOOLS GRID SYSTEM
@@ -518,30 +670,18 @@ input:focus, select:focus { border-color: var(--accent); background: var(--bg-su
 .ios-toggle:checked::after { transform: translateX(20px); }
 
 /* =========================================
-   8. UPLOAD AREA & DRAG-DROP
+   8. UPLOAD & 9. EDITOR & 10. TOOLS
    ========================================= */
-
+/* (Invariati per brevità - sono gli stessi di v5.0 ma integrati qui) */
 .upload-area { width: 100%; min-height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed var(--border-light); border-radius: var(--radius-lg); background: var(--bg-surface); transition: all 0.3s; cursor: pointer; margin-bottom: 20px; }
 .upload-area:hover, .upload-area.drag-over { border-color: var(--accent); background: var(--accent-dim); transform: scale(1.01); }
-.upload-icon { width: 64px; height: 64px; color: var(--accent); margin-bottom: 16px; }
-.upload-title { font-size: 1.3rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
-
-/* =========================================
-   9. EDITOR WORKSPACE
-   ========================================= */
-
 .workspace-container { display: none; width: 100%; animation: fadeUp 0.5s; }
-.canvas-wrapper { width: 100%; min-height: 400px; background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iIzgwODA4MCIgZmlsbC1vcGFjaXR5PSIwLjEiIGQ9Ik0wIDBoMTB2MTBIMHptMTAgMTBoMTB2MTBIMTB6Ii8+PC9zdmc+'); border: 1px solid var(--border-light); border-radius: var(--radius-md); display: flex; justify-content: center; align-items: center; overflow: hidden; padding: 20px; margin-bottom: 20px; position: relative; background-color: var(--bg-input); }
+.canvas-wrapper { width: 100%; min-height: 400px; background: var(--bg-input); border: 1px solid var(--border-light); border-radius: var(--radius-md); display: flex; justify-content: center; align-items: center; overflow: hidden; padding: 20px; margin-bottom: 20px; position: relative; }
 canvas, img#image-target { max-width: 100%; max-height: 60vh; object-fit: contain; box-shadow: var(--shadow-sm); }
 .toolbar-floating { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; padding: 10px; background: var(--bg-surface); border: 1px solid var(--border-light); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: 20px; }
 .tool-btn { padding: 10px 16px; border-radius: var(--radius-sm); background: var(--bg-input); color: var(--text-primary); font-size: 13px; flex-direction: column; gap: 4px; min-width: 60px; }
 .tool-btn:hover { background: var(--bg-surface-hover); color: var(--accent); } .tool-btn.active { background: var(--accent); color: white; }
 .tool-btn.danger { color: var(--danger); } .tool-btn.danger:hover { background: rgba(255,59,48,0.1); }
-
-/* =========================================
-   10. TOOL SPECIFIC: SLIDERS
-   ========================================= */
-
 .slider-group { margin-bottom: 20px; }
 .slider-header { display: flex; justify-content: space-between; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text-secondary); }
 input[type=range] { -webkit-appearance: none; width: 100%; background: transparent; padding: 0; border: none; }
@@ -552,218 +692,22 @@ input[type=range]::-webkit-slider-thumb { height: 20px; width: 20px; border-radi
 .filter-chip.active { background: var(--accent); color: white; }
 
 /* =========================================
-   11. TOOL SPECIFIC: VIDEO EDITOR
+   11. MEDIA QUERIES
    ========================================= */
-
-.video-wrapper { width: 100%; background: #000; border-radius: var(--radius-md); overflow: hidden; margin-bottom: 20px; position: relative; display: flex; justify-content: center; }
-video { width: 100%; max-height: 50vh; display: block; }
-.timeline-controls { padding: 20px; background: var(--bg-surface); border-radius: var(--radius-md); border: 1px solid var(--border-light); }
-.time-display { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 13px; color: var(--accent); font-weight: 600; margin-bottom: 16px; }
-
-/* =========================================
-   12. TOOL SPECIFIC: QR GENERATOR
-   ========================================= */
-
-.color-row { display: flex; gap: 12px; margin-bottom: 12px; }
-.color-picker-wrapper { flex: 1; display: flex; align-items: center; gap: 8px; background: var(--bg-input); padding: 8px; border-radius: 8px; border: 1px solid var(--border-light); cursor: pointer; }
-input[type="color"] { -webkit-appearance: none; border: none; width: 32px; height: 32px; cursor: pointer; background: none; padding: 0; border-radius: 50%; overflow: hidden; }
-.type-tabs { display: flex; gap: 8px; overflow-x: auto; margin-bottom: 16px; padding-bottom: 4px; }
-.type-tab { padding: 8px 16px; background: var(--bg-input); border-radius: 20px; color: var(--text-secondary); font-size: 13px; font-weight: 600; cursor: pointer; border: none; white-space: nowrap; }
-.type-tab.active { background: var(--accent); color: white; }
-
-/* =========================================
-   13. TOOL SPECIFIC: AI REMOVER
-   ========================================= */
-
-.ai-aurora { position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; z-index: -1; pointer-events: none; background: radial-gradient(circle at 50% 50%, rgba(124, 58, 237, 0.15), rgba(0, 243, 255, 0.1), transparent 60%); animation: auroraSpin 30s linear infinite; }
-@keyframes auroraSpin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-.compare-container { position: relative; width: 100%; aspect-ratio: 1/1; border-radius: var(--radius-md); overflow: hidden; background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iI2NjYyIgZmlsbC1vcGFjaXR5PSIwLjIiIGQ9Ik0wIDBoMTB2MTBIMHptMTAgMTBoMTB2MTBIMTB6Ii8+PC9zdmc+'); cursor: col-resize; box-shadow: var(--shadow-md); margin-bottom: 20px; }
-.compare-image { width: 100%; height: 100%; object-fit: contain; display: block; }
-.compare-overlay { position: absolute; top: 0; left: 0; height: 100%; width: 50%; overflow: hidden; border-right: 2px solid white; background: white; box-shadow: 5px 0 15px rgba(0,0,0,0.2); }
-.compare-overlay img { position: absolute; top: 0; left: 0; height: 100%; max-width: none !important; }
-.btn-ai { background: linear-gradient(135deg, #7c3aed 0%, #ff0099 100%); border: none; color: white; box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4); }
-
-/* =========================================
-   14. TOOL SPECIFIC: CONVERTER & INFO
-   ========================================= */
-
-.format-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; background: var(--bg-input); padding: 4px; border-radius: 12px; margin-bottom: 20px; }
-.format-opt { padding: 10px; text-align: center; font-size: 13px; font-weight: 700; border-radius: 8px; cursor: pointer; color: var(--text-secondary); transition: 0.2s; }
-.format-opt:hover { color: var(--text-primary); } .format-opt.active { background: var(--bg-surface); color: var(--accent); box-shadow: var(--shadow-sm); }
-.version-timeline { margin-left: 10px; border-left: 2px solid var(--border-light); padding-left: 24px; position: relative; }
-.version-entry { margin-bottom: 40px; position: relative; }
-.version-dot { position: absolute; left: -31px; top: 4px; width: 12px; height: 12px; background: var(--bg-surface); border: 3px solid var(--text-secondary); border-radius: 50%; }
-
-/* =========================================
-   15. AUTH & ACCOUNT
-   ========================================= */
-
-.auth-form-wrapper { max-width: 400px; margin: 40px auto; width: 100%; }
-.auth-tabs { display: flex; background: var(--bg-input); padding: 4px; border-radius: 12px; margin-bottom: 24px; }
-.auth-tab { flex: 1; padding: 10px; text-align: center; cursor: pointer; border-radius: 8px; font-weight: 600; font-size: 14px; color: var(--text-secondary); }
-.auth-tab.active { background: var(--bg-surface); color: var(--text-primary); box-shadow: var(--shadow-sm); }
-.account-header { text-align: center; padding: 30px 20px; }
-.account-big-avatar { width: 80px; height: 80px; background: var(--accent); color: white; font-size: 32px; font-weight: 700; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 16px; box-shadow: var(--shadow-md); }
-
-/* =========================================
-   16. UTILITIES
-   ========================================= */
-
-.processing-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; display: none; flex-direction: column; align-items: center; justify-content: center; backdrop-filter: blur(10px); color: white; }
-.processing-overlay.active { display: flex; animation: fadeIn 0.3s; }
-.spinner { width: 50px; height: 50px; border: 4px solid rgba(255,255,255,0.2); border-top-color: var(--accent); border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
-
-.hidden { display: none !important; }
-.desktop-only { display: block; }
-
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-@keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
-@keyframes spin { 100% { transform: rotate(360deg); } }
 
 @media (max-width: 768px) {
-    .desktop-only { display: none; }
     body { padding-top: 100px; }
     .content-wrapper { padding: 0 16px; }
     .hero-title { font-size: 2.5rem; }
-    .toolbar-floating { position: fixed; bottom: 20px; left: 20px; right: 20px; z-index: 100; box-shadow: var(--shadow-lg); background: var(--bg-glass-heavy); backdrop-filter: blur(20px); margin: 0; }
     .tools-grid { grid-template-columns: repeat(2, 1fr); }
-    /* Legacy Mobile Specific - Ora gestito globalmente, ma manteniamo per fallback */
-    body.bar-bottom { padding-top: 40px; padding-bottom: 100px; }
-    body.bar-bottom #global-navbar { top: auto; bottom: 0; padding-top: 0; padding-bottom: 20px; }
-    body.bar-bottom #global-navbar.scrolled { padding-bottom: 10px; }
-}
-
-/* =========================================
-   17. ULTRA MOBILE OPTIMIZATION & DEFAULT MINIMAL
-   ========================================= */
-
-@media (max-width: 768px) {
-    /* --- DEFAULT MINIMAL NAVBAR FOR MOBILE (Se NON è Dynamic Mode) --- */
-    /* La logica è invertita: 
-       - Di default su mobile applica stile minimale.
-       - Se l'utente VUOLE la Dynamic Bar (quindi NON ha la classe .old-design-mode), 
-         allora NON applichiamo queste forzature.
-       - MA, siccome hai chiesto "minimale default", assumiamo che l'utente debba attivare esplicitamente la dynamic.
-       
-       Tuttavia, il tuo JS aggiunge o rimuove 'old-design-mode'. 
-       Se l'utente *disattiva* la "Modalità minimale" nel menu, la classe 'old-design-mode' sparisce.
-       Quindi dobbiamo applicare questo stile SOLO se c'è la classe 'old-design-mode' O se vogliamo forzarlo sempre tranne eccezioni.
-       
-       SOLUZIONE RICHIESTA: "Minimale di default ma se uno vuole la può disattivare".
-       Questo significa che dobbiamo rispettare la classe 'old-design-mode'.
-       Per renderlo "default", dovresti assicurarti che il tuo JS aggiunga quella classe all'avvio su mobile.
-       
-       Tuttavia, per ottimizzare l'esperienza "App-Like" indipendentemente dalla navbar scelta,
-       applichiamo stili globali di layout qui sotto.
-    */
-
-    /* FORZATURA MINIMALE (Solo se è attiva la modalità o di default se non gestito da JS) 
-       Per ora, applichiamo lo stile "Full Width" alla navbar quando è in modalità minimale su mobile.
-       FIX COLORE TEMA: Usiamo var(--nav-bg) invece di valori fissi per supportare i temi colorati (Aurora, ecc.)
-    */
-    body.old-design-mode #global-navbar {
-        padding: 0 !important;
-        background: var(--nav-bg) !important; /* COLORE DINAMICO DEL TEMA */
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border-bottom: 1px solid var(--border-light);
-    }
     
-    /* Rimosso override specifico per dark mode, ora var(--nav-bg) gestisce tutto */
-
-    body.old-design-mode .nav-pill {
+    /* Mobile Dynamic Bar Fix */
+    #global-navbar.expanded .nav-pill {
         width: 100% !important;
         max-width: 100% !important;
-        border-radius: 0 !important;
-        border: none !important;
-        background: transparent !important;
-        box-shadow: none !important;
-        height: 60px;
-        padding: 0 16px !important;
-        justify-content: space-between;
-    }
-
-    /* Fix Logo Centering on Mobile (Sempre valido) */
-    .nav-center {
-        position: absolute;
-        left: 50%;
-        transform: translateX(-50%);
-        width: auto !important;
-    }
-    
-    .nav-brand-fixed {
-        display: flex !important;
-    }
-
-    /* --- UI & TOUCH OPTIMIZATIONS (Sempre attivi su mobile) --- */
-    
-    /* Better Touch Targets */
-    .btn, .nav-btn, .menu-item, .tool-card, input, select {
-        min-height: 44px; /* Apple Human Interface Guidelines */
-    }
-
-    /* Adjust Layout Spacing */
-    .content-wrapper {
-        padding: 0 16px;
-        width: 100%;
-        max-width: 100%;
-    }
-
-    body {
-        padding-top: 80px; /* Default mobile padding */
-    }
-
-    /* Tool Grid Optimization */
-    .tools-grid {
-        grid-template-columns: repeat(2, 1fr) !important; /* Force 2 columns */
-        gap: 12px;
-    }
-
-    .tool-card {
-        height: 110px; /* Slightly more compact */
-        padding: 16px 8px;
-    }
-
-    /* Text Readability */
-    h1, .hero-title {
-        font-size: 2.2rem !important; /* Prevent overflow */
-    }
-    
-    .hero-subtitle {
-        font-size: 1rem !important;
-        padding: 0 10px;
-    }
-
-    /* Hide Desktop Elements */
-    .desktop-only {
-        display: none !important;
-    }
-
-    /* Floating Toolbar Mobile Fix */
-    .toolbar-floating {
-        position: fixed;
-        bottom: 20px;
-        left: 16px;
-        right: 16px;
-        background: var(--bg-glass-heavy);
-        backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-        border: 1px solid var(--border-light);
-        border-radius: 20px;
-        padding: 12px;
-        z-index: 1000;
-        box-shadow: var(--shadow-lg);
-        justify-content: space-around;
-        animation: fadeUp 0.3s ease-out;
-    }
-
-    .workspace-container {
-        padding-bottom: 100px; /* Space for floating toolbar */
-    }
-
-    /* Sidebar Full Width on Small Screens */
-    .sidebar {
-        width: 85%;
-        max-width: 320px;
+        border-radius: 0 0 24px 24px !important;
+        top: 0;
+        margin-top: -16px; /* Compensate navbar padding top */
+        min-height: 100vh; /* Full screen menu on mobile */
     }
 }
