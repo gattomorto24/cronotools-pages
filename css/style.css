@@ -14,7 +14,7 @@
    9.  EDITOR WORKSPACE
    10. TOOLS SPECIFIC CSS
    11. MEDIA QUERIES
-   12. ANIMATIONS (NEW)
+   12. ANIMATIONS (NEW - FIXES INVISIBLE PAGES)
 */
 
 /* =========================================
@@ -673,7 +673,7 @@ input:focus, select:focus { border-color: var(--accent); background: var(--bg-su
 /* =========================================
    8. UPLOAD & 9. EDITOR & 10. TOOLS
    ========================================= */
-/* (Invariati per brevità - sono gli stessi di v5.0 ma integrati qui) */
+
 .upload-area { width: 100%; min-height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed var(--border-light); border-radius: var(--radius-lg); background: var(--bg-surface); transition: all 0.3s; cursor: pointer; margin-bottom: 20px; }
 .upload-area:hover, .upload-area.drag-over { border-color: var(--accent); background: var(--accent-dim); transform: scale(1.01); }
 .workspace-container { display: none; width: 100%; animation: fadeUp 0.5s; }
@@ -717,6 +717,7 @@ input[type=range]::-webkit-slider-thumb { height: 20px; width: 20px; border-radi
    12. ANIMATIONS (GLOBAL DEFINITIONS)
    ========================================= */
 
+/* QUESTE ERANO MANCANTI, CAUSANDO PAGINE BIANCHE */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
