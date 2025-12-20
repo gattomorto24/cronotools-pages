@@ -1,19 +1,18 @@
 /* ==========================================================================
-   CRONOTOOLS DESIGN SYSTEM - V5.1.0 (DYNAMIC EXPANSION & THEME FIXES)
+   CRONOTOOLS DESIGN SYSTEM - V5.2.0 (IOS SIDEBAR & THEME FIX)
    ========================================================================== */
 
 /* INDICE CONTENUTI:
-   1.  CORE VARIABLES & THEMING (Fixed & Expanded)
+   1.  CORE VARIABLES & THEMING (All Themes Fixed)
    2.  RESET & GLOBAL LAYOUT
-   3.  NAVBAR LOGIC (Dynamic Expansion System)
-   4.  SIDEBAR & MENU (Legacy Mode)
+   3.  NAVBAR LOGIC (Minimal & Dynamic Base)
+   4.  SIDEBAR & MENU (iOS Styled - Legacy Mode)
    5.  HOME PAGE
    6.  TOOLS GRID SYSTEM
    7.  UI COMPONENTS
    8.  UPLOAD AREA
    9.  EDITOR WORKSPACE
-   10. TOOLS SPECIFIC CSS
-   11. MEDIA QUERIES
+   10. MEDIA QUERIES
 */
 
 /* =========================================
@@ -39,7 +38,7 @@
     --ease-smooth: cubic-bezier(0.32, 0.72, 0, 1);
     
     /* --- THEME: LIGHT (Default) --- */
-    --bg-body: #f2f2f7;
+    --bg-body: #f2f2f7; /* iOS System Gray 6 */
     --bg-surface: #ffffff;
     --bg-surface-hover: #f5f5f7;
     --bg-input: #e5e5ea;
@@ -210,11 +209,9 @@
     --nav-shadow: 0 0 20px rgba(0,243,255,0.2);
 }
 
-/* =========================================================
-   NUOVI TEMI COMPLETAMENTE IMPLEMENTATI
-   ========================================================= */
-
-/* Aurora (Dark Teal/Purple) */
+/* ---------------------------------------------------------
+   THEME: AURORA (Fixed)
+   --------------------------------------------------------- */
 [data-theme="aurora"] {
     --bg-body: #0b132b;
     --bg-surface: #1c2541;
@@ -231,16 +228,15 @@
     --on-accent: #0b132b;
     --accent-dim: rgba(91, 192, 190, 0.2);
     --border-light: rgba(91, 192, 190, 0.3);
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.7);
     --nav-bg: rgba(28, 37, 65, 0.85);
     --nav-border: rgba(91, 192, 190, 0.4);
     --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     --nav-text: #ffffff;
 }
 
-/* Forest (Deep Green) */
+/* ---------------------------------------------------------
+   THEME: FOREST (Fixed)
+   --------------------------------------------------------- */
 [data-theme="forest"] {
     --bg-body: #0f1f17;
     --bg-surface: #1b3a2b;
@@ -257,16 +253,14 @@
     --on-accent: #0f1f17;
     --accent-dim: rgba(52, 199, 89, 0.2);
     --border-light: rgba(52, 199, 89, 0.3);
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.7);
     --nav-bg: rgba(27, 58, 43, 0.85);
     --nav-border: rgba(52, 199, 89, 0.4);
-    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     --nav-text: #e9f5ef;
 }
 
-/* Sunset (Deep Red/Orange) */
+/* ---------------------------------------------------------
+   THEME: SUNSET (Fixed)
+   --------------------------------------------------------- */
 [data-theme="sunset"] {
     --bg-body: #2b0f0f;
     --bg-surface: #4b1e1e;
@@ -283,16 +277,14 @@
     --on-accent: #2b0f0f;
     --accent-dim: rgba(255, 159, 10, 0.2);
     --border-light: rgba(255, 159, 10, 0.3);
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
-    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.8);
     --nav-bg: rgba(75, 30, 30, 0.85);
     --nav-border: rgba(255, 159, 10, 0.4);
-    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     --nav-text: #fff0e6;
 }
 
-/* Ocean (Deep Blue) */
+/* ---------------------------------------------------------
+   THEME: OCEAN (Fixed)
+   --------------------------------------------------------- */
 [data-theme="ocean"] {
     --bg-body: #051923;
     --bg-surface: #003554;
@@ -309,16 +301,14 @@
     --on-accent: #051923;
     --accent-dim: rgba(0, 166, 251, 0.2);
     --border-light: rgba(0, 166, 251, 0.3);
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.7);
     --nav-bg: rgba(0, 53, 84, 0.85);
     --nav-border: rgba(0, 166, 251, 0.4);
-    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     --nav-text: #e6faff;
 }
 
-/* Graphite (Monochrome Dark) */
+/* ---------------------------------------------------------
+   THEME: GRAPHITE (Fixed)
+   --------------------------------------------------------- */
 [data-theme="graphite"] {
     --bg-body: #121212;
     --bg-surface: #1e1e1e;
@@ -335,12 +325,8 @@
     --on-accent: #121212;
     --accent-dim: rgba(255, 255, 255, 0.1);
     --border-light: rgba(255, 255, 255, 0.15);
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
-    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.8);
     --nav-bg: rgba(30, 30, 30, 0.85);
     --nav-border: rgba(255, 255, 255, 0.15);
-    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     --nav-text: #f5f5f5;
 }
 
@@ -361,7 +347,6 @@ body {
     padding-bottom: 60px;
     min-height: 100vh;
     overflow-x: hidden;
-    /* KEY CENTERING LOGIC */
     display: flex; flex-direction: column; align-items: center;
     transition: background-color 0.4s var(--ease-smooth), color 0.4s var(--ease-smooth);
 }
@@ -391,7 +376,7 @@ a:hover { opacity: 0.8; }
 
 
 /* =========================================
-   3. NAVBAR LOGIC & DYNAMIC EXPANSION
+   3. NAVBAR LOGIC
    ========================================= */
 
 #global-navbar { 
@@ -436,31 +421,27 @@ a:hover { opacity: 0.8; }
 
 /* Contenuto Espanso (Menu) */
 .dynamic-menu-content {
-    display: none; /* Nascosto di default */
+    display: none;
     opacity: 0;
     width: 100%;
     padding: 10px 0 20px 0;
-    transition: opacity 0.3s ease 0.2s; /* Ritardo per apparire dopo espansione */
+    transition: opacity 0.3s ease 0.2s;
 }
 
 /* --- STATO ESPANSO (DYNAMIC BAR MODE) --- */
-#global-navbar.expanded {
-    z-index: 6000; /* Sopra tutto */
-}
+#global-navbar.expanded { z-index: 6000; }
 
 #global-navbar.expanded .nav-pill {
-    /* Si allarga */
     width: 96% !important;
     max-width: 500px !important;
-    height: auto !important; /* Cresce verso il basso */
+    height: auto !important;
     min-height: 300px;
-    border-radius: 32px !important; /* Meno pillola, più card */
+    border-radius: 32px !important;
     padding: 20px;
     background: var(--bg-glass-heavy);
     border-color: var(--accent);
 }
 
-/* Nascondi header normale durante espansione */
 #global-navbar.expanded .nav-content-normal {
     opacity: 0;
     pointer-events: none;
@@ -469,7 +450,6 @@ a:hover { opacity: 0.8; }
     transform: translateY(-20px);
 }
 
-/* Mostra contenuto menu */
 #global-navbar.expanded .dynamic-menu-content {
     display: block;
     opacity: 1;
@@ -477,12 +457,8 @@ a:hover { opacity: 0.8; }
 
 /* Stili Link Interni al Menu Dinamico */
 .dyn-menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border-light);
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid var(--border-light);
 }
 .dyn-menu-title { font-weight: 800; font-size: 20px; }
 .dyn-close-btn { 
@@ -490,86 +466,52 @@ a:hover { opacity: 0.8; }
     display:flex; align-items:center; justify-content:center; cursor:pointer; 
 }
 .dyn-link {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 16px; margin-bottom: 6px;
-    background: var(--bg-input);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-weight: 600;
-    text-decoration: none;
-    transition: transform 0.2s;
+    display: flex; align-items: center; gap: 12px; padding: 12px 16px; margin-bottom: 6px;
+    background: var(--bg-input); border-radius: 12px; color: var(--text-primary);
+    font-weight: 600; text-decoration: none; transition: transform 0.2s;
 }
 .dyn-link:active { transform: scale(0.98); }
 .dyn-link:hover { background: var(--bg-surface-hover); color: var(--accent); }
 
-
-/* --- LOGO VISIBILITY (Light vs Dark) --- */
+/* --- LOGO VISIBILITY --- */
 .nav-mini-logo { 
     display: none; align-items: center; justify-content: center;
     font-weight: 800; font-size: 17px; color: var(--text-primary);
     opacity: 0; transform: translateY(10px); transition: all 0.4s;
 }
 .logo-img { height: 24px; width: auto; margin-right: 8px; display: block; }
-.logo-light { display: block; } 
-.logo-dark { display: none; }
+.logo-light { display: block; } .logo-dark { display: none; }
 
-[data-theme="dark"] .logo-light, 
-[data-theme="midnight"] .logo-light, 
-[data-theme="cyberpunk"] .logo-light, 
-[data-theme="slate"] .logo-light,
-[data-theme="aurora"] .logo-light,
-[data-theme="forest"] .logo-light,
-[data-theme="ocean"] .logo-light,
-[data-theme="graphite"] .logo-light,
-[data-theme="sunset"] .logo-light { display: none !important; }
-
-[data-theme="dark"] .logo-dark, 
-[data-theme="midnight"] .logo-dark, 
-[data-theme="cyberpunk"] .logo-dark, 
-[data-theme="slate"] .logo-dark,
-[data-theme="aurora"] .logo-dark,
-[data-theme="forest"] .logo-dark,
-[data-theme="ocean"] .logo-dark,
-[data-theme="graphite"] .logo-dark,
-[data-theme="sunset"] .logo-dark { display: block !important; }
+[data-theme="dark"] .logo-light, [data-theme="midnight"] .logo-light, [data-theme="cyberpunk"] .logo-light, [data-theme="slate"] .logo-light, [data-theme="aurora"] .logo-light, [data-theme="forest"] .logo-light, [data-theme="ocean"] .logo-light, [data-theme="graphite"] .logo-light, [data-theme="sunset"] .logo-light { display: none !important; }
+[data-theme="dark"] .logo-dark, [data-theme="midnight"] .logo-dark, [data-theme="cyberpunk"] .logo-dark, [data-theme="slate"] .logo-dark, [data-theme="aurora"] .logo-dark, [data-theme="forest"] .logo-dark, [data-theme="ocean"] .logo-dark, [data-theme="graphite"] .logo-dark, [data-theme="sunset"] .logo-dark { display: block !important; }
 
 
-/* --- DYNAMIC MODE (Default) - SCROLLED BEHAVIOR --- */
-/* Quando non è espansa e si scrolla */
+/* --- DYNAMIC MODE (Default) - SCROLLED --- */
 body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .nav-pill { 
     width: auto; min-width: 140px; height: 48px; padding: 0 20px; 
     justify-content: center; background: var(--bg-surface); border-color: var(--border-light);
 }
 body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .nav-btn,
 body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .nav-center-links,
-body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .auth-wrapper { 
-    display: none; opacity: 0; pointer-events: none; 
-}
-body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .nav-mini-logo { 
-    display: flex; opacity: 1; transform: translateY(0); margin: 0; 
-}
+body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .auth-wrapper { display: none; opacity: 0; pointer-events: none; }
+body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .nav-mini-logo { display: flex; opacity: 1; transform: translateY(0); margin: 0; }
 body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .logo-img { display: none !important; }
 
-/* --- MINIMAL MODE (Legacy/Old Design) --- */
+/* --- MINIMAL MODE (Legacy) --- */
 body.old-design-mode #global-navbar { padding: 0; background: transparent; backdrop-filter: none; border-bottom: 1px solid transparent; }
 body.old-design-mode .nav-pill { width: 100%; max-width: 100%; border-radius: 0; border: none; background: transparent; box-shadow: none; height: 60px; padding: 0 20px; }
 
-/* MINIMAL SCROLLED */
 body.old-design-mode #global-navbar.scrolled {
     height: 30px; padding: 0;
     background: var(--nav-bg); 
     backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
     border-bottom: 1px solid var(--border-light);
 }
-body.old-design-mode #global-navbar.scrolled .nav-pill { 
-    height: 100%; padding: 0; justify-content: center; 
-}
-body.old-design-mode #global-navbar.scrolled .nav-btn, 
-body.old-design-mode #global-navbar.scrolled .nav-center-links { display: none !important; }
+body.old-design-mode #global-navbar.scrolled .nav-pill { height: 100%; padding: 0; justify-content: center; }
+body.old-design-mode #global-navbar.scrolled .nav-btn, body.old-design-mode #global-navbar.scrolled .nav-center-links { display: none !important; }
 body.old-design-mode #global-navbar.scrolled .nav-mini-logo { display: flex !important; opacity: 1; transform: translateY(0); }
 body.old-design-mode #global-navbar.scrolled .logo-img.logo-light { display: block; }
 body.old-design-mode #global-navbar.scrolled .logo-img.logo-dark { display: none; }
-
 
 /* Navbar Buttons */
 .nav-btn { width: 44px; height: 44px; border-radius: 50%; border: none; background: transparent; color: inherit; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.2s; }
@@ -577,32 +519,25 @@ body.old-design-mode #global-navbar.scrolled .logo-img.logo-dark { display: none
 .auth-avatar { width: 36px; height: 36px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; box-shadow: 0 2px 8px var(--accent-dim); }
 
 /* --- BARRA IN BASSO (GLOBAL SUPPORT) --- */
-body.bar-bottom { 
-    padding-top: 40px !important; 
-    padding-bottom: 120px !important; 
-}
-body.bar-bottom #global-navbar { 
-    top: auto; 
-    bottom: 0; 
-    padding-top: 0; 
-    padding-bottom: 20px; 
-}
+body.bar-bottom { padding-top: 40px !important; padding-bottom: 120px !important; }
+body.bar-bottom #global-navbar { top: auto; bottom: 0; padding-top: 0; padding-bottom: 20px; }
 body.bar-bottom #global-navbar.scrolled { padding-bottom: 10px; }
 
-
 /* =========================================
-   4. SIDEBAR & MENU (LEGACY MODE)
+   4. SIDEBAR & MENU (iOS Styled - Legacy Mode)
    ========================================= */
 
+/* Sidebar Container */
 .sidebar { 
     position: fixed; top: 0; bottom: 0; left: 0;
-    width: 300px; max-width: 85%; 
-    background: var(--bg-glass-heavy); 
-    backdrop-filter: blur(30px); border-right: 1px solid var(--border-light);
+    width: 280px; /* Larghezza iOS Style */
+    max-width: 85%; 
+    background: var(--bg-body); /* Colore solido di sfondo, non glass per consistenza lista */
+    border-right: 1px solid var(--border-light);
     z-index: 6000; 
     transform: translateX(-100%); 
     visibility: hidden;
-    transition: transform 0.4s var(--ease-elastic), visibility 0.4s;
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1), visibility 0.4s; /* Curve iOS */
     display: flex; flex-direction: column;
 }
 
@@ -615,15 +550,63 @@ body.bar-bottom #global-navbar.scrolled { padding-bottom: 10px; }
 .sidebar.open { 
     transform: translateX(0); 
     visibility: visible;
-    box-shadow: 0 0 100px rgba(0,0,0,0.3);
+    box-shadow: 0 0 50px rgba(0,0,0,0.2);
 }
 
-.sidebar-header { height: 70px; display: flex; align-items: center; justify-content: space-between; padding: 0 20px; border-bottom: 1px solid var(--border-light); }
-.sidebar-title { font-weight: 700; font-size: 1.2rem; }
-.menu-item { display: flex; align-items: center; gap: 12px; width: 100%; padding: 14px 16px; margin-bottom: 4px; background: transparent; border: none; border-radius: var(--radius-sm); color: var(--text-primary); font-size: 16px; font-weight: 500; text-align: left; cursor: pointer; transition: background 0.2s; }
-.menu-item:hover { background: var(--bg-input); }
-.backdrop { position: fixed; inset: 0; background: var(--bg-overlay); z-index: 5500; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(2px); }
+/* Sidebar Header */
+.sidebar-header { 
+    height: 60px; /* Altezza Nav Bar */
+    display: flex; align-items: center; justify-content: space-between; 
+    padding: 0 16px; 
+    background: var(--bg-surface);
+    border-bottom: 1px solid var(--border-light);
+    position: sticky; top: 0; z-index: 10;
+}
+
+.sidebar-title { 
+    font-weight: 700; font-size: 17px; /* iOS Headline size */
+    color: var(--text-primary);
+}
+
+/* iOS INSET GROUPED LIST STYLE */
+.sidebar > div {
+    padding: 20px 16px !important; /* Spaziatura esterna del gruppo */
+    overflow-y: auto;
+    flex: 1;
+}
+
+/* Ogni link diventa una "cella" della lista */
+.menu-item { 
+    display: flex; align-items: center; gap: 12px; width: 100%; 
+    padding: 16px; /* Spazio interno generoso */
+    margin-bottom: 10px; /* Separazione tra le card */
+    
+    background: var(--bg-surface); /* Card bianca su sfondo grigio */
+    border: none; 
+    border-radius: 12px; /* Arrotondamento squircle-ish */
+    
+    color: var(--text-primary); 
+    font-size: 16px; font-weight: 600; 
+    text-align: left; text-decoration: none;
+    cursor: pointer; 
+    
+    transition: transform 0.1s ease, background 0.2s;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.03); /* Ombra leggerissima */
+}
+
+.menu-item:active { 
+    transform: scale(0.98); 
+    background: var(--bg-surface-hover);
+}
+
+.menu-item:hover { 
+    background: var(--bg-surface-hover); 
+}
+
+/* Backdrop */
+.backdrop { position: fixed; inset: 0; background: rgba(0,0,0,0.3); z-index: 5500; opacity: 0; pointer-events: none; transition: opacity 0.3s; backdrop-filter: blur(2px); }
 .backdrop.active { opacity: 1; pointer-events: all; }
+
 
 /* =========================================
    5. HOME PAGE & SEARCH
@@ -672,7 +655,6 @@ input:focus, select:focus { border-color: var(--accent); background: var(--bg-su
 /* =========================================
    8. UPLOAD & 9. EDITOR & 10. TOOLS
    ========================================= */
-/* (Invariati per brevità - sono gli stessi di v5.0 ma integrati qui) */
 .upload-area { width: 100%; min-height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center; border: 2px dashed var(--border-light); border-radius: var(--radius-lg); background: var(--bg-surface); transition: all 0.3s; cursor: pointer; margin-bottom: 20px; }
 .upload-area:hover, .upload-area.drag-over { border-color: var(--accent); background: var(--accent-dim); transform: scale(1.01); }
 .workspace-container { display: none; width: 100%; animation: fadeUp 0.5s; }
@@ -692,7 +674,7 @@ input[type=range]::-webkit-slider-thumb { height: 20px; width: 20px; border-radi
 .filter-chip.active { background: var(--accent); color: white; }
 
 /* =========================================
-   11. MEDIA QUERIES
+   10. MEDIA QUERIES
    ========================================= */
 
 @media (max-width: 768px) {
@@ -707,7 +689,7 @@ input[type=range]::-webkit-slider-thumb { height: 20px; width: 20px; border-radi
         max-width: 100% !important;
         border-radius: 0 0 24px 24px !important;
         top: 0;
-        margin-top: -16px; /* Compensate navbar padding top */
-        min-height: 100vh; /* Full screen menu on mobile */
+        margin-top: -16px; 
+        min-height: 100vh; 
     }
-}
+                }
