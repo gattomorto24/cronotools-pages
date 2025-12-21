@@ -1,4 +1,4 @@
-/* --- CronoTools UI Manager v3.4.0 (Dynamic Bar Logic) --- */
+/* --- CronoTools UI Manager v3.5.0 (Accessibility & Compact Bar) --- */
 
 const UI = {
     init() {
@@ -172,7 +172,8 @@ const UI = {
 
     /* --- ACCESSIBILITY --- */
     initAccessibility() {
-        ['motion', 'contrast', 'bold'].forEach(k => {
+        // Updated List: motion, contrast, bold + transparency, borders
+        ['motion', 'contrast', 'bold', 'transparency', 'borders'].forEach(k => {
             const active = localStorage.getItem(`crono-acc-${k}`) === 'true';
             this.toggleAccessClass(k, active);
         });
@@ -186,9 +187,12 @@ const UI = {
     },
 
     toggleAccessClass(type, active) {
+        // Map types to Body Classes
         if(type === 'motion') this.body.classList.toggle('reduce-motion', active);
         if(type === 'contrast') this.body.classList.toggle('high-contrast', active);
         if(type === 'bold') this.body.classList.toggle('bold-text', active);
+        if(type === 'transparency') this.body.classList.toggle('no-transparency', active);
+        if(type === 'borders') this.body.classList.toggle('show-borders', active);
     },
 
     /* --- SYNC HELPERS --- */
