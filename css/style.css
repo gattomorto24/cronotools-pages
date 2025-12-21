@@ -1,9 +1,9 @@
 /* ==========================================================================
-   CRONOTOOLS DESIGN SYSTEM - V5.1.0 (DYNAMIC EXPANSION & THEME FIXES)
+   CRONOTOOLS DESIGN SYSTEM - V5.2.0 (ACCESSIBILITY & COMPACT MENU)
    ========================================================================== */
 
 /* INDICE CONTENUTI:
-   1.  CORE VARIABLES & THEMING (Fixed & Expanded)
+   1.  CORE VARIABLES & THEMING
    2.  RESET & GLOBAL LAYOUT
    3.  NAVBAR LOGIC (Dynamic Expansion System)
    4.  SIDEBAR & MENU (Legacy Mode)
@@ -14,7 +14,7 @@
    9.  EDITOR WORKSPACE
    10. TOOLS SPECIFIC CSS
    11. MEDIA QUERIES
-   12. ANIMATIONS (NEW - FIXES INVISIBLE PAGES)
+   12. ANIMATIONS & ACCESSIBILITY OVERRIDES
 */
 
 /* =========================================
@@ -62,6 +62,7 @@
     --warning: #ffcc00;
 
     --border-light: rgba(60, 60, 67, 0.15);
+    --border-focus: transparent; /* Usato per la modalità Show Borders */
 
     --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
     --shadow-md: 0 8px 24px rgba(0,0,0,0.08);
@@ -211,11 +212,9 @@
     --nav-shadow: 0 0 20px rgba(0,243,255,0.2);
 }
 
-/* =========================================================
-   NUOVI TEMI COMPLETAMENTE IMPLEMENTATI
-   ========================================================= */
-
-/* Aurora (Dark Teal/Purple) */
+/* ---------------------------------------------------------
+   THEME: AURORA
+   --------------------------------------------------------- */
 [data-theme="aurora"] {
     --bg-body: #0b132b;
     --bg-surface: #1c2541;
@@ -232,16 +231,14 @@
     --on-accent: #0b132b;
     --accent-dim: rgba(91, 192, 190, 0.2);
     --border-light: rgba(91, 192, 190, 0.3);
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.7);
     --nav-bg: rgba(28, 37, 65, 0.85);
     --nav-border: rgba(91, 192, 190, 0.4);
-    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     --nav-text: #ffffff;
 }
 
-/* Forest (Deep Green) */
+/* ---------------------------------------------------------
+   THEME: FOREST
+   --------------------------------------------------------- */
 [data-theme="forest"] {
     --bg-body: #0f1f17;
     --bg-surface: #1b3a2b;
@@ -258,16 +255,14 @@
     --on-accent: #0f1f17;
     --accent-dim: rgba(52, 199, 89, 0.2);
     --border-light: rgba(52, 199, 89, 0.3);
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.7);
     --nav-bg: rgba(27, 58, 43, 0.85);
     --nav-border: rgba(52, 199, 89, 0.4);
-    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     --nav-text: #e9f5ef;
 }
 
-/* Sunset (Deep Red/Orange) */
+/* ---------------------------------------------------------
+   THEME: SUNSET
+   --------------------------------------------------------- */
 [data-theme="sunset"] {
     --bg-body: #2b0f0f;
     --bg-surface: #4b1e1e;
@@ -284,16 +279,14 @@
     --on-accent: #2b0f0f;
     --accent-dim: rgba(255, 159, 10, 0.2);
     --border-light: rgba(255, 159, 10, 0.3);
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
-    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.8);
     --nav-bg: rgba(75, 30, 30, 0.85);
     --nav-border: rgba(255, 159, 10, 0.4);
-    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
     --nav-text: #fff0e6;
 }
 
-/* Ocean (Deep Blue) */
+/* ---------------------------------------------------------
+   THEME: OCEAN
+   --------------------------------------------------------- */
 [data-theme="ocean"] {
     --bg-body: #051923;
     --bg-surface: #003554;
@@ -310,16 +303,14 @@
     --on-accent: #051923;
     --accent-dim: rgba(0, 166, 251, 0.2);
     --border-light: rgba(0, 166, 251, 0.3);
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.3);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.7);
     --nav-bg: rgba(0, 53, 84, 0.85);
     --nav-border: rgba(0, 166, 251, 0.4);
-    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     --nav-text: #e6faff;
 }
 
-/* Graphite (Monochrome Dark) */
+/* ---------------------------------------------------------
+   THEME: GRAPHITE
+   --------------------------------------------------------- */
 [data-theme="graphite"] {
     --bg-body: #121212;
     --bg-surface: #1e1e1e;
@@ -336,13 +327,47 @@
     --on-accent: #121212;
     --accent-dim: rgba(255, 255, 255, 0.1);
     --border-light: rgba(255, 255, 255, 0.15);
-    --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.4);
-    --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.6);
-    --shadow-lg: 0 12px 40px rgba(0, 0, 0, 0.8);
     --nav-bg: rgba(30, 30, 30, 0.85);
     --nav-border: rgba(255, 255, 255, 0.15);
-    --nav-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
     --nav-text: #f5f5f5;
+}
+
+/* ---------------------------------------------------------
+   THEME: HIGH CONTRAST (NEW)
+   --------------------------------------------------------- */
+[data-theme="high-contrast"] {
+    --bg-body: #000000;
+    --bg-surface: #000000;
+    --bg-surface-hover: #111111;
+    --bg-input: #000000;
+    --bg-glass: #000000;
+    --bg-glass-heavy: #000000;
+    --bg-overlay: rgba(0,0,0,0.9);
+    
+    --text-primary: #ffffff;
+    --text-secondary: #ffff00; /* Yellow for high readability */
+    --text-tertiary: #ffffff;
+    
+    --accent: #ffff00;
+    --accent-hover: #ffffff;
+    --on-accent: #000000;
+    --accent-dim: rgba(255, 255, 0, 0.2);
+    
+    --danger: #ff0000;
+    --success: #00ff00;
+    --warning: #ffff00;
+    
+    --border-light: #ffffff;
+    --border-focus: #ffff00;
+    
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: 0 0 0 2px #ffffff;
+    
+    --nav-bg: #000000;
+    --nav-border: #ffffff;
+    --nav-text: #ffffff;
+    --nav-shadow: none;
 }
 
 
@@ -461,6 +486,47 @@ a:hover { opacity: 0.8; }
     border-color: var(--accent);
 }
 
+/* COMPACT MENU FIX for Tablet/Bottom Bar/Mobile Popups */
+/* Rimpicciolisce il contenuto quando espanso per evitare che esca o copra il pulsante di chiusura */
+#global-navbar.expanded .dynamic-menu-content {
+    display: block;
+    opacity: 1;
+    overflow-y: auto; /* Permette lo scroll se il contenuto è troppo alto */
+    max-height: 70vh; /* Limita l'altezza per non uscire dallo schermo */
+}
+
+/* Stili Link Interni al Menu Dinamico - COMPACT */
+.dyn-menu-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px; /* Ridotto da 20px */
+    padding-bottom: 8px; /* Ridotto da 10px */
+    border-bottom: 1px solid var(--border-light);
+}
+.dyn-menu-title { font-weight: 800; font-size: 18px; /* Ridotto da 20px */ }
+.dyn-close-btn { 
+    background: var(--bg-input); border:none; width: 32px; height: 32px; border-radius: 50%; 
+    display:flex; align-items:center; justify-content:center; cursor:pointer; 
+    z-index: 10;
+}
+
+.dyn-link {
+    display: flex; align-items: center; gap: 10px; /* Ridotto da 12px */
+    padding: 10px 14px; /* Ridotto da 12px 16px */
+    margin-bottom: 4px; /* Ridotto da 6px */
+    background: var(--bg-input);
+    border-radius: 10px; /* Ridotto da 12px */
+    color: var(--text-primary);
+    font-weight: 600;
+    font-size: 14px; /* Leggermente più piccolo */
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+.dyn-link:active { transform: scale(0.98); }
+.dyn-link:hover { background: var(--bg-surface-hover); color: var(--accent); }
+
+
 /* Nascondi header normale durante espansione */
 #global-navbar.expanded .nav-content-normal {
     opacity: 0;
@@ -469,39 +535,6 @@ a:hover { opacity: 0.8; }
     overflow: hidden;
     transform: translateY(-20px);
 }
-
-/* Mostra contenuto menu */
-#global-navbar.expanded .dynamic-menu-content {
-    display: block;
-    opacity: 1;
-}
-
-/* Stili Link Interni al Menu Dinamico */
-.dyn-menu-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid var(--border-light);
-}
-.dyn-menu-title { font-weight: 800; font-size: 20px; }
-.dyn-close-btn { 
-    background: var(--bg-input); border:none; width: 32px; height: 32px; border-radius: 50%; 
-    display:flex; align-items:center; justify-content:center; cursor:pointer; 
-}
-.dyn-link {
-    display: flex; align-items: center; gap: 12px;
-    padding: 12px 16px; margin-bottom: 6px;
-    background: var(--bg-input);
-    border-radius: 12px;
-    color: var(--text-primary);
-    font-weight: 600;
-    text-decoration: none;
-    transition: transform 0.2s;
-}
-.dyn-link:active { transform: scale(0.98); }
-.dyn-link:hover { background: var(--bg-surface-hover); color: var(--accent); }
 
 
 /* --- LOGO VISIBILITY (Light vs Dark) --- */
@@ -522,6 +555,7 @@ a:hover { opacity: 0.8; }
 [data-theme="forest"] .logo-light,
 [data-theme="ocean"] .logo-light,
 [data-theme="graphite"] .logo-light,
+[data-theme="high-contrast"] .logo-light,
 [data-theme="sunset"] .logo-light { display: none !important; }
 
 [data-theme="dark"] .logo-dark, 
@@ -532,6 +566,7 @@ a:hover { opacity: 0.8; }
 [data-theme="forest"] .logo-dark,
 [data-theme="ocean"] .logo-dark,
 [data-theme="graphite"] .logo-dark,
+[data-theme="high-contrast"] .logo-dark,
 [data-theme="sunset"] .logo-dark { display: block !important; }
 
 
@@ -714,10 +749,9 @@ input[type=range]::-webkit-slider-thumb { height: 20px; width: 20px; border-radi
 }
 
 /* =========================================
-   12. ANIMATIONS (GLOBAL DEFINITIONS)
+   12. ANIMATIONS & ACCESSIBILITY OVERRIDES
    ========================================= */
 
-/* QUESTE ERANO MANCANTI, CAUSANDO PAGINE BIANCHE */
 @keyframes fadeUp {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -731,4 +765,60 @@ input[type=range]::-webkit-slider-thumb { height: 20px; width: 20px; border-radi
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
+}
+
+/* --- ACCESSIBILITY CLASSES --- */
+
+/* Rimuovi Trasparenza */
+body.no-transparency {
+    --bg-glass: var(--bg-surface);
+    --bg-glass-heavy: var(--bg-surface);
+    --nav-bg: var(--bg-surface);
+}
+body.no-transparency * {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+}
+
+/* Mostra Bordi */
+body.show-borders * {
+    /* Assicuriamoci che i bordi siano visibili con alto contrasto */
+}
+body.show-borders .glass-card, 
+body.show-borders .nav-pill, 
+body.show-borders .btn, 
+body.show-borders input,
+body.show-borders .ios-toggle-wrapper {
+    border: 2px solid var(--text-primary) !important;
+}
+body.show-borders .nav-pill {
+    box-shadow: none !important;
+}
+
+/* Riduci Movimento */
+body.reduce-motion *,
+body.reduce-motion *::before,
+body.reduce-motion *::after {
+    animation-duration: 0.001s !important;
+    transition-duration: 0.001s !important;
+    animation-iteration-count: 1 !important;
+}
+
+/* Contrasto Elevato (Toggle Switch) */
+body.high-contrast {
+    --text-primary: #000000;
+    --text-secondary: #000000;
+    --bg-body: #ffffff;
+    --bg-surface: #ffffff;
+    --accent: #0000aa;
+    font-weight: 700 !important;
+}
+body.high-contrast[data-theme="dark"], 
+body.high-contrast[data-theme="midnight"],
+body.high-contrast[data-theme="cyberpunk"] {
+    --text-primary: #ffffff;
+    --text-secondary: #ffffff;
+    --bg-body: #000000;
+    --bg-surface: #000000;
+    --accent: #ffff00;
 }
