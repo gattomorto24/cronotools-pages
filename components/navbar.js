@@ -1,9 +1,8 @@
 /* =========================================================
-   Universal Navbar Component — CronoTools 3.5.0
-   - DYNAMIC EXPANSION MENU LOGIC
-   - CENTRALIZED MENU DEFINITIONS
-   - LEGACY SIDEBAR FALLBACK
-   - ACCESSIBILITY CONTROLS ADDED
+   Universal Navbar Component — CronoTools 4.0
+   - FULL ACCESSIBILITY SUITE
+   - BETA ANIMATION TOGGLE
+   - NEW THEMES (GOLD/CYBER)
    ========================================================= */
 
 class GlobalNavbar extends HTMLElement {
@@ -20,44 +19,47 @@ class GlobalNavbar extends HTMLElement {
 
         const isMinimal = document.body.classList.contains('old-design-mode');
         const isBottom = document.body.classList.contains('bar-bottom');
+        const isBetaAnim = document.body.classList.contains('beta-animations');
         
-        // Check Accessibility States for Checkboxes
+        // Check Accessibility States
         const acc = {
             motion: document.body.classList.contains('reduce-motion'),
             contrast: document.body.classList.contains('high-contrast'),
             transparency: document.body.classList.contains('no-transparency'),
-            borders: document.body.classList.contains('show-borders')
+            borders: document.body.classList.contains('show-borders'),
+            bold: document.body.classList.contains('bold-text'),
+            saturated: document.body.classList.contains('saturated-colors'),
+            monochrome: document.body.classList.contains('monochrome')
         };
 
-        // --- AUTH CONTENT ---
+        // --- AUTH & WIDGET HTML ---
         const authHtml = isLoggedIn ? `
-            <a href="/account/index.html" class="auth-avatar" title="Profilo" style="display:flex;align-items:center;justify-content:center;width:32px;height:32px;border-radius:50%;background:var(--accent-faded, rgba(0,0,0,0.1));color:var(--accent, #000);font-weight:bold;text-decoration:none;">
+            <a href="/account/index.html" class="auth-avatar" style="display:flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--accent);color:#fff;font-weight:bold;text-decoration:none;box-shadow:0 2px 5px rgba(0,0,0,0.2);">
                 ${currentUser.username ? currentUser.username.substring(0,2).toUpperCase() : 'U'}
             </a>
         ` : `
-            <a href="/login/index.html" class="auth-link" style="font-size:14px;font-weight:600;color:var(--accent);text-decoration:none;margin-right:8px;"></a>
+            <a href="/login/index.html" style="font-size:14px;font-weight:700;color:var(--accent);text-decoration:none;margin-right:10px;">Accedi</a>
         `;
 
         const widgetHtml = isLoggedIn ? `
-            <div class="cronoid-widget logged-in" onclick="location.href='/account/index.html'" style="padding:16px; background:var(--bg-input); border-radius:12px; margin-bottom:20px; display:flex; gap:12px; align-items:center; cursor:pointer;">
-                <div class="widget-avatar" style="width:40px;height:40px;background:var(--accent);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;">${currentUser.username.substring(0,2).toUpperCase()}</div>
+            <div class="cronoid-widget logged-in" onclick="location.href='/account/index.html'" style="padding:16px; background:var(--bg-input); border-radius:16px; margin-bottom:20px; display:flex; gap:12px; align-items:center; cursor:pointer;">
+                <div class="widget-avatar" style="width:44px;height:44px;background:var(--accent);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:18px;">${currentUser.username.substring(0,2).toUpperCase()}</div>
                 <div class="widget-info" style="display:flex;flex-direction:column;">
-                    <span class="widget-name" style="font-weight:bold;">${currentUser.username}</span>
-                    <span class="widget-cta" style="font-size:12px;color:var(--text-secondary);">Gestisci account →</span>
+                    <span class="widget-name" style="font-weight:bold;font-size:16px;">${currentUser.username}</span>
+                    <span class="widget-cta" style="font-size:13px;color:var(--text-secondary);font-weight:500;">Gestisci account →</span>
                 </div>
             </div>
         ` : `
-            <div class="cronoid-widget guest" onclick="location.href='/login/index.html'" style="padding:16px; background:var(--bg-input); border-radius:12px; margin-bottom:20px; display:flex; gap:12px; align-items:center; cursor:pointer;">
-                <div class="widget-avatar" style="width:40px;height:40px;background:var(--text-tertiary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;">?</div>
+            <div class="cronoid-widget guest" onclick="location.href='/login/index.html'" style="padding:16px; background:var(--bg-input); border-radius:16px; margin-bottom:20px; display:flex; gap:12px; align-items:center; cursor:pointer;">
+                <div class="widget-avatar" style="width:44px;height:44px;background:var(--text-tertiary);color:white;border-radius:50%;display:flex;align-items:center;justify-content:center;">?</div>
                 <div class="widget-info" style="display:flex;flex-direction:column;">
-                    <span class="widget-name" style="font-weight:bold;">Non connesso</span>
-                    <span class="widget-cta" style="font-size:12px;color:var(--text-secondary);">Accedi a CronoID →</span>
+                    <span class="widget-name" style="font-weight:bold;font-size:16px;">Ospite</span>
+                    <span class="widget-cta" style="font-size:13px;color:var(--text-secondary);font-weight:500;">Accedi a CronoID →</span>
                 </div>
             </div>
         `;
 
-        // --- MENU DEFINITIONS (Used in both Sidebar and Dynamic Menu) ---
-        
+        // --- MENU LEFT CONTENT ---
         const menuLeftContent = `
             <a href="/index.html" class="dyn-link">🏠 Home</a>
             <a href="/dynamic-bar/index.html" class="dyn-link">💊 Dynamic Bar</a>
@@ -73,10 +75,20 @@ class GlobalNavbar extends HTMLElement {
             </div>
         `;
 
+        // --- MENU RIGHT CONTENT (SETTINGS) ---
         const menuRightContent = `
             ${widgetHtml}
             
-            <h4 style="margin:16px 0 8px;font-size:13px;text-transform:uppercase;color:var(--text-secondary);">Layout</h4>
+            <!-- BETA FEATURE -->
+            <div class="ios-toggle-wrapper" onclick="UI.toggleBetaAnimations(!document.body.classList.contains('beta-animations'))" style="border-color:var(--accent); background:var(--accent-dim);">
+                <div style="display:flex; flex-direction:column;">
+                    <span class="ios-toggle-label" style="display:flex;align-items:center;gap:6px;">Nuove Animazioni <span style="background:var(--accent);color:#fff;font-size:10px;padding:2px 6px;border-radius:6px;">BETA</span></span>
+                    <span style="font-size:11px;opacity:0.7;">Più fluide e moderne</span>
+                </div>
+                <input type="checkbox" class="ios-toggle" ${isBetaAnim ? 'checked' : ''}>
+            </div>
+
+            <h4 style="margin:20px 0 8px;font-size:12px;text-transform:uppercase;color:var(--text-secondary);letter-spacing:1px;font-weight:700;">Layout</h4>
             <div class="ios-toggle-wrapper" onclick="UI.toggleMinimal()">
                 <span class="ios-toggle-label">Modalità minimale</span>
                 <input type="checkbox" class="ios-toggle" ${isMinimal ? 'checked' : ''}>
@@ -86,7 +98,7 @@ class GlobalNavbar extends HTMLElement {
                 <input type="checkbox" class="ios-toggle" ${isBottom ? 'checked' : ''}>
             </div>
 
-            <h4 style="margin:24px 0 8px;font-size:13px;text-transform:uppercase;color:var(--text-secondary);">Accessibilità</h4>
+            <h4 style="margin:24px 0 8px;font-size:12px;text-transform:uppercase;color:var(--text-secondary);letter-spacing:1px;font-weight:700;">Accessibilità</h4>
             
             <div class="ios-toggle-wrapper" onclick="UI.toggleAccessibility('transparency')">
                 <span class="ios-toggle-label">Rimuovi Trasparenza</span>
@@ -96,6 +108,21 @@ class GlobalNavbar extends HTMLElement {
             <div class="ios-toggle-wrapper" onclick="UI.toggleAccessibility('borders')">
                 <span class="ios-toggle-label">Mostra Bordi</span>
                 <input type="checkbox" class="ios-toggle" ${acc.borders ? 'checked' : ''}>
+            </div>
+            
+            <div class="ios-toggle-wrapper" onclick="UI.toggleAccessibility('bold')">
+                <span class="ios-toggle-label">Testo in Grassetto</span>
+                <input type="checkbox" class="ios-toggle" ${acc.bold ? 'checked' : ''}>
+            </div>
+
+            <div class="ios-toggle-wrapper" onclick="UI.toggleAccessibility('saturated')">
+                <span class="ios-toggle-label">Colori Saturi</span>
+                <input type="checkbox" class="ios-toggle" ${acc.saturated ? 'checked' : ''}>
+            </div>
+
+            <div class="ios-toggle-wrapper" onclick="UI.toggleAccessibility('monochrome')">
+                <span class="ios-toggle-label">Scala di Grigi (Focus)</span>
+                <input type="checkbox" class="ios-toggle" ${acc.monochrome ? 'checked' : ''}>
             </div>
             
             <div class="ios-toggle-wrapper" onclick="UI.toggleAccessibility('motion')">
@@ -109,26 +136,28 @@ class GlobalNavbar extends HTMLElement {
             </div>
 
 
-            <h4 style="margin:24px 0 8px;font-size:13px;text-transform:uppercase;color:var(--text-secondary);">Temi</h4>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px; padding-bottom: 20px;">
-                <button class="menu-item" onclick="UI.setTheme('light')">Light</button>
-                <button class="menu-item" onclick="UI.setTheme('dark')">Dark</button>
-                <button class="menu-item" onclick="UI.setTheme('midnight')">Midnight</button>
-                <button class="menu-item" onclick="UI.setTheme('slate')">Slate</button>
-                <button class="menu-item" onclick="UI.setTheme('aurora')">Aurora</button>
-                <button class="menu-item" onclick="UI.setTheme('forest')">Forest</button>
-                <button class="menu-item" onclick="UI.setTheme('sunset')">Sunset</button>
-                <button class="menu-item" onclick="UI.setTheme('ocean')">Ocean</button>
-                <button class="menu-item" onclick="UI.setTheme('high-contrast')" style="border:1px solid var(--text-primary); font-weight:bold;">High Contrast</button>
+            <h4 style="margin:24px 0 8px;font-size:12px;text-transform:uppercase;color:var(--text-secondary);letter-spacing:1px;font-weight:700;">Temi</h4>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px; padding-bottom: 20px;">
+                <button class="menu-item" onclick="UI.setTheme('light')" style="text-align:center;">Light</button>
+                <button class="menu-item" onclick="UI.setTheme('dark')" style="text-align:center;">Dark</button>
+                <button class="menu-item" onclick="UI.setTheme('gold')" style="text-align:center;border-color:#ffd700;color:#ffd700;background:#000;">Gold</button>
+                <button class="menu-item" onclick="UI.setTheme('cyber')" style="text-align:center;border-color:#ff0099;color:#00f3ff;background:#000;">Cyber</button>
+                <button class="menu-item" onclick="UI.setTheme('midnight')" style="text-align:center;">Midnight</button>
+                <button class="menu-item" onclick="UI.setTheme('slate')" style="text-align:center;">Slate</button>
+                <button class="menu-item" onclick="UI.setTheme('aurora')" style="text-align:center;">Aurora</button>
+                <button class="menu-item" onclick="UI.setTheme('forest')" style="text-align:center;">Forest</button>
+                <button class="menu-item" onclick="UI.setTheme('sunset')" style="text-align:center;">Sunset</button>
+                <button class="menu-item" onclick="UI.setTheme('ocean')" style="text-align:center;">Ocean</button>
+                <button class="menu-item" onclick="UI.setTheme('high-contrast')" style="grid-column:span 2; border:2px solid var(--text-primary); font-weight:bold;text-align:center;">High Contrast</button>
             </div>
         `;
 
-        // CSS Inject to ensure visibility
+        // CSS Inject
         const styles = `
             <style>
                 #global-navbar .nav-center { display: flex !important; justify-content: center !important; flex-grow: 1 !important; width: auto !important; }
                 #global-navbar .nav-brand-fixed { display: flex !important; align-items: center !important; gap: 10px !important; text-decoration: none !important; color: inherit !important; opacity: 1 !important; visibility: visible !important; }
-                #global-navbar .logo-img { height: 24px; width: auto; object-fit: contain; }
+                #global-navbar .logo-img { height: 28px; width: auto; object-fit: contain; }
             </style>
         `;
 
@@ -137,38 +166,42 @@ class GlobalNavbar extends HTMLElement {
         <nav id="global-navbar">
             <div class="nav-pill" id="main-nav-pill">
                 
+                <!-- STANDARD CONTENT (Collapsed) -->
                 <div class="nav-content-normal">
                     <button class="nav-btn" onclick="UI.toggleMenu('left')" aria-label="Menu">
-                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
                     </button>
 
                     <div class="nav-center">
                         <a href="/index.html" class="nav-brand-fixed">
                             <img src="/css/IMG_0623.png" class="logo-img logo-light" alt="Logo">
                             <img src="/css/IMG_0624.png" class="logo-img logo-dark" alt="Logo">
-                            <span class="brand-text">CronoTools</span>
+                            <span class="brand-text" style="font-weight:800;font-size:18px;letter-spacing:-0.5px;">CronoTools</span>
                         </a>
                     </div>
 
                     <div style="display:flex;align-items:center;gap:6px;">
                         ${authHtml}
-                        <button class="nav-btn" onclick="UI.toggleMenu('right')" aria-label="Impostazioni">⚙️</button>
+                        <button class="nav-btn" onclick="UI.toggleMenu('right')" aria-label="Impostazioni">
+                             <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+                        </button>
                     </div>
                 </div>
 
-                <div class="dynamic-menu-content" id="dyn-menu-container">
-                    </div>
-
+                <!-- DYNAMIC EXPANDED CONTENT -->
+                <div class="dynamic-menu-content" id="dyn-menu-container"></div>
             </div>
         </nav>
 
+        <!-- LEGACY SIDEBARS -->
         <aside class="sidebar" id="sidebar-left">
             <div class="sidebar-header">
                 <span class="sidebar-title">Menu</span>
                 <button class="nav-btn" onclick="UI.closeSidebars()">✕</button>
             </div>
-            <div style="padding:20px">
-                ${menuLeftContent.replace(/dyn-link/g, 'menu-item')} </div>
+            <div style="padding:24px 20px;">
+                ${menuLeftContent.replace(/dyn-link/g, 'menu-item')} 
+            </div>
         </aside>
 
         <aside class="sidebar right" id="sidebar-right">
@@ -176,7 +209,7 @@ class GlobalNavbar extends HTMLElement {
                 <span class="sidebar-title">Personalizza</span>
                 <button class="nav-btn" onclick="UI.closeSidebars()">✕</button>
             </div>
-            <div style="padding:20px">
+            <div style="padding:24px 20px;">
                 ${menuRightContent}
             </div>
         </aside>
