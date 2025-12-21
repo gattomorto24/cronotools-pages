@@ -1,4 +1,4 @@
-/* --- CronoTools UI Manager v3.5.0 (Accessibility & Compact Bar) --- */
+/* --- CronoTools UI Manager v4.0 (Remastered & Beta Engine) --- */
 
 const UI = {
     init() {
@@ -6,6 +6,7 @@ const UI = {
         this.bindEvents();
         this.initTheme();
         this.initLayout();
+        this.initAnimations(); // Initialize Beta Engine
         
         this.lastScrollY = window.scrollY;
         this.ticking = false; 
@@ -40,12 +41,9 @@ const UI = {
     /* --- INTELLIGENT MENU TOGGLE --- */
     toggleMenu(side) {
         const isMinimal = this.body.classList.contains('old-design-mode');
-
         if (isMinimal) {
-            // Legacy Mode: Open Sidebar
             this.openSidebar(side);
         } else {
-            // Dynamic Mode: Expand Navbar
             this.expandNavbar(side);
         }
     },
@@ -53,10 +51,8 @@ const UI = {
     /* --- DYNAMIC NAVBAR EXPANSION --- */
     expandNavbar(side) {
         if (!this.navbar) return;
-        
         const container = document.getElementById('dyn-menu-container');
         const template = document.getElementById(`tpl-menu-${side}`);
-        
         if (container && template) {
             container.innerHTML = template.innerHTML;
             this.navbar.classList.add('expanded');
@@ -68,7 +64,6 @@ const UI = {
     closeDynamicMenu() {
         if (this.navbar) {
             this.navbar.classList.remove('expanded');
-            // Ritardo pulizia HTML per permettere animazione chiusura
             setTimeout(() => {
                 const container = document.getElementById('dyn-menu-container');
                 if(container && !this.navbar.classList.contains('expanded')) container.innerHTML = '';
@@ -78,7 +73,6 @@ const UI = {
         this.body.classList.remove('no-scroll');
     },
 
-    /* --- LEGACY SIDEBARS --- */
     openSidebar(side) {
         this.closeSidebars(); 
         const el = document.getElementById(side === 'left' ? 'sidebar-left' : 'sidebar-right');
@@ -108,8 +102,6 @@ const UI = {
 
     handleScroll() {
         if (!this.navbar) return;
-        
-        // Se la navbar è espansa (menu aperto), ignora lo scroll
         if (this.navbar.classList.contains('expanded')) return;
 
         const currentScrollY = window.scrollY;
@@ -140,9 +132,6 @@ const UI = {
     setMinimalMode(active) {
         this.body.classList.toggle('old-design-mode', active);
         localStorage.setItem('crono-minimal', active);
-        if(window.CronoID) CronoID.updatePref('minimalMode', active);
-        
-        // Se cambiamo modalità mentre qualcosa è aperto, chiudiamo tutto per sicurezza
         this.closeDynamicMenu();
         this.closeSidebars();
         this.handleScroll();
@@ -151,7 +140,6 @@ const UI = {
     setBarPosition(bottom) {
         this.body.classList.toggle('bar-bottom', bottom);
         localStorage.setItem('crono-bar-bottom', bottom);
-        if(window.CronoID) CronoID.updatePref('barBottom', bottom);
         this.handleScroll();
     },
     
@@ -170,10 +158,22 @@ const UI = {
         if(window.CronoID) CronoID.updatePref('theme', t);
     },
 
-    /* --- ACCESSIBILITY --- */
+    /* --- ANIMATION BETA ENGINE --- */
+    initAnimations() {
+        const isBeta = localStorage.getItem('crono-beta-anims') === 'true';
+        this.toggleBetaAnimations(isBeta, false); // false = don't save yet, just apply
+    },
+
+    toggleBetaAnimations(active, save = true) {
+        this.body.classList.toggle('beta-animations', active);
+        if (save) localStorage.setItem('crono-beta-anims', active);
+    },
+
+    /* --- ACCESSIBILITY SUITE --- */
     initAccessibility() {
-        // Updated List: motion, contrast, bold + transparency, borders
-        ['motion', 'contrast', 'bold', 'transparency', 'borders'].forEach(k => {
+        // Updated List with new features
+        const keys = ['motion', 'contrast', 'bold', 'transparency', 'borders', 'saturated', 'monochrome'];
+        keys.forEach(k => {
             const active = localStorage.getItem(`crono-acc-${k}`) === 'true';
             this.toggleAccessClass(k, active);
         });
@@ -193,6 +193,8 @@ const UI = {
         if(type === 'bold') this.body.classList.toggle('bold-text', active);
         if(type === 'transparency') this.body.classList.toggle('no-transparency', active);
         if(type === 'borders') this.body.classList.toggle('show-borders', active);
+        if(type === 'saturated') this.body.classList.toggle('saturated-colors', active);
+        if(type === 'monochrome') this.body.classList.toggle('monochrome', active);
     },
 
     /* --- SYNC HELPERS --- */
@@ -203,8 +205,7 @@ const UI = {
     },
 
     updateUIState() {
-        const minCheck = document.getElementById('check-minimal');
-        if(minCheck) minCheck.checked = this.body.classList.contains('old-design-mode');
+        // Useful for checkbox sync if menu stays open
     }
 };
 
