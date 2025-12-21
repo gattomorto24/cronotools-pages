@@ -1,8 +1,9 @@
 /* =========================================================
-   Universal Navbar Component — CronoTools 3.4.0
+   Universal Navbar Component — CronoTools 3.5.0
    - DYNAMIC EXPANSION MENU LOGIC
    - CENTRALIZED MENU DEFINITIONS
    - LEGACY SIDEBAR FALLBACK
+   - ACCESSIBILITY CONTROLS ADDED
    ========================================================= */
 
 class GlobalNavbar extends HTMLElement {
@@ -19,6 +20,14 @@ class GlobalNavbar extends HTMLElement {
 
         const isMinimal = document.body.classList.contains('old-design-mode');
         const isBottom = document.body.classList.contains('bar-bottom');
+        
+        // Check Accessibility States for Checkboxes
+        const acc = {
+            motion: document.body.classList.contains('reduce-motion'),
+            contrast: document.body.classList.contains('high-contrast'),
+            transparency: document.body.classList.contains('no-transparency'),
+            borders: document.body.classList.contains('show-borders')
+        };
 
         // --- AUTH CONTENT ---
         const authHtml = isLoggedIn ? `
@@ -77,8 +86,31 @@ class GlobalNavbar extends HTMLElement {
                 <input type="checkbox" class="ios-toggle" ${isBottom ? 'checked' : ''}>
             </div>
 
+            <h4 style="margin:24px 0 8px;font-size:13px;text-transform:uppercase;color:var(--text-secondary);">Accessibilità</h4>
+            
+            <div class="ios-toggle-wrapper" onclick="UI.toggleAccessibility('transparency')">
+                <span class="ios-toggle-label">Rimuovi Trasparenza</span>
+                <input type="checkbox" class="ios-toggle" ${acc.transparency ? 'checked' : ''}>
+            </div>
+            
+            <div class="ios-toggle-wrapper" onclick="UI.toggleAccessibility('borders')">
+                <span class="ios-toggle-label">Mostra Bordi</span>
+                <input type="checkbox" class="ios-toggle" ${acc.borders ? 'checked' : ''}>
+            </div>
+            
+            <div class="ios-toggle-wrapper" onclick="UI.toggleAccessibility('motion')">
+                <span class="ios-toggle-label">Riduci Movimento</span>
+                <input type="checkbox" class="ios-toggle" ${acc.motion ? 'checked' : ''}>
+            </div>
+            
+            <div class="ios-toggle-wrapper" onclick="UI.toggleAccessibility('contrast')">
+                <span class="ios-toggle-label">Contrasto Elevato</span>
+                <input type="checkbox" class="ios-toggle" ${acc.contrast ? 'checked' : ''}>
+            </div>
+
+
             <h4 style="margin:24px 0 8px;font-size:13px;text-transform:uppercase;color:var(--text-secondary);">Temi</h4>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px; padding-bottom: 20px;">
                 <button class="menu-item" onclick="UI.setTheme('light')">Light</button>
                 <button class="menu-item" onclick="UI.setTheme('dark')">Dark</button>
                 <button class="menu-item" onclick="UI.setTheme('midnight')">Midnight</button>
@@ -87,6 +119,7 @@ class GlobalNavbar extends HTMLElement {
                 <button class="menu-item" onclick="UI.setTheme('forest')">Forest</button>
                 <button class="menu-item" onclick="UI.setTheme('sunset')">Sunset</button>
                 <button class="menu-item" onclick="UI.setTheme('ocean')">Ocean</button>
+                <button class="menu-item" onclick="UI.setTheme('high-contrast')" style="border:1px solid var(--text-primary); font-weight:bold;">High Contrast</button>
             </div>
         `;
 
@@ -104,7 +137,6 @@ class GlobalNavbar extends HTMLElement {
         <nav id="global-navbar">
             <div class="nav-pill" id="main-nav-pill">
                 
-                <!-- STANDARD CONTENT (Collapsed) -->
                 <div class="nav-content-normal">
                     <button class="nav-btn" onclick="UI.toggleMenu('left')" aria-label="Menu">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
@@ -124,23 +156,19 @@ class GlobalNavbar extends HTMLElement {
                     </div>
                 </div>
 
-                <!-- DYNAMIC EXPANDED CONTENT (Hidden by default) -->
                 <div class="dynamic-menu-content" id="dyn-menu-container">
-                    <!-- Injected via JS based on which button clicked -->
-                </div>
+                    </div>
 
             </div>
         </nav>
 
-        <!-- LEGACY SIDEBARS (Used only if Minimal Mode is active) -->
         <aside class="sidebar" id="sidebar-left">
             <div class="sidebar-header">
                 <span class="sidebar-title">Menu</span>
                 <button class="nav-btn" onclick="UI.closeSidebars()">✕</button>
             </div>
             <div style="padding:20px">
-                ${menuLeftContent.replace(/dyn-link/g, 'menu-item')} <!-- Reuse content, swap class -->
-            </div>
+                ${menuLeftContent.replace(/dyn-link/g, 'menu-item')} </div>
         </aside>
 
         <aside class="sidebar right" id="sidebar-right">
@@ -155,7 +183,6 @@ class GlobalNavbar extends HTMLElement {
 
         <div class="backdrop" id="backdrop"></div>
 
-        <!-- Hidden Templates for Dynamic Menu injection -->
         <template id="tpl-menu-left">
             <div class="dyn-menu-header">
                 <span class="dyn-menu-title">Navigazione</span>
