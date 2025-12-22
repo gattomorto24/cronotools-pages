@@ -1,13 +1,24 @@
-/* --- CronoTools UI Manager v4.0 (Remastered & Beta Engine) --- */
+/* ==========================================================================
+   CRONOTOOLS UI MANAGER - V6.0 (CORE ENGINE)
+   - Handles Themes (12+ Types)
+   - Handles Accessibility Suite (7+ Modes)
+   - Handles Beta Animation Engine
+   - Handles Layout & Navigation Logic
+   ========================================================================== */
 
 const UI = {
+    // --- INITIALIZATION ---
     init() {
+        console.log("CronoTools UI Engine v6.0 Starting...");
         this.cacheDOM();
         this.bindEvents();
+        
+        // Init Core Systems
         this.initTheme();
         this.initLayout();
-        this.initAnimations(); // Initialize Beta Engine
+        this.initAnimations(); // New Beta Engine Init
         
+        // Init Scroll Logic
         this.lastScrollY = window.scrollY;
         this.ticking = false; 
         this.handleScroll();
@@ -20,13 +31,16 @@ const UI = {
     },
 
     bindEvents() {
+        // Optimized Scroll Handler
         window.addEventListener('scroll', () => this.requestTick(), { passive: true });
         
+        // Close menus on Backdrop click
         if (this.backDrop) this.backDrop.addEventListener('click', () => {
             this.closeSidebars();
             this.closeDynamicMenu();
         });
         
+        // Accessibility: Close on Escape key
         document.addEventListener('keydown', (e) => { 
             if (e.key === 'Escape') {
                 this.closeSidebars();
@@ -34,12 +48,17 @@ const UI = {
             }
         });
         
+        // Custom Events for Cross-Component Sync
         window.addEventListener('crono-pref-sync', (e) => this.applyPrefs(e.detail));
         window.addEventListener('crono-auth-change', () => this.updateUIState());
     },
 
-    /* --- INTELLIGENT MENU TOGGLE --- */
+    /* =========================================
+       NAVIGATION LOGIC (DYNAMIC VS LEGACY)
+       ========================================= */
+    
     toggleMenu(side) {
+        // Check if user prefers the "Old Design" (Sidebar) or new (Dynamic Bar)
         const isMinimal = this.body.classList.contains('old-design-mode');
         if (isMinimal) {
             this.openSidebar(side);
@@ -48,12 +67,14 @@ const UI = {
         }
     },
 
-    /* --- DYNAMIC NAVBAR EXPANSION --- */
+    /* --- Dynamic Navbar Expansion --- */
     expandNavbar(side) {
         if (!this.navbar) return;
         const container = document.getElementById('dyn-menu-container');
         const template = document.getElementById(`tpl-menu-${side}`);
+        
         if (container && template) {
+            // Inject content from template
             container.innerHTML = template.innerHTML;
             this.navbar.classList.add('expanded');
             this.backDrop.classList.add('active');
@@ -64,17 +85,19 @@ const UI = {
     closeDynamicMenu() {
         if (this.navbar) {
             this.navbar.classList.remove('expanded');
+            // Clean content after animation delay for smooth exit
             setTimeout(() => {
                 const container = document.getElementById('dyn-menu-container');
                 if(container && !this.navbar.classList.contains('expanded')) container.innerHTML = '';
-            }, 300);
+            }, 400);
         }
         if (this.backDrop) this.backDrop.classList.remove('active');
         this.body.classList.remove('no-scroll');
     },
 
+    /* --- Legacy Sidebars --- */
     openSidebar(side) {
-        this.closeSidebars(); 
+        this.closeSidebars(); // Close others first
         const el = document.getElementById(side === 'left' ? 'sidebar-left' : 'sidebar-right');
         if (el) {
             el.classList.add('open');
@@ -89,7 +112,10 @@ const UI = {
         this.body.classList.remove('no-scroll');
     },
 
-    /* --- SCROLL LOGIC --- */
+    /* =========================================
+       SCROLL & STICKY LOGIC
+       ========================================= */
+    
     requestTick() {
         if (!this.ticking) {
             window.requestAnimationFrame(() => {
@@ -102,26 +128,31 @@ const UI = {
 
     handleScroll() {
         if (!this.navbar) return;
+        // Don't change state if menu is expanded
         if (this.navbar.classList.contains('expanded')) return;
 
         const currentScrollY = window.scrollY;
-        const threshold = 10; 
+        const threshold = 15; 
         const scrollDelta = 5;
 
         if (currentScrollY <= threshold) {
             this.navbar.classList.remove('scrolled');
         } else {
             const diff = currentScrollY - this.lastScrollY;
-            if (diff > scrollDelta) {
+            // Add scrolled class if we move enough, simple logic
+            if (diff > scrollDelta || currentScrollY > 50) {
                 this.navbar.classList.add('scrolled');
-            } else if (diff < -scrollDelta) {
+            } else if (currentScrollY < 50) {
                 this.navbar.classList.remove('scrolled');
             }
         }
         this.lastScrollY = Math.max(0, currentScrollY);
     },
 
-    /* --- LAYOUT & THEME --- */
+    /* =========================================
+       LAYOUT & THEME MANAGEMENT
+       ========================================= */
+
     initLayout() {
         const isMinimal = localStorage.getItem('crono-minimal') === 'true';
         const isBottom = localStorage.getItem('crono-bar-bottom') === 'true';
@@ -132,6 +163,7 @@ const UI = {
     setMinimalMode(active) {
         this.body.classList.toggle('old-design-mode', active);
         localStorage.setItem('crono-minimal', active);
+        // Force close menus to reset state
         this.closeDynamicMenu();
         this.closeSidebars();
         this.handleScroll();
@@ -149,7 +181,7 @@ const UI = {
     initTheme() {
         const t = localStorage.getItem('crono-theme') || 'light';
         this.setTheme(t);
-        this.initAccessibility();
+        this.initAccessibility(); // Re-apply accessibility on theme init
     },
 
     setTheme(t) {
@@ -158,21 +190,44 @@ const UI = {
         if(window.CronoID) CronoID.updatePref('theme', t);
     },
 
-    /* --- ANIMATION BETA ENGINE --- */
+    /* =========================================
+       BETA ANIMATION ENGINE
+       ========================================= */
+    
     initAnimations() {
         const isBeta = localStorage.getItem('crono-beta-anims') === 'true';
-        this.toggleBetaAnimations(isBeta, false); // false = don't save yet, just apply
+        this.toggleBetaAnimations(isBeta, false); // false = do not overwrite storage on init
     },
 
     toggleBetaAnimations(active, save = true) {
         this.body.classList.toggle('beta-animations', active);
         if (save) localStorage.setItem('crono-beta-anims', active);
+        // Trigger a re-flow to restart animations if needed
+        if(active) {
+            const wrapper = document.querySelector('.content-wrapper');
+            if(wrapper) {
+                wrapper.style.animation = 'none';
+                wrapper.offsetHeight; /* trigger reflow */
+                wrapper.style.animation = null; 
+            }
+        }
     },
 
-    /* --- ACCESSIBILITY SUITE --- */
+    /* =========================================
+       ACCESSIBILITY SUITE (7 MODES)
+       ========================================= */
+
     initAccessibility() {
-        // Updated List with new features
-        const keys = ['motion', 'contrast', 'bold', 'transparency', 'borders', 'saturated', 'monochrome'];
+        const keys = [
+            'motion',       // Reduce Motion
+            'contrast',     // High Contrast Mode
+            'bold',         // Bold Text
+            'transparency', // Remove Transparency
+            'borders',      // Show Borders
+            'saturated',    // Saturated Colors
+            'monochrome'    // Grayscale Focus
+        ];
+
         keys.forEach(k => {
             const active = localStorage.getItem(`crono-acc-${k}`) === 'true';
             this.toggleAccessClass(k, active);
@@ -181,23 +236,30 @@ const UI = {
 
     toggleAccessibility(type) {
         const key = `crono-acc-${type}`;
-        const newState = !(localStorage.getItem(key) === 'true');
+        const isActive = localStorage.getItem(key) === 'true';
+        const newState = !isActive;
+        
         localStorage.setItem(key, newState);
         this.toggleAccessClass(type, newState);
     },
 
     toggleAccessClass(type, active) {
-        // Map types to Body Classes
-        if(type === 'motion') this.body.classList.toggle('reduce-motion', active);
-        if(type === 'contrast') this.body.classList.toggle('high-contrast', active);
-        if(type === 'bold') this.body.classList.toggle('bold-text', active);
-        if(type === 'transparency') this.body.classList.toggle('no-transparency', active);
-        if(type === 'borders') this.body.classList.toggle('show-borders', active);
-        if(type === 'saturated') this.body.classList.toggle('saturated-colors', active);
-        if(type === 'monochrome') this.body.classList.toggle('monochrome', active);
+        // Map types to Specific Body Classes defined in CSS
+        switch(type) {
+            case 'motion': this.body.classList.toggle('reduce-motion', active); break;
+            case 'contrast': this.body.classList.toggle('high-contrast', active); break;
+            case 'bold': this.body.classList.toggle('bold-text', active); break;
+            case 'transparency': this.body.classList.toggle('no-transparency', active); break;
+            case 'borders': this.body.classList.toggle('show-borders', active); break;
+            case 'saturated': this.body.classList.toggle('saturated-colors', active); break;
+            case 'monochrome': this.body.classList.toggle('monochrome', active); break;
+        }
     },
 
-    /* --- SYNC HELPERS --- */
+    /* =========================================
+       SYNC & STATE HELPERS
+       ========================================= */
+
     applyPrefs(prefs) {
         if(prefs.theme) this.setTheme(prefs.theme);
         if(prefs.minimalMode !== undefined) this.setMinimalMode(prefs.minimalMode);
@@ -205,9 +267,9 @@ const UI = {
     },
 
     updateUIState() {
-        // Useful for checkbox sync if menu stays open
+        // Reserved for future widget updates
     }
 };
 
-// Avvio al caricamento DOM
+// Start the engine when DOM is ready
 document.addEventListener('DOMContentLoaded', () => UI.init());
