@@ -1,20 +1,37 @@
 /* ==========================================================================
+<<<<<<< HEAD
    CRONOTOOLS DESIGN SYSTEM - V6.0 (ULTIMATE EDITION)
+=======
+   CRONOTOOLS DESIGN SYSTEM - V7.0 (PRISMA UPDATE)
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
    ========================================================================== */
 
 /* INDICE CONTENUTI:
    1.  CORE VARIABLES & FONTS
+<<<<<<< HEAD
    2.  THEME DEFINITIONS (12+ THEMES)
+=======
+   2.  THEME DEFINITIONS (REMASTERED ENGINE)
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
    3.  RESET & GLOBAL LAYOUT
    4.  NAVBAR LOGIC (DYNAMIC & LEGACY)
    5.  SIDEBAR & MENU STRUCTURE
    6.  HOME PAGE & TYPOGRAPHY
+<<<<<<< HEAD
    7.  TOOLS GRID SYSTEM (REMASTERED)
    8.  UI COMPONENTS (INPUTS, BUTTONS, TOGGLES)
    9.  UPLOAD AREA & WORKSPACE
    10. ANIMATION ENGINE (LEGACY & BETA SUITE)
    11. ACCESSIBILITY OVERRIDES (THE FULL SUITE)
    12. MEDIA QUERIES (COMPACT MODES)
+=======
+   7.  TOOLS GRID SYSTEM
+   8.  UI COMPONENTS (INPUTS, BUTTONS, TOGGLES)
+   9.  UPLOAD AREA & WORKSPACE
+   10. ANIMATION ENGINE
+   11. ACCESSIBILITY OVERRIDES
+   12. MEDIA QUERIES
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 */
 
 /* =========================================
@@ -22,8 +39,13 @@
    ========================================= */
 
 :root { 
+<<<<<<< HEAD
     /* --- METRICHE & FONT --- */
     --font-stack: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+=======
+    /* --- METRICHE & FONT (Ready for Multi-lang) --- */
+    --font-stack: "SF Pro Display", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
     --font-mono: "SF Mono", "Fira Code", Consolas, monospace;
     
     --radius-sm: 12px; 
@@ -32,6 +54,7 @@
     --radius-xl: 38px;
     --radius-pill: 999px;
     
+    /* Dynamic Bar Defaults (Possono essere sovrascritti da JS) */
     --bar-width: 94%;
     --bar-height: 64px;
     
@@ -40,6 +63,7 @@
     --ease-smooth: cubic-bezier(0.32, 0.72, 0, 1);
     --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
     
+<<<<<<< HEAD
     /* --- COLORI BASE (Fallback) --- */
     --danger: #ff3b30;
     --success: #34c759;
@@ -85,18 +109,77 @@
 }
 
 /* --- THEME: DARK --- */
+=======
+    /* --- COLORI BASE (Semantic Fallback) --- */
+    --danger: #ff453a;
+    --success: #32d74b;
+    --warning: #ffd60a;
+}
+
+/* =========================================
+   2. THEME DEFINITIONS (REMASTERED)
+   ========================================= */
+
+/* --- THEME: LIGHT (Standard) --- */
+:root {
+    --bg-body: #f2f2f7;
+    --bg-surface: #ffffff;
+    --bg-surface-hover: #f9f9fb;
+    --bg-input: #eef1f6;
+    
+    /* Glass Layers - Calibrated Opacity */
+    --bg-glass: rgba(255, 255, 255, 0.65);
+    --bg-glass-heavy: rgba(255, 255, 255, 0.85);
+    --bg-overlay: rgba(0, 0, 0, 0.2);
+
+    --text-primary: #1c1c1e;
+    --text-secondary: rgba(60, 60, 67, 0.75);
+    --text-tertiary: rgba(60, 60, 67, 0.45);
+
+    --accent: #007aff;
+    --accent-hover: #0063ce;
+    --on-accent: #ffffff;
+    --accent-dim: rgba(0, 122, 255, 0.1);
+    --accent-gradient: linear-gradient(135deg, #007aff, #00c6ff);
+
+    --border-light: rgba(0, 0, 0, 0.08);
+    --border-focus: rgba(0, 122, 255, 0.4);
+
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 8px 24px rgba(0,0,0,0.06);
+    --shadow-lg: 0 20px 48px rgba(0,0,0,0.1);
+    --shadow-glow: 0 0 20px rgba(0, 122, 255, 0.15);
+
+    --nav-bg: rgba(255, 255, 255, 0.8);
+    --nav-border: rgba(255,255,255,0.5);
+    --nav-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    --nav-text: #1c1c1e;
+}
+
+/* --- THEME: DARK (Standard) --- */
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 [data-theme="dark"] {
     --bg-body: #000000;
     --bg-surface: #1c1c1e;
     --bg-surface-hover: #2c2c2e;
     --bg-input: #252527;
+<<<<<<< HEAD
     --bg-glass: rgba(28, 28, 30, 0.75);
     --bg-glass-heavy: rgba(28, 28, 30, 0.92);
+=======
+    
+    --bg-glass: rgba(28, 28, 30, 0.65);
+    --bg-glass-heavy: rgba(28, 28, 30, 0.85);
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
     --bg-overlay: rgba(0, 0, 0, 0.6);
 
     --text-primary: #ffffff;
     --text-secondary: #ebebf5;
+<<<<<<< HEAD
     --text-tertiary: rgba(235, 235, 245, 0.35);
+=======
+    --text-tertiary: rgba(235, 235, 245, 0.4);
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 
     --accent: #0a84ff;
     --accent-hover: #409cff;
@@ -105,6 +188,7 @@
     --accent-gradient: linear-gradient(135deg, #0a84ff, #5ac8fa);
 
     --border-light: rgba(255, 255, 255, 0.12);
+<<<<<<< HEAD
 
     --shadow-sm: 0 4px 12px rgba(0,0,0,0.3);
     --shadow-md: 0 12px 30px rgba(0,0,0,0.4);
@@ -113,10 +197,20 @@
 
     --nav-bg: rgba(28, 28, 30, 0.85);
     --nav-border: rgba(255, 255, 255, 0.15);
+=======
+    --shadow-sm: 0 4px 12px rgba(0,0,0,0.3);
+    --shadow-md: 0 12px 30px rgba(0,0,0,0.4);
+    --shadow-lg: 0 30px 60px rgba(0,0,0,0.6);
+    --shadow-glow: 0 0 25px rgba(10, 132, 255, 0.2);
+
+    --nav-bg: rgba(28, 28, 30, 0.8);
+    --nav-border: rgba(255, 255, 255, 0.1);
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
     --nav-shadow: 0 10px 40px rgba(0,0,0,0.5);
     --nav-text: #ffffff;
 }
 
+<<<<<<< HEAD
 /* --- THEME: GOLD (NEW) --- */
 [data-theme="gold"] {
     --bg-body: #080808;
@@ -298,10 +392,225 @@
     --nav-bg: rgba(28, 37, 65, 0.85);
     --nav-border: rgba(91, 192, 190, 0.4);
     --nav-text: #ffffff;
+=======
+/* --- THEME: GOLD (Premium/Mida) --- */
+[data-theme="gold"] {
+    --bg-body: #050503; /* Nero molto caldo */
+    --bg-surface: #14120b;
+    --bg-surface-hover: #1f1c12;
+    --bg-input: #262216;
+    
+    --bg-glass: rgba(20, 18, 11, 0.7);
+    --bg-glass-heavy: rgba(20, 18, 11, 0.9);
+    --bg-overlay: rgba(0, 0, 0, 0.8);
+    
+    --text-primary: #f5e6c8;
+    --text-secondary: #d4c5a3;
+    --text-tertiary: #8f846a;
+    
+    /* Premium Gradients */
+    --accent: #d4af37;
+    --accent-hover: #f1d374;
+    --on-accent: #000000;
+    --accent-dim: rgba(212, 175, 55, 0.15);
+    --accent-gradient: linear-gradient(135deg, #bf953f 0%, #fcf6ba 40%, #b38728 70%, #fbf5b7 100%);
+    
+    --border-light: rgba(212, 175, 55, 0.25);
+    --border-focus: rgba(212, 175, 55, 0.6);
+    
+    --shadow-glow: 0 0 35px rgba(212, 175, 55, 0.25);
+    --nav-bg: rgba(20, 18, 11, 0.85);
+    --nav-border: rgba(212, 175, 55, 0.3);
+    --nav-text: #d4af37;
+    --nav-shadow: 0 0 30px rgba(212, 175, 55, 0.1);
+}
+
+/* --- THEME: CILIEGIA (New - Cherry Red) --- */
+[data-theme="ciliegia"] {
+    --bg-body: #1a0507;
+    --bg-surface: #2b0b0e;
+    --bg-surface-hover: #381014;
+    --bg-input: #45151a;
+    
+    --bg-glass: rgba(43, 11, 14, 0.7);
+    --bg-glass-heavy: rgba(43, 11, 14, 0.9);
+    
+    --text-primary: #ffebec;
+    --text-secondary: #ffb3b8;
+    --text-tertiary: #995c61;
+    
+    --accent: #ff2d55;
+    --accent-hover: #ff5c7c;
+    --on-accent: #ffffff;
+    --accent-dim: rgba(255, 45, 85, 0.2);
+    --accent-gradient: linear-gradient(135deg, #ff2d55, #ff3b30);
+    
+    --border-light: rgba(255, 45, 85, 0.3);
+    --nav-bg: rgba(43, 11, 14, 0.8);
+    --nav-border: rgba(255, 45, 85, 0.3);
+    --nav-text: #ffebec;
+}
+
+/* --- THEME: LAVANDA (New - Pastel Purple) --- */
+[data-theme="lavanda"] {
+    --bg-body: #f7f6fc;
+    --bg-surface: #ffffff;
+    --bg-surface-hover: #f0edfa;
+    --bg-input: #e6e1f5;
+    
+    --bg-glass: rgba(255, 255, 255, 0.7);
+    --bg-glass-heavy: rgba(255, 255, 255, 0.9);
+    
+    --text-primary: #3a3052;
+    --text-secondary: #6e638a;
+    --text-tertiary: #9d96b3;
+    
+    --accent: #af52de;
+    --accent-hover: #bf73e6;
+    --on-accent: #ffffff;
+    --accent-dim: rgba(175, 82, 222, 0.12);
+    --accent-gradient: linear-gradient(135deg, #af52de, #5856d6);
+    
+    --border-light: rgba(175, 82, 222, 0.15);
+    --nav-bg: rgba(255, 255, 255, 0.85);
+    --nav-border: rgba(175, 82, 222, 0.2);
+    --nav-text: #3a3052;
+}
+
+/* --- THEME: NORDIC (New - Ice Blue) --- */
+[data-theme="nordic"] {
+    --bg-body: #f0f4f8;
+    --bg-surface: #ffffff;
+    --bg-surface-hover: #e6eef5;
+    --bg-input: #dae4ed;
+    
+    --bg-glass: rgba(255, 255, 255, 0.7);
+    --bg-glass-heavy: rgba(255, 255, 255, 0.9);
+    
+    --text-primary: #2c3e50;
+    --text-secondary: #5d738a;
+    --text-tertiary: #8fa0b3;
+    
+    --accent: #5ac8fa;
+    --accent-hover: #7cd5fc;
+    --on-accent: #ffffff;
+    --accent-dim: rgba(90, 200, 250, 0.15);
+    --accent-gradient: linear-gradient(135deg, #5ac8fa, #007aff);
+    
+    --border-light: rgba(90, 200, 250, 0.2);
+    --nav-bg: rgba(255, 255, 255, 0.85);
+    --nav-border: rgba(90, 200, 250, 0.3);
+    --nav-text: #2c3e50;
+}
+
+/* --- THEME: LATTE (Refined - Warm) --- */
+[data-theme="latte"] {
+    --bg-body: #fdf6e3; /* Solarized Light Base */
+    --bg-surface: #fffef8;
+    --bg-surface-hover: #f5efdc;
+    --bg-input: #eee8d5;
+    
+    --bg-glass: rgba(255, 254, 248, 0.7);
+    --bg-glass-heavy: rgba(255, 254, 248, 0.9);
+    
+    --text-primary: #5c4f3b; /* Warm Dark Brown */
+    --text-secondary: #87775d;
+    --text-tertiary: #b0a38e;
+    
+    --accent: #d33682; /* Magenta/Pink warm pop */
+    --accent-hover: #e64e98;
+    --on-accent: #ffffff;
+    --accent-dim: rgba(211, 54, 130, 0.1);
+    --accent-gradient: linear-gradient(135deg, #d33682, #b58900);
+    
+    --border-light: rgba(92, 79, 59, 0.15);
+    --nav-bg: rgba(255, 254, 248, 0.85);
+    --nav-text: #5c4f3b;
+    --nav-border: rgba(92, 79, 59, 0.1);
+}
+
+/* --- THEME: CYBER (Neon) --- */
+[data-theme="cyber"] {
+    --bg-body: #050505;
+    --bg-surface: #0a0a12;
+    --bg-surface-hover: #14141f;
+    --bg-input: #1a1a2e;
+    --bg-glass: rgba(10, 10, 18, 0.75);
+    --bg-glass-heavy: rgba(10, 10, 18, 0.92);
+    
+    --text-primary: #ffffff;
+    --text-secondary: #00f3ff;
+    --text-tertiary: #ff0099;
+    
+    --accent: #ff0099;
+    --accent-hover: #ff5cba;
+    --on-accent: #ffffff;
+    --accent-dim: rgba(255, 0, 153, 0.2);
+    --accent-gradient: linear-gradient(135deg, #ff0099, #00f3ff);
+    
+    --border-light: rgba(0, 243, 255, 0.3);
+    --shadow-glow: 0 0 30px rgba(255, 0, 153, 0.3);
+    
+    --nav-bg: rgba(10, 10, 18, 0.85);
+    --nav-border: #00f3ff;
+    --nav-text: #ffffff;
+    --nav-shadow: 0 0 25px rgba(0, 243, 255, 0.2);
+}
+
+/* --- THEME: MIDNIGHT --- */
+[data-theme="midnight"] {
+    --bg-body: #000000;
+    --bg-surface: #0f0f12;
+    --bg-surface-hover: #18181f;
+    --bg-input: #1f1f26;
+    --bg-glass: rgba(15, 15, 18, 0.7);
+    --bg-glass-heavy: rgba(15, 15, 18, 0.9);
+    
+    --text-primary: #ffffff;
+    --text-secondary: #94949e;
+    --text-tertiary: #5e5e66;
+    
+    --accent: #5e5ce6; /* Indigo */
+    --accent-hover: #7d7aff;
+    --on-accent: #ffffff;
+    --accent-dim: rgba(94, 92, 230, 0.2);
+    --accent-gradient: linear-gradient(135deg, #5e5ce6, #bf5af2);
+    
+    --border-light: #2c2c2e;
+    --nav-bg: rgba(15, 15, 18, 0.8);
+    --nav-border: rgba(255,255,255,0.1);
+    --nav-text: #ffffff;
+}
+
+/* --- THEME: SLATE --- */
+[data-theme="slate"] {
+    --bg-body: #1b262c;
+    --bg-surface: #26333d;
+    --bg-surface-hover: #324350;
+    --bg-input: #3e505e;
+    --bg-glass: rgba(38, 51, 61, 0.7);
+    --bg-glass-heavy: rgba(38, 51, 61, 0.9);
+    
+    --text-primary: #dee4e7;
+    --text-secondary: #aabcc6;
+    --text-tertiary: #758a99;
+    
+    --accent: #64ffda;
+    --accent-hover: #9effe8;
+    --on-accent: #1b262c;
+    --accent-dim: rgba(100, 255, 218, 0.15);
+    --accent-gradient: linear-gradient(135deg, #64ffda, #4db6ac);
+    
+    --border-light: rgba(100, 255, 218, 0.2);
+    --nav-bg: rgba(38, 51, 61, 0.8);
+    --nav-border: rgba(100, 255, 218, 0.25);
+    --nav-text: #dee4e7;
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 }
 
 /* --- THEME: FOREST --- */
 [data-theme="forest"] {
+<<<<<<< HEAD
     --bg-body: #0f1f17;
     --bg-surface: #1b3a2b;
     --bg-surface-hover: #244a38;
@@ -321,10 +630,34 @@
     --nav-bg: rgba(27, 58, 43, 0.85);
     --nav-border: rgba(52, 199, 89, 0.4);
     --nav-text: #e9f5ef;
+=======
+    --bg-body: #0d1a12;
+    --bg-surface: #172e20;
+    --bg-surface-hover: #203f2c;
+    --bg-input: #295038;
+    --bg-glass: rgba(23, 46, 32, 0.7);
+    --bg-glass-heavy: rgba(23, 46, 32, 0.9);
+    
+    --text-primary: #e6f5eb;
+    --text-secondary: #9ccdb0;
+    --text-tertiary: #6a9b7e;
+    
+    --accent: #34c759;
+    --accent-hover: #5ddf85;
+    --on-accent: #000000;
+    --accent-dim: rgba(52, 199, 89, 0.2);
+    --accent-gradient: linear-gradient(135deg, #34c759, #30d158);
+    
+    --border-light: rgba(52, 199, 89, 0.3);
+    --nav-bg: rgba(23, 46, 32, 0.8);
+    --nav-border: rgba(52, 199, 89, 0.35);
+    --nav-text: #e6f5eb;
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 }
 
 /* --- THEME: SUNSET --- */
 [data-theme="sunset"] {
+<<<<<<< HEAD
     --bg-body: #2b0f0f;
     --bg-surface: #4b1e1e;
     --bg-surface-hover: #5e2626;
@@ -369,11 +702,37 @@
     --nav-text: #e6faff;
 }
 
+=======
+    --bg-body: #240e10;
+    --bg-surface: #3d171b;
+    --bg-surface-hover: #521f24;
+    --bg-input: #69282e;
+    --bg-glass: rgba(61, 23, 27, 0.7);
+    --bg-glass-heavy: rgba(61, 23, 27, 0.9);
+    
+    --text-primary: #ffe6e8;
+    --text-secondary: #ffb3ba;
+    --text-tertiary: #cc8088;
+    
+    --accent: #ff9f0a;
+    --accent-hover: #ffb340;
+    --on-accent: #240e10;
+    --accent-dim: rgba(255, 159, 10, 0.2);
+    --accent-gradient: linear-gradient(135deg, #ff9f0a, #ff375f);
+    
+    --border-light: rgba(255, 159, 10, 0.3);
+    --nav-bg: rgba(61, 23, 27, 0.85);
+    --nav-border: rgba(255, 159, 10, 0.35);
+    --nav-text: #ffe6e8;
+}
+
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 /* --- THEME: GRAPHITE --- */
 [data-theme="graphite"] {
     --bg-body: #121212;
     --bg-surface: #1e1e1e;
     --bg-surface-hover: #2c2c2c;
+<<<<<<< HEAD
     --bg-input: #2a2a2a;
     --bg-glass: rgba(30, 30, 30, 0.7);
     --bg-glass-heavy: rgba(30, 30, 30, 0.9);
@@ -390,6 +749,216 @@
     --nav-bg: rgba(30, 30, 30, 0.85);
     --nav-border: rgba(255, 255, 255, 0.15);
     --nav-text: #f5f5f5;
+=======
+    --bg-input: #333333;
+    --bg-glass: rgba(30, 30, 30, 0.7);
+    --bg-glass-heavy: rgba(30, 30, 30, 0.9);
+    
+    --text-primary: #e0e0e0;
+    --text-secondary: #a0a0a0;
+    --text-tertiary: #666666;
+    
+    --accent: #ffffff;
+    --accent-hover: #dcdcdc;
+    --on-accent: #000000;
+    --accent-dim: rgba(255, 255, 255, 0.1);
+    --accent-gradient: linear-gradient(135deg, #ffffff, #b3b3b3);
+    
+    --border-light: rgba(255, 255, 255, 0.15);
+    --nav-bg: rgba(30, 30, 30, 0.8);
+    --nav-border: rgba(255, 255, 255, 0.15);
+    --nav-text: #e0e0e0;
+}
+
+/* --- THEME: HIGH CONTRAST (Accessibility) --- */
+[data-theme="high-contrast"] {
+    --bg-body: #ffffff;
+    --bg-surface: #ffffff;
+    --bg-surface-hover: #f0f0f0;
+    --bg-input: #ffffff;
+    --bg-glass: #ffffff;
+    --bg-glass-heavy: #ffffff;
+    --bg-overlay: rgba(0,0,0,0.9);
+    
+    --text-primary: #000000;
+    --text-secondary: #000000;
+    --text-tertiary: #000000;
+    
+    --accent: #0000aa;
+    --accent-hover: #000055;
+    --on-accent: #ffffff;
+    --accent-dim: rgba(0, 0, 0, 0.1);
+    --accent-gradient: none;
+    
+    --border-light: #000000;
+    --border-focus: #000000;
+    
+    --shadow-sm: none;
+    --shadow-md: none;
+    --shadow-lg: none;
+    --shadow-glow: none;
+    
+    --nav-bg: #ffffff;
+    --nav-border: #000000;
+    --nav-text: #000000;
+    --nav-shadow: none;
+}
+[data-theme="high-contrast"] * { border: 2px solid #000000 !important; }
+
+/* --- THEME: OCEAN --- */
+[data-theme="ocean"] {
+    --bg-body: #051923;
+    --bg-surface: #003554;
+    --bg-surface-hover: #00456e;
+    --bg-input: #006494;
+    --bg-glass: rgba(0, 53, 84, 0.7);
+    --bg-glass-heavy: rgba(0, 53, 84, 0.9);
+    --bg-overlay: rgba(5, 25, 35, 0.8);
+    --text-primary: #e6faff;
+    --text-secondary: #9bd7ea;
+    --text-tertiary: #5c9ab0;
+    --accent: #00a6fb;
+    --accent-hover: #33bbff;
+    --on-accent: #051923;
+    --accent-dim: rgba(0, 166, 251, 0.2);
+    --accent-gradient: linear-gradient(135deg, #00a6fb, #0582ca);
+    --border-light: rgba(0, 166, 251, 0.3);
+    --nav-bg: rgba(0, 53, 84, 0.85);
+    --nav-border: rgba(0, 166, 251, 0.4);
+    --nav-text: #e6faff;
+}
+
+/* --- THEME: CHERRY --- */
+[data-theme="cherry"] {
+    --bg-body: #1a0408;
+    --bg-surface: #3a0a14;
+    --bg-surface-hover: #4a0f1b;
+    --bg-input: #5a1422;
+    --bg-glass: rgba(58, 10, 20, 0.7);
+    --bg-glass-heavy: rgba(58, 10, 20, 0.9);
+    --bg-overlay: rgba(26, 4, 8, 0.85);
+    --text-primary: #fff1f4;
+    --text-secondary: #f2b8c6;
+    --text-tertiary: #c77a8c;
+    --accent: #e6396a;
+    --accent-hover: #ff4f85;
+    --on-accent: #1a0408;
+    --accent-dim: rgba(230, 57, 106, 0.2);
+    --accent-gradient: linear-gradient(135deg, #e6396a, #ff758f);
+    --border-light: rgba(230, 57, 106, 0.35);
+    --nav-bg: rgba(58, 10, 20, 0.85);
+    --nav-border: rgba(230, 57, 106, 0.45);
+    --nav-text: #fff1f4;
+}
+
+/* --- THEME: AURORA --- */
+[data-theme="aurora"] {
+    --bg-body: #040d12;
+    --bg-surface: #071a24;
+    --bg-surface-hover: #0a2433;
+    --bg-input: #0e2f42;
+    --bg-glass: rgba(7, 26, 36, 0.7);
+    --bg-glass-heavy: rgba(7, 26, 36, 0.9);
+    --bg-overlay: rgba(4, 13, 18, 0.85);
+    --text-primary: #eaffff;
+    --text-secondary: #b5f3ff;
+    --text-tertiary: #6fbfd1;
+    --accent: #4fd1c5;
+    --accent-hover: #6beee0;
+    --on-accent: #040d12;
+    --accent-dim: rgba(79, 209, 197, 0.25);
+    --accent-gradient: linear-gradient(135deg, #4fd1c5, #63b3ed);
+    --border-light: rgba(79, 209, 197, 0.35);
+    --nav-bg: rgba(7, 26, 36, 0.85);
+    --nav-border: rgba(79, 209, 197, 0.45);
+    --nav-text: #eaffff;
+}
+
+/* --- THEME: DESERT --- */
+[data-theme="desert"] {
+    --bg-body: #1a140b;
+    --bg-surface: #2b2114;
+    --bg-surface-hover: #3a2d1c;
+    --bg-input: #4a3a24;
+    --bg-glass: rgba(43, 33, 20, 0.7);
+    --bg-glass-heavy: rgba(43, 33, 20, 0.9);
+    --bg-overlay: rgba(26, 20, 11, 0.85);
+    --text-primary: #fff6e5;
+    --text-secondary: #e7cfa3;
+    --text-tertiary: #b89b6b;
+    --accent: #e0a84a;
+    --accent-hover: #f0bb63;
+    --on-accent: #1a140b;
+    --accent-dim: rgba(224, 168, 74, 0.25);
+    --accent-gradient: linear-gradient(135deg, #e0a84a, #ffcc80);
+    --border-light: rgba(224, 168, 74, 0.35);
+    --nav-bg: rgba(43, 33, 20, 0.85);
+    --nav-border: rgba(224, 168, 74, 0.45);
+    --nav-text: #fff6e5;
+}
+/* --- THEME: ROSE --- */
+[data-theme="rose"] {
+    /* Base: carta scura rosata, non nero */
+    --bg-body: #141012;
+    --bg-surface: #1f181c;
+    --bg-surface-hover: #2a2126;
+    --bg-input: #33272d;
+
+    /* Glass: vellutato, quasi opaco */
+    --bg-glass: rgba(42, 33, 38, 0.65);
+    --bg-glass-heavy: rgba(42, 33, 38, 0.88);
+    --bg-overlay: rgba(20, 16, 18, 0.9);
+
+    /* Testi: carta avorio + rosé spento */
+    --text-primary: #f4eaea;
+    --text-secondary: #d6bfc3;
+    --text-tertiary: #a88f94;
+
+    /* Accento: rosé metallico, NON pink */
+    --accent: #c48a97;
+    --accent-hover: #d9a3af;
+    --on-accent: #141012;
+
+    /* Accento soft e gradient editoriale */
+    --accent-dim: rgba(196, 138, 151, 0.18);
+    --accent-gradient: linear-gradient(
+        135deg,
+        #c48a97,
+        #e0b6bf,
+        #b97986
+    );
+
+    /* Bordi sottilissimi, quasi invisibili */
+    --border-light: rgba(196, 138, 151, 0.25);
+
+    /* Navbar: inchiostro rosato */
+    --nav-bg: rgba(31, 24, 28, 0.9);
+    --nav-border: rgba(196, 138, 151, 0.35);
+    --nav-text: #f4eaea;
+}
+
+/* --- THEME: SOLAR --- */
+[data-theme="solar"] {
+    --bg-body: #140800;
+    --bg-surface: #2a1400;
+    --bg-surface-hover: #3b1d00;
+    --bg-input: #4d2600;
+    --bg-glass: rgba(42, 20, 0, 0.7);
+    --bg-glass-heavy: rgba(42, 20, 0, 0.9);
+    --bg-overlay: rgba(20, 8, 0, 0.85);
+    --text-primary: #fff3e0;
+    --text-secondary: #ffd199;
+    --text-tertiary: #d49b5c;
+    --accent: #ff9800;
+    --accent-hover: #ffb74d;
+    --on-accent: #140800;
+    --accent-dim: rgba(255, 152, 0, 0.25);
+    --accent-gradient: linear-gradient(135deg, #ff9800, #ffc107);
+    --border-light: rgba(255, 152, 0, 0.4);
+    --nav-bg: rgba(42, 20, 0, 0.85);
+    --nav-border: rgba(255, 152, 0, 0.5);
+    --nav-text: #fff3e0;
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 }
 
 /* --- THEME: HIGH CONTRAST (Standard) --- */
@@ -452,7 +1021,10 @@ body.no-scroll { overflow: hidden; }
     display: flex; flex-direction: column; align-items: center;
     position: relative; z-index: 10;
     opacity: 0; 
+<<<<<<< HEAD
     /* L'animazione effettiva viene definita nella sezione Animazioni */
+=======
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
     animation: legacyFadeUp 0.8s var(--ease-smooth) forwards; 
 }
 
@@ -481,7 +1053,11 @@ a:hover { opacity: 0.7; }
     pointer-events: auto; 
     width: var(--bar-width); 
     max-width: 860px; 
+<<<<<<< HEAD
     height: 68px; 
+=======
+    height: var(--bar-height); 
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
     background: var(--nav-bg); 
     border: 1px solid var(--nav-border); 
     border-radius: var(--radius-pill); 
@@ -494,7 +1070,28 @@ a:hover { opacity: 0.7; }
     display: flex; flex-direction: column; overflow: hidden;
 }
 
+<<<<<<< HEAD
 .nav-content-normal { width: 100%; height: 68px; display: flex; align-items: center; justify-content: space-between; transition: opacity 0.3s ease, transform 0.3s ease; }
+=======
+/* DYNAMIC BAR VARIANTS (Density & Content) */
+#global-navbar.density-compact .nav-pill { height: 52px; padding: 0 16px; }
+#global-navbar.density-extended .nav-pill { height: 78px; padding: 0 32px; border-radius: 28px; }
+
+#global-navbar.content-text-only .nav-icon,
+#global-navbar.content-text-only .logo-img { display: none !important; }
+#global-navbar.content-text-only .nav-text, 
+#global-navbar.content-text-only .nav-mini-logo { display: inline-block !important; }
+
+#global-navbar.content-icons-only .nav-text,
+#global-navbar.content-icons-only .nav-mini-logo { display: none !important; }
+#global-navbar.content-icons-only .nav-icon { font-size: 22px; }
+
+/* No Animation State */
+#global-navbar.no-entry-anim { animation: none !important; transition: none !important; }
+body.no-hover-anim .nav-btn:hover { transform: none !important; }
+
+.nav-content-normal { width: 100%; height: 100%; display: flex; align-items: center; justify-content: space-between; transition: opacity 0.3s ease, transform 0.3s ease; }
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 
 /* Menu Dinamico Espanso */
 .dynamic-menu-content {
@@ -510,11 +1107,18 @@ a:hover { opacity: 0.7; }
     background: var(--bg-glass-heavy); border-color: var(--accent);
 }
 
+<<<<<<< HEAD
 /* Gestione overflow per mobile/tablet in modalità espansa */
 #global-navbar.expanded .dynamic-menu-content { display: block; opacity: 1; max-height: 70vh; overflow-y: auto; }
 #global-navbar.expanded .nav-content-normal { opacity: 0; pointer-events: none; height: 0; overflow: hidden; transform: translateY(-20px); }
 
 /* Elementi Menu Dinamico (Compact Design) */
+=======
+#global-navbar.expanded .dynamic-menu-content { display: block; opacity: 1; max-height: 70vh; overflow-y: auto; }
+#global-navbar.expanded .nav-content-normal { opacity: 0; pointer-events: none; height: 0; overflow: hidden; transform: translateY(-20px); }
+
+/* Elementi Menu Dinamico */
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 .dyn-menu-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--border-light); }
 .dyn-menu-title { font-weight: 800; font-size: 22px; letter-spacing: -0.5px; }
 .dyn-close-btn { 
@@ -553,19 +1157,27 @@ body:not(.old-design-mode) #global-navbar.scrolled:not(.expanded) .logo-img { di
 
 /* Theme Specific Logo Logic */
 .logo-light { display: block; } .logo-dark { display: none; }
+<<<<<<< HEAD
 [data-theme="dark"] .logo-light, [data-theme="gold"] .logo-light, [data-theme="cyber"] .logo-light, [data-theme="midnight"] .logo-light { display: none !important; }
 [data-theme="dark"] .logo-dark, [data-theme="gold"] .logo-dark, [data-theme="cyber"] .logo-dark, [data-theme="midnight"] .logo-dark { display: block !important; }
+=======
+[data-theme="dark"] .logo-light, [data-theme="gold"] .logo-light, [data-theme="cyber"] .logo-light, [data-theme="midnight"] .logo-light, [data-theme="ciliegia"] .logo-light, [data-theme="sunset"] .logo-light, [data-theme="forest"] .logo-light { display: none !important; }
+[data-theme="dark"] .logo-dark, [data-theme="gold"] .logo-dark, [data-theme="cyber"] .logo-dark, [data-theme="midnight"] .logo-dark, [data-theme="ciliegia"] .logo-dark, [data-theme="sunset"] .logo-dark, [data-theme="forest"] .logo-dark { display: block !important; }
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 
 /* Minimal Mode Styles (Legacy) */
 body.old-design-mode #global-navbar { padding: 0; background: transparent; backdrop-filter: none; border-bottom: 1px solid transparent; }
 body.old-design-mode .nav-pill { width: 100%; max-width: 100%; border-radius: 0; border: none; background: transparent; box-shadow: none; height: 70px; padding: 0 30px; }
 body.old-design-mode #global-navbar.scrolled { height: 40px; padding: 0; background: var(--nav-bg); backdrop-filter: blur(40px); border-bottom: 1px solid var(--border-light); }
 body.old-design-mode #global-navbar.scrolled .nav-pill { height: 100%; padding: 0; justify-content: center; }
+<<<<<<< HEAD
 
 /* Bottom Bar Support */
 body.bar-bottom { padding-top: 60px !important; padding-bottom: 140px !important; }
 body.bar-bottom #global-navbar { top: auto; bottom: 0; padding-top: 0; padding-bottom: 24px; }
 body.bar-bottom #global-navbar.scrolled { padding-bottom: 12px; }
+=======
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 
 /* =========================================
    5. SIDEBAR & MENU STRUCTURE
@@ -574,6 +1186,7 @@ body.bar-bottom #global-navbar.scrolled { padding-bottom: 12px; }
 .sidebar { 
     position: fixed; top: 0; bottom: 0; width: 340px; max-width: 85vw;
     background: var(--bg-glass-heavy); backdrop-filter: blur(40px); 
+<<<<<<< HEAD
     z-index: 6000; transition: transform 0.5s var(--ease-elastic), visibility 0.5s; 
     visibility: hidden; display: flex; flex-direction: column; border-right: 1px solid var(--border-light); 
 }
@@ -581,6 +1194,24 @@ body.bar-bottom #global-navbar.scrolled { padding-bottom: 12px; }
 .sidebar#sidebar-right { right: 0; border-left: 1px solid var(--border-light); border-right: none; transform: translateX(100%); }
 .sidebar.open { transform: translateX(0); visibility: visible; box-shadow: 0 0 100px rgba(0,0,0,0.5); }
 
+=======
+    z-index: 6000; 
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.4s; 
+    visibility: hidden; display: flex; flex-direction: column; border-right: 1px solid var(--border-light);
+    overflow-y: auto;
+}
+.sidebar#sidebar-left { left: 0; transform: translateX(-100%); }
+.sidebar#sidebar-right { right: 0; border-left: 1px solid var(--border-light); border-right: none; transform: translateX(100%); }
+
+.sidebar.open, 
+.sidebar#sidebar-left.open, 
+.sidebar#sidebar-right.open { 
+    transform: translateX(0); 
+    visibility: visible; 
+    box-shadow: 0 0 100px rgba(0,0,0,0.5); 
+}
+
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 .sidebar-header { height: 90px; display: flex; align-items: center; justify-content: space-between; padding: 0 24px; border-bottom: 1px solid var(--border-light); }
 .sidebar-title { font-weight: 800; font-size: 1.4rem; }
 
@@ -603,14 +1234,30 @@ body.bar-bottom #global-navbar.scrolled { padding-bottom: 12px; }
     filter: drop-shadow(0 4px 12px rgba(0,0,0,0.05));
     transition: transform 0.5s var(--ease-smooth);
 }
+<<<<<<< HEAD
 /* Special handling for Fancy Themes Hero */
 [data-theme="cyber"] .hero-title { background: var(--accent-gradient); -webkit-background-clip: text; filter: drop-shadow(0 0 25px rgba(255,0,153,0.6)); }
 [data-theme="gold"] .hero-title { background: var(--accent-gradient); -webkit-background-clip: text; filter: drop-shadow(0 4px 15px rgba(255,215,0,0.4)); }
+=======
+/* Special Hero Handling for Themes */
+[data-theme="cyber"] .hero-title,
+[data-theme="gold"] .hero-title,
+[data-theme="ciliegia"] .hero-title,
+[data-theme="latte"] .hero-title { 
+    background: var(--accent-gradient); 
+    -webkit-background-clip: text; 
+    filter: drop-shadow(0 4px 15px var(--accent-dim)); 
+}
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 
 .hero-subtitle { font-size: clamp(1.2rem, 3vw, 1.6rem); color: var(--text-secondary); margin-bottom: 50px; max-width: 700px; font-weight: 500; opacity: 0.9; }
 
 /* =========================================
+<<<<<<< HEAD
    7. TOOLS GRID SYSTEM (REMASTERED)
+=======
+   7. TOOLS GRID SYSTEM
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
    ========================================= */
 
 .tools-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 24px; width: 100%; max-width: 1040px; margin: 20px auto 0; }
@@ -738,7 +1385,11 @@ input:focus, select:focus {
 .upload-area:hover, .upload-area.drag-over { border-color: var(--accent); background: var(--accent-dim); transform: scale(1.01); }
 
 /* =========================================
+<<<<<<< HEAD
    10. ANIMATION ENGINE (LEGACY & BETA SUITE)
+=======
+   10. ANIMATION ENGINE
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
    ========================================= */
 
 /* --- LEGACY ANIMATIONS (Default) --- */
@@ -747,15 +1398,20 @@ input:focus, select:focus {
     to { opacity: 1; transform: translateY(0); }
 }
 
+<<<<<<< HEAD
 /* --- BETA ANIMATIONS (Modern, Snappy, Staggered) --- */
 /* Attivabili con classe .beta-animations sul body */
 
 /* Advanced Keyframes */
+=======
+/* --- BETA ANIMATIONS (Modern) --- */
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 @keyframes betaFadeUp {
     0% { opacity: 0; transform: translateY(50px) scale(0.96); filter: blur(8px); }
     100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
 }
 
+<<<<<<< HEAD
 @keyframes betaPopIn {
     0% { opacity: 0; transform: scale(0.6); }
     50% { opacity: 1; transform: scale(1.05); }
@@ -768,16 +1424,26 @@ input:focus, select:focus {
 }
 
 /* Beta Application Logic */
+=======
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 body.beta-animations .content-wrapper {
     animation: betaFadeUp 0.9s var(--ease-out-expo) forwards;
 }
 
 body.beta-animations .tool-card {
+<<<<<<< HEAD
     opacity: 0; /* Init invisible for stagger */
     animation: betaFadeUp 0.8s var(--ease-out-expo) forwards;
 }
 
 /* Stagger Logic for Grid in Beta Mode (up to 20 items) */
+=======
+    opacity: 0; 
+    animation: betaFadeUp 0.8s var(--ease-out-expo) forwards;
+}
+
+/* Stagger Logic for Grid in Beta Mode */
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 body.beta-animations .tool-card:nth-child(1) { animation-delay: 0.05s; }
 body.beta-animations .tool-card:nth-child(2) { animation-delay: 0.1s; }
 body.beta-animations .tool-card:nth-child(3) { animation-delay: 0.15s; }
@@ -786,25 +1452,38 @@ body.beta-animations .tool-card:nth-child(5) { animation-delay: 0.25s; }
 body.beta-animations .tool-card:nth-child(6) { animation-delay: 0.3s; }
 body.beta-animations .tool-card:nth-child(7) { animation-delay: 0.35s; }
 body.beta-animations .tool-card:nth-child(8) { animation-delay: 0.4s; }
+<<<<<<< HEAD
 body.beta-animations .tool-card:nth-child(9) { animation-delay: 0.45s; }
 body.beta-animations .tool-card:nth-child(10) { animation-delay: 0.5s; }
 body.beta-animations .tool-card:nth-child(11) { animation-delay: 0.55s; }
 body.beta-animations .tool-card:nth-child(12) { animation-delay: 0.6s; }
 
 /* Navbar Expansion Beta Animation */
+=======
+
+/* Navbar Expansion Animation */
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 body.beta-animations #global-navbar.expanded .nav-pill {
     transition: all 0.7s var(--ease-out-expo);
 }
 
 /* =========================================
+<<<<<<< HEAD
    11. ACCESSIBILITY OVERRIDES (THE FULL SUITE)
    ========================================= */
 
 /* 1. Bold Text (Testo in Grassetto) */
+=======
+   11. ACCESSIBILITY OVERRIDES
+   ========================================= */
+
+/* 1. Bold Text */
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 body.bold-text { font-weight: 700 !important; }
 body.bold-text p, body.bold-text span, body.bold-text a, body.bold-text input, body.bold-text button, body.bold-text label { font-weight: 700 !important; }
 body.bold-text h1, body.bold-text h2, body.bold-text h3 { font-weight: 900 !important; letter-spacing: 0.01em; }
 
+<<<<<<< HEAD
 /* 2. Saturated Colors (Saturazione Extra) */
 body.saturated-colors { filter: saturate(1.8) contrast(1.1); }
 
@@ -817,6 +1496,20 @@ body.no-transparency { --bg-glass: var(--bg-surface); --bg-glass-heavy: var(--bg
 body.no-transparency * { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
 
 /* 5. Show Borders (High Visibility) */
+=======
+/* 2. Saturated Colors */
+body.saturated-colors { filter: saturate(1.8) contrast(1.1); }
+
+/* 3. Monochrome */
+body.monochrome { filter: grayscale(100%); }
+body.monochrome .tool-card:hover { transform: translateY(-5px); box-shadow: 0 0 0 3px #000; } 
+
+/* 4. Transparency Off */
+body.no-transparency { --bg-glass: var(--bg-surface); --bg-glass-heavy: var(--bg-surface); --nav-bg: var(--bg-surface); }
+body.no-transparency * { backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+
+/* 5. Show Borders */
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
 body.show-borders * { border-width: 1px !important; } 
 body.show-borders .glass-card, 
 body.show-borders .nav-pill, 
@@ -828,6 +1521,7 @@ body.show-borders .ios-toggle-wrapper {
     box-shadow: none !important; 
 }
 
+<<<<<<< HEAD
 /* 6. Reduce Motion (Remove Animations) */
 body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after { 
     animation-duration: 0.001s !important; transition-duration: 0.001s !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important;
@@ -837,6 +1531,15 @@ body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after 
 
 /* =========================================
    12. MEDIA QUERIES (COMPACT MODES)
+=======
+/* 6. Reduce Motion */
+body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after { 
+    animation-duration: 0.001s !important; transition-duration: 0.001s !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important;
+}
+
+/* =========================================
+   12. MEDIA QUERIES
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
    ========================================= */
 
 @media (max-width: 768px) {
@@ -853,4 +1556,8 @@ body.reduce-motion *, body.reduce-motion *::before, body.reduce-motion *::after 
         top: 0; margin-top: -24px; min-height: 100vh;
         border-left: none; border-right: none; border-top: none;
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))

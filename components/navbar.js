@@ -69,7 +69,10 @@ class GlobalNavbar extends HTMLElement {
         // 1. LEFT MENU (NAVIGATION)
         const menuLeftContent = `
             <a href="/index.html" class="dyn-link">🏠 Home</a>
+<<<<<<< HEAD
             <a href="/dynamic-bar/index.html" class="dyn-link">💊 Dynamic Bar</a>
+=======
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
             <a href="/filtri/index.html" class="dyn-link">🎨 Filtri</a>
             <a href="/crop-immagini/index.html" class="dyn-link">✂️ Ritaglia</a>
             <a href="/ridimensiona/index.html" class="dyn-link">📐 Ridimensiona</a>
@@ -159,6 +162,14 @@ class GlobalNavbar extends HTMLElement {
                 <button class="menu-item" onclick="UI.setTheme('ocean')" style="text-align:center;">Ocean</button>
                 <button class="menu-item" onclick="UI.setTheme('latte')" style="text-align:center;">Latte</button>
                 <button class="menu-item" onclick="UI.setTheme('graphite')" style="text-align:center;">Graphite</button>
+<<<<<<< HEAD
+=======
+                <button class="menu-item" onclick="UI.setTheme('desert')" style="text-align:center;">Desert</button>
+                <button class="menu-item" onclick="UI.setTheme('rose')" style="text-align:center;">Rose</button>
+                <button class="menu-item" onclick="UI.setTheme('aurora')" style="text-align:center;">Aurora</button>
+                <button class="menu-item" onclick="UI.setTheme('solar')" style="text-align:center;">Solar</button>
+                <button class="menu-item" onclick="UI.setTheme('cherry')" style="text-align:center;">Cherry</button>
+>>>>>>> 347dec1 (Redesign navbar e home (3.4 Beta 2))
                 <button class="menu-item" onclick="UI.setTheme('high-contrast')" style="grid-column:span 2; border:2px solid var(--text-primary); font-weight:bold;text-align:center;">High Contrast</button>
             </div>
         `;
