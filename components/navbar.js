@@ -152,7 +152,6 @@ class GlobalNavbar extends HTMLElement {
                 <button class="menu-item" onclick="UI.setTheme('cyber')" style="text-align:center;border-color:#ff0099;color:#00f3ff;background:#050005;">Cyber</button>
                 <button class="menu-item" onclick="UI.setTheme('midnight')" style="text-align:center;">Midnight</button>
                 <button class="menu-item" onclick="UI.setTheme('slate')" style="text-align:center;">Slate</button>
-                <button class="menu-item" onclick="UI.setTheme('aurora')" style="text-align:center;">Aurora</button>
                 <button class="menu-item" onclick="UI.setTheme('forest')" style="text-align:center;">Forest</button>
                 <button class="menu-item" onclick="UI.setTheme('sunset')" style="text-align:center;">Sunset</button>
                 <button class="menu-item" onclick="UI.setTheme('ocean')" style="text-align:center;">Ocean</button>
