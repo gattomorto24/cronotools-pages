@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Accedi - CronoTools</title>
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+    <crono-navbar></crono-navbar>
+
+    <div class="content-wrapper" style="max-width:400px; margin:0 auto; padding-top:40px;">
+        <div class="glass-card" style="padding:30px;">
+            <div style="text-align:center; margin-bottom:30px;">
+                <h1 style="font-size:28px; margin-bottom:10px;">Benvenuto</h1>
+                <p style="color:var(--text-secondary);">Accedi al tuo account universale.</p>
+            </div>
+
+            <div style="display:flex; background:var(--bg-tertiary); padding:4px; border-radius:12px; margin-bottom:24px;">
+                <button id="tab-login" onclick="setMode('login')" style="flex:1; padding:10px; border:none; border-radius:10px; font-weight:600; cursor:pointer; background:var(--bg-secondary); box-shadow:var(--shadow-sm);">Login</button>
+                <button id="tab-reg" onclick="setMode('register')" style="flex:1; padding:10px; border:none; border-radius:10px; font-weight:600; cursor:pointer; color:var(--text-secondary); background:transparent;">Registrati</button>
+            </div>
+
+            <form id="auth-form" onsubmit="handleSubmit(event)">
+                <div style="margin-bottom:16px;">
+                    <label style="display:block; font-size:13px; font-weight:600; margin-bottom:8px; color:var(--text-secondary);">Username</label>
+                    <input type="text" id="inp-user" required style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--separator); background:var(--bg-primary); font-size:16px; outline:none;">
+                </div>
+                
+                <div style="margin-bottom:24px;">
+                    <label style="display:block; font-size:13px; font-weight:600; margin-bottom:8px; color:var(--text-secondary);">Password</label>
+                    <input type="password" id="inp-pass" required style="width:100%; padding:14px; border-radius:12px; border:1px solid var(--separator); background:var(--bg-primary); font-size:16px; outline:none;">
+                </div>
+
+                <button type="submit" id="btn-submit" class="alert-btn primary" style="width:100%;">Accedi</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/auth.js"></script>
+    <script src="../js/ui.js"></script>
+    <script src="../components/navbar.js"></script>
+    
+    <script>
+        let mode = 'login';
+
+        function setMode(m) {
+            mode = m;
+            const tLog = document.getElementById('tab-login');
+            const tReg = document.getElementById('tab-reg');
+            const btn = document.getElementById('btn-submit');
+
+            if (m === 'login') {
+                tLog.style.background = 'var(--bg-secondary)'; tLog.style.color = 'var(--text-primary)'; tLog.style.boxShadow = 'var(--shadow-sm)';
+                tReg.style.background = 'transparent'; tReg.style.color = 'var(--text-secondary)'; tReg.style.boxShadow = 'none';
+                btn.textContent = 'Accedi';
+            } else {
+                tReg.style.background = 'var(--bg-secondary)'; tReg.style.color = 'var(--text-primary)'; tReg.style.boxShadow = 'var(--shadow-sm)';
+                tLog.style.background = 'transparent'; tLog.style.color = 'var(--text-secondary)'; tLog.style.boxShadow = 'none';
+                btn.textContent = 'Crea Account';
+            }
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault();
+            const u = document.getElementById('inp-user').value;
+            const p = document.getElementById('inp-pass').value;
+            
+            let res;
+            if (mode === 'login') {
+                res = CronoID.login(u, p);
+            } else {
+                res = CronoID.register(u, p);
+            }
+
+            if (res.success) {
+                if (mode === 'register') {
+                    alert(res.message);
+                    setMode('login');
+                } else {
+                    window.location.href = '/account/index.html';
+                }
+            } else {
+                alert("Errore: " + res.message);
+            }
+        }
+    </script>
+</body>
+</html>

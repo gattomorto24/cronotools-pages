@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6781796671498902"
+     crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <meta name="description" content="Suite di strumenti gratuiti per la modifica di immagini e utilità digitali." />
+  <meta name="theme-color" content="#f2f2f7" />
+  <title>CronoTools</title>
+
+  <link rel="stylesheet" href="css/style.css" />
+
+  <style>
+    /* =========================================================
+       HOME REDESIGN — CronoTools 3.4 (drop-in)
+       - Keeps your existing converter + tools grid logic
+       - Reframes the page with an iOS-like product shell:
+         Hero -> Quick Actions -> Spotlight Tool -> Tools Catalog
+       - Built to survive long strings (multilingua) and CJK.
+       ========================================================= */
+
+    /* ===== Reset & safe defaults ===== */
+    * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg-body);
+      color: var(--text-main);
+      overflow-x: hidden;
+    }
+
+    :root {
+      /* Base tokens (you can map these to your global theme vars later) */
+      --bg-body: #f2f2f7;
+      --bg-card: #ffffff;
+      --bg-soft: rgba(0,0,0,0.04);
+      --text-main: #1c1c1e;
+      --text-sub: #3a3a3c;
+      --text-dim: rgba(28,28,30,0.65);
+      --accent: #007aff;
+      --separator: rgba(60,60,67,0.16);
+      --radius-xl: 24px;
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --shadow-soft: 0 10px 35px rgba(0,0,0,0.08);
+      --shadow-card: 0 6px 18px rgba(0,0,0,0.06);
+      --spacing: 16px;
+      --max: 980px;
+    }
+
+    [data-theme="dark"] {
+      --bg-body: #000000;
+      --bg-card: #1c1c1e;
+      --bg-soft: rgba(255,255,255,0.06);
+      --text-main: #ffffff;
+      --text-sub: #c7c7cc;
+      --text-dim: rgba(235,235,245,0.65);
+      --separator: rgba(84,84,88,0.65);
+      --shadow-soft: 0 10px 35px rgba(0,0,0,0.55);
+      --shadow-card: 0 6px 18px rgba(0,0,0,0.35);
+    }
+
+    /* ===== Shell ===== */
+    .page {
+      width: 100%;
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 14px var(--spacing) 110px;
+    }
+
+    .stack { display: flex; flex-direction: column; gap: 14px; }
+
+    /* ===== Top hero ===== */
+    .hero {
+      padding-top: 6px;
+      display: grid;
+      gap: 10px;
+    }
+
+    .hero-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .hero-brand {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    .hero-title {
+      margin: 0;
+      font-size: 34px;
+      font-weight: 900;
+      letter-spacing: -1px;
+      line-height: 1.05;
+      word-break: break-word;
+    }
+
+    .hero-subtitle {
+      margin: 0;
+      font-size: 14px;
+      color: var(--text-dim);
+      line-height: 1.35;
+    }
+
+    .hero-badge {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      background: var(--bg-soft);
+      border: 1px solid var(--separator);
+      color: var(--text-sub);
+      font-size: 12px;
+      font-weight: 700;
+      white-space: nowrap;
+      user-select: none;
+    }
+
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(0,122,255,0.15);
+    }
+
+    /* ===== Search ===== */
+    .search {
+      position: relative;
+      background: var(--bg-card);
+      border: 1px solid var(--separator);
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+    }
+
+    .search-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 12px 12px;
+    }
+
+    .search-icon {
+      width: 20px;
+      height: 20px;
+      color: var(--text-dim);
+      flex: 0 0 auto;
+    }
+
+    .search-input {
+      width: 100%;
+      border: none;
+      outline: none;
+      background: transparent;
+      font-size: 17px; /* iOS zoom-safe */
+      color: var(--text-main);
+      padding: 4px 0;
+      min-width: 0;
+    }
+
+    .search-input::placeholder { color: var(--text-dim); }
+
+    .search-suggest {
+      display: flex;
+      gap: 10px;
+      padding: 0 12px 12px;
+      flex-wrap: wrap;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--separator);
+      background: var(--bg-soft);
+      color: var(--text-sub);
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .chip:active { transform: scale(0.98); }
+
+    /* ===== Quick Actions ===== */
+    .quick {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 860px) {
+      .quick { grid-template-columns: 1.2fr 0.8fr; }
+    }
+
+    .panel {
+      background: var(--bg-card);
+      border: 1px solid var(--separator);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .panel-head {
+      padding: 16px 16px 12px;
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+      border-bottom: 1px solid var(--separator);
+    }
+
+    .panel-title {
+      margin: 0;
+      font-size: 14px;
+      font-weight: 900;
+      letter-spacing: 0.2px;
+      color: var(--text-main);
+      text-transform: uppercase;
+    }
+
+    .panel-sub {
+      margin: 0;
+      font-size: 12px;
+      color: var(--text-dim);
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .panel-body { padding: 14px 14px 16px; }
+
+    .actions-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 520px) {
+      .actions-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .action {
+      text-decoration: none;
+      color: inherit;
+      background: var(--bg-soft);
+      border: 1px solid var(--separator);
+      border-radius: var(--radius-lg);
+      padding: 14px 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      gap: 10px;
+      min-height: 88px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .action:active { transform: scale(0.98); }
+
+    .action-icon {
+      width: 22px;
+      height: 22px;
+      color: var(--accent);
+    }
+
+    .action-name {
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.15;
+      word-break: break-word;
+    }
+
+    .action-meta {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--text-dim);
+      line-height: 1.2;
+    }
+
+    /* ===== Spotlight tool (your converter) ===== */
+    .spotlight {
+      padding: 0;
+    }
+
+    .spotlight .panel-body {
+      padding: 14px 14px 16px;
+    }
+
+    /* --- Converter: keep your existing converter styles but tighten spacing --- */
+    .main-card {
+      background: transparent;
+      border-radius: 0;
+      padding: 0;
+      width: 100%;
+      max-width: none;
+      box-shadow: none;
+      margin-bottom: 0;
+    }
+
+    .format-switcher {
+      display: flex;
+      background: var(--bg-soft);
+      padding: 4px;
+      border-radius: 14px;
+      margin-bottom: 14px;
+      gap: 6px;
+    }
+
+    .format-btn {
+      flex: 1;
+      text-align: center;
+      padding: 10px 0;
+      font-size: 12px;
+      font-weight: 900;
+      border-radius: 12px;
+      color: var(--text-dim);
+      cursor: pointer;
+      user-select: none;
+      border: 1px solid transparent;
+    }
+
+    .format-btn.active {
+      background: var(--bg-card);
+      color: var(--accent);
+      border-color: var(--separator);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+    }
+
+    .upload-zone {
+      border: 1px dashed var(--separator);
+      border-radius: var(--radius-xl);
+      min-height: 190px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      color: var(--text-sub);
+      cursor: pointer;
+      background: var(--bg-soft);
+      padding: 14px;
+      text-align: center;
+    }
+
+    .upload-zone:active { opacity: 0.75; }
+
+    .upload-icon { width: 44px; height: 44px; color: var(--accent); }
+    .upload-text { font-weight: 900; font-size: 15px; }
+    .upload-sub { font-size: 12px; color: var(--text-dim); font-weight: 700; }
+
+    .result-area { display: none; text-align: center; }
+    .result-area.visible { display: block; animation: fadeIn 0.25s; }
+
+    .preview-img {
+      max-width: 100%;
+      max-height: 280px;
+      border-radius: var(--radius-lg);
+      margin: 8px 0 12px;
+      box-shadow: var(--shadow-card);
+    }
+
+    .action-btn {
+      width: 100%;
+      padding: 14px;
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--separator);
+      font-size: 16px;
+      font-weight: 900;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .btn-primary { background: var(--accent); color: white; border-color: transparent; }
+    .btn-secondary { background: var(--bg-soft); color: var(--text-main); }
+
+    /* ===== Catalog ===== */
+    .catalog {
+      background: transparent;
+      border-radius: 0;
+    }
+
+    .catalog-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      padding: 8px 2px 6px;
+    }
+
+    .catalog-title {
+      margin: 0;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-dim);
+      font-weight: 900;
+    }
+
+    .catalog-count {
+      font-size: 12px;
+      color: var(--text-dim);
+      font-weight: 900;
+    }
+
+    .tools-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      width: 100%;
+      margin-top: 10px;
+    }
+
+    @media (min-width: 560px) {
+      .tools-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    @media (min-width: 860px) {
+      .tools-grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .tool-card {
+      background: var(--bg-card);
+      padding: 16px 12px;
+      border-radius: var(--radius-xl);
+      text-decoration: none;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      justify-content: center;
+      text-align: left;
+      box-shadow: var(--shadow-card);
+      transition: transform 0.1s;
+      min-height: 104px;
+      border: 1px solid var(--separator);
+      color: var(--text-main);
+      gap: 10px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tool-card:active { transform: scale(0.98); }
+
+    .tool-icon {
+      width: 26px;
+      height: 26px;
+      flex: 0 0 auto;
+    }
+
+    .tool-name {
+      font-size: 13px;
+      font-weight: 900;
+      line-height: 1.15;
+      word-break: break-word;
+    }
+
+    .tool-hint {
+      font-size: 11px;
+      color: var(--text-dim);
+      font-weight: 800;
+      line-height: 1.2;
+    }
+
+    .hidden { display: none !important; }
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+    /* Icon colors from your original */
+    .icon-green { color: #34c759; }
+    .icon-purple { color: #af52de; }
+    .icon-red { color: #ff3b30; }
+    .icon-blue { color: #007aff; }
+    .icon-yellow { color: #ffcc00; }
+    .icon-black { color: var(--text-main); }
+  </style>
+</head>
+
+<body>
+  <crono-navbar></crono-navbar>
+
+
+  <main class="page home-hero">
+    <div class="content-wrapper">
+      <section class="hero">
+        <h1 data-i18n="hero.title">Crea, Modifica, Converti.</h1>
+        <p data-i18n="hero.subtitle">La suite definitiva per le tue immagini. Potente, gratuita e interamente nel tuo browser.</p>
+        <a href="converti/index.html" class="cta-big" data-i18n="cta.converter">Vai al Convertitore</a>
+      </section>
+      <section class="quick-links">
+        <a href="Ai/index.html" data-i18n="quick.ai">✨ AI Remove BG</a>
+        <a href="filtri/index.html" data-i18n="quick.filters">Filtri</a>
+        <a href="crop-immagini/index.html" data-i18n="quick.crop">Ritaglia</a>
+        <a href="ridimensiona/index.html" data-i18n="quick.resize">Ridimensiona</a>
+        <a href="qr/index.html" data-i18n="quick.qr">QR Code</a>
+      </section>
+      <section class="catalog" aria-label="Tutti gli strumenti">
+        <h2 data-i18n="catalog.title">Tutti gli strumenti</h2>
+        <div class="tools-grid" id="tools-grid">
+          <!-- Tool cards -->
+
+    <!-- CATALOG -->
+          <a href="ridimensiona/index.html" class="tool-card" data-tool="ridimensiona" data-pressable>
+            <svg class="tool-icon icon-green" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M15 3h6v6"></path><path d="M9 21H3v-6"></path><path d="M21 3l-7 7"></path><path d="M3 21l7-7"></path>
+            </svg>
+            <span class="tool-name">Ridimensiona</span>
+            <span class="tool-hint">Immagini</span>
+          </a>
+
+          <a href="colora/index.html" class="tool-card" data-tool="colora" data-pressable>
+            <svg class="tool-icon icon-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <circle cx="12" cy="12" r="10"></circle><path d="M12 2a4 4 0 0 1 4 4c0 2-2 3-2 5"></path>
+            </svg>
+            <span class="tool-name">Colora</span>
+            <span class="tool-hint">Monocolore</span>
+          </a>
+
+          <a href="taglia-video/index.html" class="tool-card" data-tool="taglia video" data-pressable>
+            <svg class="tool-icon icon-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polygon points="23 7 16 12 23 17 23 7"></polygon><rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+            </svg>
+            <span class="tool-name">Taglia video</span>
+            <span class="tool-hint">Clip</span>
+          </a>
+
+          <a href="flip-immagini/index.html" class="tool-card" data-tool="specchia" data-pressable>
+            <svg class="tool-icon icon-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="16 3 21 3 21 8"></polyline><line x1="4" y1="20" x2="21" y2="3"></line><polyline points="21 16 21 21 16 21"></polyline>
+            </svg>
+            <span class="tool-name">Specchia</span>
+            <span class="tool-hint">Flip</span>
+          </a>
+
+          <a href="ruota-immagini/index.html" class="tool-card" data-tool="ruota" data-pressable>
+            <svg class="tool-icon icon-red" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M2.5 2v6h6M2.66 15.57a10 10 0 1 0 .57-8.38"></path>
+            </svg>
+            <span class="tool-name">Ruota</span>
+            <span class="tool-hint">Angoli</span>
+          </a>
+
+          <a href="crop-immagini/index.html" class="tool-card" data-tool="ritaglia" data-pressable>
+            <svg class="tool-icon icon-blue" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M6.13 1L6 16a2 2 0 0 0 2 2h15"></path><path d="M1 6.13L16 6a2 2 0 0 1 2 2v15"></path>
+            </svg>
+            <span class="tool-name">Ritaglia</span>
+            <span class="tool-hint">Crop</span>
+          </a>
+
+          <a href="qr/index.html" class="tool-card" data-tool="qr" data-pressable>
+            <svg class="tool-icon icon-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect>
+            </svg>
+            <span class="tool-name">QR Code</span>
+            <span class="tool-hint">Generatore</span>
+          </a>
+
+          <a href="Ai/index.html" class="tool-card" data-tool="ai remove" data-pressable>
+            <svg class="tool-icon icon-yellow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 2a10 10 0 1 0 10 10H12V2z"></path><path d="M12 12L2.1 11.5"></path><path d="M12 12l9.9-0.5"></path>
+            </svg>
+            <span class="tool-name">AI Remove</span>
+            <span class="tool-hint">Sfondo</span>
+          </a>
+
+          <a href="filtri/index.html" class="tool-card" data-tool="filtri" data-pressable>
+            <svg class="tool-icon icon-purple" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path>
+            </svg>
+            <span class="tool-name">Filtri</span>
+            <span class="tool-hint">Style</span>
+          </a>
+
+          <a href="base64/index.html" class="tool-card" data-tool="base64" data-pressable>
+            <svg class="tool-icon icon-black" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+              <polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            <span class="tool-name">Base64</span>
+            <span class="tool-hint">Utility</span>
+          </a>
+        </div>
+      </section>
+      <footer class="main-footer" id="main-footer">
+        <div style="margin-bottom:10px;">
+          <a href="https://www.cronoshop.eu" target="_blank" rel="noopener" style="color:var(--accent);font-weight:700;" data-i18n="footer.shop">Cronoshop.eu</a> &nbsp;|&nbsp;
+          <a href="Terms/index.html" data-i18n="footer.terms">Termini</a> &nbsp;|&nbsp;
+          <a href="FAQ/index.html" data-i18n="footer.faq">FAQ</a> &nbsp;|&nbsp;
+          <a href="about.html" data-i18n="footer.about">About</a>
+        </div>
+        <div style="font-size:0.95em;" data-i18n="footer.copyright">© 2026 Crono Inc. - Tutti i diritti riservati</div>
+      </footer>
+    </div>
+  </main>
+
+  <script src="js/ui.js"></script>
+  <script src="js/navbar-lang-fix.js"></script>
+  <script src="components/navbar.js"></script>
+  <script>
+    // Tema adattivo: imposta il tema in base al sistema al primo accesso, poi rispetta la preferenza utente
+    (function() {
+      const THEME_KEY = "crono-ui-prefs";
+      function getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+      // Se non c'è preferenza salvata, imposta quella di sistema
+      let prefs = localStorage.getItem(THEME_KEY);
+      let parsed = null;
+      try { parsed = prefs ? JSON.parse(prefs) : null; } catch {}
+      if (!parsed || !parsed.theme) {
+        const sysTheme = getSystemTheme();
+        document.documentElement.setAttribute('data-theme', sysTheme);
+        // salva la preferenza per i prossimi accessi
+        localStorage.setItem(THEME_KEY, JSON.stringify({ ...(parsed||{}), theme: sysTheme }));
+      } else {
+        document.documentElement.setAttribute('data-theme', parsed.theme);
+      }
+      // Aggiorna se cambia il tema di sistema e l'utente non ha scelto manualmente
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+        let prefs = localStorage.getItem(THEME_KEY);
+        let parsed = null;
+        try { parsed = prefs ? JSON.parse(prefs) : null; } catch {}
+        if (!parsed || !parsed.theme || parsed.theme === 'auto') {
+          const sysTheme = e.matches ? 'dark' : 'light';
+          document.documentElement.setAttribute('data-theme', sysTheme);
+          localStorage.setItem(THEME_KEY, JSON.stringify({ ...(parsed||{}), theme: sysTheme }));
+        }
+      });
+    })();
+  </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      initSearch();
+      initConverter();
+      initChips();
+      refreshToolsCount();
+    });
+
+    /* === SEARCH (extended, no breaking changes) === */
+    function initSearch() {
+      const input = document.getElementById('tool-search');
+      const grid = document.getElementById('tools-grid');
+      const cards = grid.querySelectorAll('.tool-card');
+
+      input.addEventListener('keyup', (e) => {
+        const term = e.target.value.toLowerCase().trim();
+        cards.forEach(card => {
+          const name = card.querySelector('.tool-name').textContent.toLowerCase();
+          const meta = (card.getAttribute('data-tool') || '').toLowerCase();
+          const match = name.includes(term) || meta.includes(term);
+          card.classList.toggle('hidden', term.length ? !match : false);
+        });
+        refreshToolsCount();
+      });
+    }
+
+    /* === CHIP SHORTCUTS === */
+    function initChips() {
+      const input = document.getElementById('tool-search');
+      document.querySelectorAll('.chip').forEach(chip => {
+        chip.addEventListener('click', () => {
+          const type = chip.getAttribute('data-chip');
+          const map = {
+            convert: 'convert',
+            resize: 'ridimensiona',
+            qr: 'qr',
+            filters: 'filtri'
+          };
+          input.value = map[type] || '';
+          input.dispatchEvent(new Event('keyup'));
+          // scroll to catalog
+          document.querySelector('.catalog')?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+    }
+
+    function refreshToolsCount() {
+      const cards = Array.from(document.querySelectorAll('#tools-grid .tool-card'));
+      const visible = cards.filter(c => !c.classList.contains('hidden')).length;
+      const el = document.getElementById('tools-count');
+      if (el) el.textContent = visible + ' strumenti';
+    }
+
+    /* === CONVERTER (your original logic, unchanged ids) === */
+    function initConverter() {
+      const state = { file: null, mime: 'image/png', ext: 'PNG' };
+
+      const els = {
+        upload: document.getElementById('upload-stage'),
+        input: document.getElementById('file-input'),
+        result: document.getElementById('result-stage'),
+        img: document.getElementById('result-img'),
+        btns: document.querySelectorAll('.format-btn'),
+        dl: document.getElementById('btn-download'),
+        reset: document.getElementById('btn-reset'),
+        base64Out: document.getElementById('base64-output')
+      };
+
+      // Cambio formato
+      els.btns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          els.btns.forEach(b => {
+            b.classList.remove('active');
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.classList.add('active');
+          btn.setAttribute('aria-selected', 'true');
+          state.mime = btn.dataset.mime;
+          state.ext = btn.dataset.ext;
+          if (state.file) processFile();
+        });
+      });
+
+      // Upload
+      els.upload.addEventListener('click', () => els.input.click());
+      els.input.addEventListener('change', (e) => {
+        if (e.target.files[0]) {
+          state.file = e.target.files[0];
+          processFile();
+        }
+      });
+
+      function processFile() {
+        if (!state.file) return;
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+            const ctx = canvas.getContext('2d');
+
+            // Sfondo bianco per JPG
+            if (state.mime === 'image/jpeg') {
+              ctx.fillStyle = '#FFF';
+              ctx.fillRect(0, 0, canvas.width, canvas.height);
+            }
+            ctx.drawImage(img, 0, 0);
+
+            if (state.mime === 'base64') {
+              const b64 = canvas.toDataURL('image/png');
+              els.img.style.display = 'none';
+              els.base64Out.classList.remove('hidden');
+              els.base64Out.style.display = 'block';
+              els.base64Out.value = b64;
+              els.dl.style.display = 'none';
+              els.result.classList.add('visible');
+              els.upload.style.display = 'none';
+            } else {
+              const url = canvas.toDataURL(state.mime, 0.9);
+              els.img.src = url;
+              els.img.style.display = 'block';
+              els.base64Out.classList.add('hidden');
+              els.base64Out.style.display = 'none';
+              els.dl.style.display = 'block';
+              els.result.classList.add('visible');
+              els.upload.style.display = 'none';
+
+              els.dl.onclick = () => {
+                const a = document.createElement('a');
+                a.download = `crono-${Date.now()}.${state.ext.toLowerCase()}`;
+                a.href = url;
+                a.click();
+              };
+            }
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(state.file);
+      }
+
+      els.reset.addEventListener('click', () => {
+        state.file = null;
+        els.input.value = '';
+        els.result.classList.remove('visible');
+        els.upload.style.display = 'flex';
+      });
+    }
+  </script>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6781796671498902"
+     crossorigin="anonymous"></script>
+</body>
+</html>

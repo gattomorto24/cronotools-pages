@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>AI Background Remover - CronoTools</title>
+    
+    <!-- Core Design System -->
+    <link rel="stylesheet" href="../css/style.css">
+    
+    <!-- AI Styles (Override & Extensions) -->
+    <style>
+        /* --- Premium AI Theme Overrides --- */
+        body {
+            background: linear-gradient(135deg, var(--bg-primary) 0%, var(--bg-tertiary) 100%);
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Effetto Aurora di sfondo */
+        .ai-aurora {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            right: -50%;
+            bottom: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 50%, 
+                rgba(0, 243, 255, 0.1), 
+                rgba(124, 58, 237, 0.1), 
+                rgba(255, 0, 153, 0.05), 
+                transparent 70%);
+            z-index: -1;
+            animation: auroraSpin 20s linear infinite;
+            pointer-events: none;
+        }
+
+        @keyframes auroraSpin {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .main-header h1 {
+            background: linear-gradient(90deg, #ff0099, #7c3aed, #00f3ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            to { background-position: 200% center; }
+        }
+
+        /* Glass Card Premium */
+        .glass-card.ai-card {
+            background: rgba(255, 255, 255, 0.4); 
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 8px 32px rgba(124, 58, 237, 0.15);
+            backdrop-filter: blur(20px) saturate(180%);
+        }
+        
+        [data-theme="dark"] .glass-card.ai-card, 
+        [data-theme="midnight"] .glass-card.ai-card,
+        [data-theme="cyberpunk"] .glass-card.ai-card {
+            background: rgba(20, 20, 30, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px rgba(0, 243, 255, 0.1);
+        }
+
+        /* Upload Area Speciale */
+        .upload-area.ai-upload {
+            border: 2px dashed rgba(124, 58, 237, 0.3);
+            background: linear-gradient(180deg, rgba(255,255,255,0.5) 0%, rgba(255,255,255,0.1) 100%);
+            transition: all 0.4s ease;
+        }
+        .upload-area.ai-upload:hover {
+            border-color: #00f3ff;
+            transform: scale(1.02);
+            box-shadow: 0 0 20px rgba(0, 243, 255, 0.2);
+        }
+
+        /* Compare Slider Container */
+        .compare-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin: 0 auto;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--separator);
+            aspect-ratio: 1 / 1; 
+            display: none;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iI2YyZjJmNyIgZD0iTTAgMGgxMHYxMEgwem0xMCAxMGgxMHYxMEgxMHoiLz48cGF0aCBmaWxsPSIjZmZmZmZmIiBkPSJNMTAgMGgxMHYxMEgxMHptLTEwIDEwaDEwdjEwSDB6Ii8+PC9zdmc=');
+        }
+
+        .compare-image {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            object-fit: contain;
+            pointer-events: none;
+        }
+
+        .compare-overlay {
+            position: absolute;
+            top: 0; left: 0;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            border-right: 2px solid white;
+            box-shadow: 2px 0 10px rgba(0,0,0,0.3);
+            background: white;
+        }
+        
+        .compare-overlay img {
+            position: absolute;
+            top: 0; left: 0;
+            height: 100%;
+            max-width: none !important; 
+        }
+
+        /* Loading State Animato */
+        .ai-processing {
+            display: none;
+            text-align: center;
+            padding: 40px;
+        }
+        .magic-loader {
+            width: 60px; height: 60px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 4px solid transparent;
+            border-top-color: #00f3ff;
+            border-right-color: #7c3aed;
+            border-bottom-color: #ff0099;
+            animation: spin 1s linear infinite;
+            filter: drop-shadow(0 0 10px #7c3aed);
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        .btn-ai {
+            background: linear-gradient(135deg, #7c3aed 0%, #ff0099 100%);
+            border: none;
+            color: white;
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(124, 58, 237, 0.4);
+            transition: all 0.3s;
+        }
+        .btn-ai:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 25px rgba(255, 0, 153, 0.5);
+        }
+        
+        [data-theme="dark"] .compare-container,
+        [data-theme="midnight"] .compare-container,
+        [data-theme="cyberpunk"] .compare-container {
+             background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSIyMCIgZmlsbD0ibm9uZSI+PHBhdGggZmlsbD0iIzMzMyIgZD0iTTAgMGgxMHYxMEgwem0xMCAxMGgxMHYxMEgxMHoiLz48cGF0aCBmaWxsPSIjNDQ0IiBkPSJNMTAgMGgxMHYxMEgxMHptLTEwIDEwaDEwdjEwSDB6Ii8+PC9zdmc+');
+        }
+    </style>
+</head>
+<body>
+    <div class="ai-aurora"></div>
+    <crono-navbar></crono-navbar>
+
+    <div class="content-wrapper">
+        <header class="main-header">
+            <h1>AI Remove Background</h1>
+            <p class="description">Rimuovi lo sfondo dalle tue immagini magicamente, in pochi secondi. Gratuito e processato localmente.</p>
+        </header>
+
+        <main>
+            <div class="glass-card ai-card" style="padding: 24px; max-width: 800px; margin: 0 auto;">
+                
+                <!-- 1. UPLOAD -->
+                <div id="upload-stage" class="upload-area ai-upload">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="url(#ai-grad)" stroke-width="2" style="color: #7c3aed;">
+                        <defs>
+                            <linearGradient id="ai-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop offset="0%" style="stop-color:#00f3ff" />
+                                <stop offset="100%" style="stop-color:#ff0099" />
+                            </linearGradient>
+                        </defs>
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="17 8 12 3 7 8"></polyline>
+                        <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <div class="upload-title" style="background: linear-gradient(90deg, #7c3aed, #ff0099); -webkit-background-clip: text; -webkit-text-fill-color: transparent; font-weight: 800;">Carica Immagine</div>
+                    <div class="upload-desc">L'intelligenza artificiale farà il resto</div>
+                    <input type="file" id="file-input" accept="image/*" hidden>
+                </div>
+
+                <!-- 2. PROCESSING -->
+                <div id="processing-stage" class="ai-processing">
+                    <div class="magic-loader"></div>
+                    <h3 style="margin-bottom: 8px;">Sto analizzando l'immagine...</h3>
+                    <p style="color: var(--text-secondary); font-size: 14px;">Potrebbe volerci qualche secondo la prima volta (Scarico il modello AI ~20MB)</p>
+                </div>
+
+                <!-- 3. RESULT (Slider Before/After) -->
+                <div id="result-stage" style="display: none;">
+                    <div class="compare-container" id="compare-viewer">
+                        <!-- Immagine SFONDO RIMOSSO (Sotto) -->
+                        <img id="img-processed" class="compare-image" src="" alt="Processed">
+                        
+                        <!-- Immagine ORIGINALE (Sopra, mascherata) -->
+                        <div class="compare-overlay" id="overlay-div">
+                            <img id="img-original" src="" alt="Original">
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 16px; color: var(--text-secondary); font-size: 13px;">
+                        Muovi il mouse (o tocca) per confrontare Prima / Dopo
+                    </div>
+
+                    <div class="action-row" style="margin-top: 30px; display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                        <button id="btn-download" class="alert-btn btn-ai" style="padding: 16px 32px; min-width: 200px;">
+                            Scarica PNG Trasparente
+                        </button>
+                        <button class="alert-btn" onclick="location.reload()">
+                            Nuova Immagine
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- Script Modulari -->
+    <script src="../js/ui.js"></script>
+    <script src="../components/navbar.js"></script>
+    
+    <!-- imgly Background Removal Library -->
+    <script src="https://cdn.jsdelivr.net/npm/@imgly/background-removal@1.3.0/dist/imgly-background-removal.min.js"></script>
+    
+    <!-- Script Specifico Pagina -->
+    <script src="script.js"></script>
+</body>
+</html>

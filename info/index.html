@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Info & Release Notes - CronoTools</title>
+
+    <link rel="stylesheet" href="../css/style.css">
+
+    <style>
+        /* Stili locali per la timeline delle versioni */
+        .version-timeline {
+            position: relative;
+            padding-left: 20px;
+            border-left: 2px solid var(--separator);
+            margin-left: 10px;
+        }
+        .version-entry {
+            margin-bottom: 30px;
+            position: relative;
+        }
+        .version-dot {
+            position: absolute;
+            left: -27px;
+            top: 6px;
+            width: 12px;
+            height: 12px;
+            background: var(--bg-secondary);
+            border: 2px solid var(--text-secondary);
+            border-radius: 50%;
+        }
+        .version-entry.current .version-dot {
+            background: var(--accent);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-dim);
+        }
+        .version-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        .version-tag {
+            font-size: 12px;
+            font-weight: 700;
+            padding: 4px 8px;
+            border-radius: 6px;
+            background: var(--bg-tertiary);
+            color: var(--text-primary);
+        }
+        .version-tag.latest {
+            background: var(--accent);
+            color: var(--on-accent);
+        }
+        .release-date {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .changes-list {
+            list-style: none;
+            padding: 0;
+        }
+        .changes-list li {
+            position: relative;
+            padding-left: 16px;
+            margin-bottom: 6px;
+            color: var(--text-secondary);
+            font-size: 15px;
+            line-height: 1.5;
+        }
+        .changes-list li::before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body>
+
+    <crono-navbar></crono-navbar>
+
+    <div class="content-wrapper">
+        <header class="main-header">
+            <h1>Informazioni</h1>
+            <p class="description">Note di rilascio e aggiornamenti di CronoTools.</p>
+        </header>
+
+        <main>
+            <div class="glass-card" style="padding: 30px;">
+
+                <h2 style="margin-bottom: 30px; font-size: 20px;">Release Notes</h2>
+
+                <div class="version-timeline">
+
+                    <!-- 3.3.x ROADMAP (3.3.0 → 3.3.8) -->
+    <div class="version-entry current">
+    <div class="version-dot"></div>
+    <div class="version-header">
+        <span class="version-tag latest">3.4</span>
+        <span class="release-date">Febbraio 2026</span>
+    </div>
+    <ul class="changes-list">
+        <li><strong>Fix Critico I18N.setLang (js/ui.js):</strong> Risolta la logica di assegnazione del dizionario. Ora, selezionando "en", il puntatore viene impostato su <code>window.CronoLangEN</code> esclusivamente se il modulo è effettivamente caricato. Questo impedisce che il dizionario venga sovrascritto da dati vuoti o errati durante il caricamento degli script.</li>
+
+        <li><strong>Aggiornamento Logica Selettore Lingua:</strong> Revisione completa in <code>ui.js</code> e nel nuovo script di fix. Implementata la chiamata forzata a <code>window.I18N.applyToDOM()</code> immediatamente dopo ogni cambio lingua, garantendo l'aggiornamento istantaneo di tutti i nodi <code>data-i18n</code> senza refresh.</li>
+
+        <li><strong>Gestione Asincrona English.js:</strong> Il selettore ora gestisce correttamente il caricamento asincrono del file di lingua inglese, aggiornando la UI in tempo reale non appena il dizionario esterno diventa disponibile.</li>
+
+        <li><strong>Nuovo Modulo Patch (js/navbar-lang-fix.js):</strong> Creato e distribuito uno script di patch specifico che forza la gestione corretta del selettore. Incluso strategicamente dopo <code>ui.js</code> in tutte le pagine critiche (Index, Converti, Terms, FAQ) per blindare l'inizializzazione.</li>
+
+        <li><strong>Sincronizzazione Navbar Dinamica & Minimale:</strong> Uniformata la logica di cambio lingua tra le due modalità della barra di navigazione. Rimossa la divergenza comportamentale per assicurare che l'interfaccia risponda coerentemente in ogni contesto visivo.</li>
+
+        <li><strong>Audit e Verifica Integrità:</strong> Eseguito controllo strutturale su <code>js/ui.js</code>, <code>components/navbar.js</code> e <code>english.js</code>. Verificata la corretta sequenza di inclusione degli script e la presenza capillare degli attributi <code>data-i18n</code> nei principali file HTML.</li>
+    </ul>
+</div>
+                    
+                     <div class="version-entry">
+    <div class="version-dot"></div>
+    <div class="version-header">
+        <span class="version-tag">3.4 Beta 2</span>
+        <span class="release-date">Dicembre 2025</span>
+    </div>
+    <ul class="changes-list">
+        <li><strong>Home Page completamente ridisegnata:</strong> Nuova architettura “product-first” con Hero, ricerca intelligente con suggerimenti, Azioni Rapide, Tool Spotlight e Catalogo strumenti riorganizzato. Layout mobile-first, multilingua-ready e ottimizzato per accessibilità e performance.</li>
+
+        <li><strong>Nuova Navbar 6.2 Pro (Dynamic + Minimal):</strong> Navbar completamente ripensata come sistema adattivo. In modalità Dynamic la barra si espande diventando una superficie interattiva; in modalità Minimal utilizza side menu affidabili. Introdotte sezioni, ricerca interna al menu, quick toggles, focus trap, gestione tastiera ed ESC-safe.</li>
+
+        <li><strong>Menu Avanzati con Pin e Recenti:</strong> Aggiunto supporto ai tool fissati (Pin) e agli strumenti recenti, con persistenza locale. Navigazione più rapida e personalizzata senza alterare la struttura globale.</li>
+
+        <li><strong>Centro di Controllo Unificato:</strong> Nuovo pannello impostazioni con controlli rapidi per layout, animazioni, accessibilità, temi e Dynamic Bar. Separazione netta tra navigazione e personalizzazione per ridurre il carico cognitivo.</li>
+
+        <li><strong>Motore UI v7.0 (State & Prefs Engine):</strong> Introdotto un nuovo motore centrale con gestione dello stato, preferenze versionate con migrazione automatica, orchestratore di transizioni anti-race, micro-interazioni e debug overlay opzionale.</li>
+
+        <li><strong>Suite Accessibilità Avanzata con Regole Intelligenti:</strong> Migliorata la gestione delle modalità di accessibilità con regole automatiche (es. riduci movimento → disattiva animazioni beta). Preparata una pagina Accessibilità dedicata in arrivo con la Beta 3.</li>
+
+        <li><strong>Motore Animazioni 2ª Generazione (BETA):</strong> Aggiornato il sistema di animazioni con transizioni più coerenti, gestione dei lock e prevenzione di glitch durante l’apertura dei menu. Nuove animazioni in arrivo con la Beta 3.</li>
+
+        <li><strong>Temi completamente riscritti:</strong> Avviata la riscrittura totale dei temi con nuove palette coerenti e variabili CSS standardizzate. Migliorato il tema Gold (“Toccato da Mida”) e introdotti nuovi concept tematici. Altri temi in arrivo.</li>
+
+        <li><strong>Nuovo Tool (non annunciato):</strong> Aggiunto un nuovo strumento alla suite (nome non dichiarato) come parte della strategia di consolidamento dei tool universali.</li>
+
+        <li><strong>Razionalizzazione dei Tool:</strong> Rimossi strumenti superflui e accorpate funzionalità in tool più versatili. Migliorata la coerenza del catalogo e ridotta la frammentazione.</li>
+
+        <li><strong>Convertitore Immagini – Refresh & Fix:</strong> Corretti bug critici introdotti nella Beta 1. Aggiornata la pipeline di input/output con nuovi formati e metodi di esportazione più affidabili.</li>
+
+        <li><strong>Preparazione Multilingua:</strong> Introdotto un sistema dedicato alle lingue con file separati (`/js/LINGUE/`). Supporto iniziale per Italiano, Inglese e Spagnolo. Altre lingue previste nelle versioni 3.4.x.</li>
+
+        <li><strong>Stabilità & UX Refinement:</strong> Migliorata la stabilità generale nell’uso quotidiano. Numerose micro-ottimizzazioni non dichiarate rendono l’esperienza più fluida, coerente e professionale.</li>
+    </ul>
+</div>
+
+<div class="version-entry">
+    <div class="version-dot"></div>
+    <div class="version-header">
+        <span class="version-tag">3.4 Beta 1</span>
+        <span class="release-date">Dicembre 2025</span>
+    </div>
+    <ul class="changes-list">
+        <li><strong>Nuovi Temi Premium & Engine Grafico:</strong> Introdotti i temi "Gold" (Lusso) e "Cyber" (Neon/Retrowave) con supporto avanzato per variabili CSS. Tutti i temi precedenti sono stati rimasterizzati per il nuovo motore grafico.</li>
+        <li><strong>Suite Accessibilità Completa:</strong> Aggiunte 7 nuove modalità di visualizzazione istantanea tra cui "Rimuovi Trasparenza", "Mostra Bordi", "Testo in Grassetto", "Saturazione Extra" e "Scala di Grigi (Focus)" per un'esperienza totalmente inclusiva.</li>
+        <li><strong>Motore Animazioni Ibrido (BETA):</strong> Introdotto un nuovo motore di animazione sperimentale basato su curve di Bézier personalizzate per transizioni più fluide ed effetti "staggered", attivabile opzionalmente dalle impostazioni.</li>
+        <li><strong>UI Refactoring & Mobile Fix:</strong> Ridisegnati input e pulsanti per un feedback più tattile (Glassmorphism 2.0). Risolti i problemi di sovrapposizione del menu dinamico su Tablet e Mobile con una nuova modalità compatta.</li>
+    </ul>
+</div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.9.1</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Rimossa la CronoAI </strong> A seguito di difficoltà, siamo costretti a rimuovere la CronoAI e le funzioni relative, lo sviluppo di questa funzionalità verrà effettuato durante il programma BETA della CronoTools 4.0, per poi venire implementato stabilmente con CronoTools 4.5, ci scusiamo in anticipo per il ritardo, ma le attuali funzioni presenti nel catalogo non funzioneranno e verranno presto rimosse</li>
+                        </ul>
+                    </div>
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.9</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Temi aggiornati:</strong> Sistemati i bug di visualizzazione dei nuovi temi aggiunti con la patch preceente</li>
+                            <li><strong>temi sistemati:</strong> aurora, forest, sunset, ocean</li>
+                            <li><strong>Obiettivo:</strong>pulizia generale del codice e bug fixing</li>
+                            <li><strong>Redesign Dynamic Mode:</strong>Modificato il design dei sidemenu per quano riguarda la Modalita' Dinamica, integrando un espansione della Dynamic Bar che conterra' gli elementi del menu, diventando a tutti gli effetti il menu di navigazione, conferendo maggiore "Dinamicita'" alla barra</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.8</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Temi aggiornati:</strong> aggiunti nuovi tasti tema senza cambiare stile.</li>
+                            <li><strong>Nuovi temi:</strong> aurora, forest, sunset, ocean, graphite.</li>
+                            <li><strong>Obiettivo:</strong> nessun refactoring estetico, solo estensione funzionale.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.7</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>CronoID preview nel side menu:</strong> nel menu sinistro, primo blocco CronoID con anteprima nome + email.</li>
+                            <li><strong>CTA:</strong> accesso rapido alle azioni account (login / gestione).</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.6</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Account hub:</strong> prevista pagina <code>/account/index.html</code> come hub per impostazioni, password, numero, ecc.</li>
+                            <li><strong>Navbar:</strong> deve solo puntare alla pagina account e mostrare lo stato (loggato/non loggato).</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.5</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Scroll behaviour:</strong> barra si assottiglia e nasconde tasti in scroll down.</li>
+                            <li><strong>Ripristino rapido:</strong> basta un minimo scroll up per ripristinare (sia minimal che dynamic).</li>
+                            <li><strong>Nota tecnica:</strong> logica tipicamente in <code>ui.js</code>; navbar predisposta con classi/agganci eventi senza rompere nulla.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.4</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Menu più completo e ordinato:</strong> link menu completi (Home, Filtri, Ritaglia, Ridimensiona, Taglia Video, Convertitore/Base64, AI Remover, QR, Info).</li>
+                            <li><strong>Info/Profilo:</strong> sezione info/profilo nel menu sinistro.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.3</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Auth UI pulita:</strong> quando loggato sparisce “Login” e compare avatar (iniziali) link a <code>/account/index.html</code>.</li>
+                            <li><strong>Stato guest:</strong> quando non loggato appare link Login.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.2</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Fix “barra in basso”:</strong> toggle Barra in basso (classe <code>bar-bottom</code>) gestito in UI con checkbox sincronizzato.</li>
+                            <li><strong>Toggle coerenti:</strong> <code>old-design-mode</code> (minimal) e <code>bar-bottom</code> restano separati.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.1</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Stabilizzazione:</strong> fix logica re-render su cambiamenti (eventi) e fallback più robusto quando CronoID non è caricato.</li>
+                            <li><strong>Sidebar destra:</strong> impostazioni consolidate (minimal mode, accessibilità, temi).</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.3.0</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>CronoID & integrazione:</strong> stato login + preferenze.</li>
+                            <li><strong>Navbar reattiva:</strong> re-render su eventi auth/preferenze.</li>
+                            <li><strong>Menu predisposto:</strong> pronto a diventare dinamico via <code>CronoID.getMenu()</code> con fallback hard-coded.</li>
+                        </ul>
+                    </div>
+
+                    <!-- VERSIONI PRECEDENTI (lasciate invariate) -->
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.2</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Piena Integrazione delle aggiunte in fase beta:</strong></li>
+                            <li><strong>Correzioni di Bug:</strong> Risolti vari problemi segnalati dagli utenti per garantire un'esperienza più fluida.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.2 Beta 2</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Home Major Bug Fixing:</strong> Ricerca rapida tool nella Home, implementata correttamente e sistemazione gravi bug visualizzazione della pagina home</li>
+                            <li><strong>Fixing Cut Video Tool</strong> "Taglia Video" sistemato completamente.</li>
+                            <li><strong>Ridimensiona+:</strong> Aggiunti ulteriori preset rapidi per social media e di vita comune</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.2 Beta 1</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Accessibilità Globale:</strong> Nuovi controlli per ridurre movimento, trasparenza e aumentare il contrasto.</li>
+                            <li><strong>Discovery:</strong> Ricerca rapida tool nella Home.</li>
+                            <li><strong>Nuovi Tool:</strong> Aggiunti "Colora Immagine" e "Taglia Video" (UI).</li>
+                            <li><strong>Convertitore Pro:</strong> Slider qualità e supporto formati esteso.</li>
+                            <li><strong>Ridimensiona+:</strong> Aggiunti preset rapidi per social media.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.1 Beta 3</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Smart Navbar Scroll:</strong> La barra di navigazione ora si riduce allo scroll verso il basso e riappare immediatamente appena si scorre verso l'alto.</li>
+                            <li><strong>UI Polish:</strong> Migliorata la fluidità delle transizioni dei menu laterali.</li>
+                            <li><strong>Nuova Pagina Info:</strong> Aggiunta sezione dedicata alle note di rilascio.</li>
+                            <li><strong>Bugfix:</strong> Risolti problemi di layout su schermi ultra-wide.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.1 Beta 2</span>
+                            <span class="release-date">Dicembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Branding Dinamico:</strong> Implementato sistema dual-logo (Nero/Bianco) che si adatta automaticamente al tema scelto.</li>
+                            <li><strong>Mobile Default:</strong> La barra minimale si attiva automaticamente su dispositivi mobili per migliorare l'usabilità.</li>
+                            <li><strong>Scroll Clean:</strong> I pulsanti laterali scompaiono durante lo scroll per una maggiore pulizia visiva.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.1 Beta 1</span>
+                            <span class="release-date">Novembre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li><strong>Refactoring UI:</strong> Nuova architettura CSS basata su variabili CSS e Design System v20.</li>
+                            <li><strong>Temi Multipli:</strong> Introduzione dei temi Midnight, Slate, Latte, Cyberpunk e altri.</li>
+                            <li><strong>AI Remover:</strong> Aggiunto tool sperimentale per rimozione sfondo con elaborazione locale.</li>
+                        </ul>
+                    </div>
+
+                    <div class="version-entry">
+                        <div class="version-dot"></div>
+                        <div class="version-header">
+                            <span class="version-tag">3.0.0</span>
+                            <span class="release-date">Ottobre 2025</span>
+                        </div>
+                        <ul class="changes-list">
+                            <li>Rilascio iniziale della suite CronoTools rinnovata.</li>
+                            <li>Integrazione tool: Ritaglia, Filtri, Ridimensiona, QR Code.</li>
+                            <li>Convertitore Base64 universale.</li>
+                        </ul>
+                    </div>
+
+                </div>
+
+                <div style="margin-top: 40px; text-align: center; font-size: 13px; color: var(--text-tertiary);">
+                    CronoTools &copy; 2025 - Made with precision.
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="../js/ui.js"></script>
+    <script src="../components/navbar.js"></script>
+
+</body>
+</html>

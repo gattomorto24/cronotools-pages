@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Converti Immagini e File | CronoTools</title>
+  <link rel="stylesheet" href="../css/style.css" />
+  <style>
+    .converti-main {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 48px 16px 32px 16px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .drop-zone {
+      width: 100%;
+      min-height: 180px;
+      border: 2px dashed var(--accent);
+      border-radius: 24px;
+      background: var(--bg-soft);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-dim);
+      font-size: 1.1rem;
+      margin-bottom: 24px;
+      transition: border-color 0.2s;
+    }
+    .drop-zone.dragover {
+      border-color: #32d74b;
+      background: #e6ffe6;
+    }
+    .drop-zone input[type="file"] {
+      display: none;
+    }
+    .convert-btn {
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 999px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 18px;
+    }
+    .convert-btn:disabled {
+      background: #aaa;
+      cursor: not-allowed;
+    }
+    .formats-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 18px 0 0 0;
+      justify-content: center;
+    }
+    .formats-list label {
+      background: var(--bg-card);
+      border: 1px solid var(--separator);
+      border-radius: 999px;
+      padding: 7px 16px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    .formats-list input[type="radio"] {
+      margin-right: 6px;
+    }
+    .result-area {
+      margin-top: 32px;
+      text-align: center;
+    }
+    .result-link {
+      display: inline-block;
+      margin-top: 12px;
+      color: var(--accent);
+      font-weight: 700;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <crono-navbar></crono-navbar>
+  <main class="converti-main">
+    <h1 data-i18n="convert.title">Converti Immagini e File</h1>
+    <div class="drop-zone" id="drop-zone">
+      <span data-i18n="convert.drop">Trascina qui i file o </span><label for="file-input" style="color:var(--accent);cursor:pointer;" data-i18n="convert.upload">carica</label>
+      <input type="file" id="file-input" multiple />
+      <div style="font-size:0.95rem;margin-top:8px;" data-i18n="convert.maxsize">Fino a 5GB. Formati: JPG, PNG, BASE64, PDF, SVG, JPEG, TIFF, BMP, GIF, HEIC, ICO</div>
+    </div>
+    <div class="formats-list" id="formats-list">
+      <!-- Formati generati da JS -->
+    </div>
+    <button class="convert-btn" id="convert-btn" disabled data-i18n="convert.button">Converti</button>
+    <div class="result-area" id="result-area"></div>
+  </main>
+  <script src="../js/ui.js"></script>
+  <script src="../js/navbar-lang-fix.js"></script>
+  <script src="../components/navbar.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/WangYuLue/image-conversion/build/conversion.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script>
+    // Genera radio per formati (senza eliminare codice esistente)
+    const formats = [
+      'JPG', 'PNG', 'BASE64', 'PDF', 'SVG', 'JPEG', 'TIFF', 'BMP', 'GIF', 'HEIC', 'ICO'
+    ];
+    const formatsList = document.getElementById('formats-list');
+    formats.forEach(fmt => {
+      const label = document.createElement('label');
+      label.innerHTML = `<input type="radio" name="format" value="${fmt}" ${fmt===formats[0]?'checked':''}>${fmt}`;
+      formatsList.appendChild(label);
+    });
+  </script>
+  <script src="../js/converter.js"></script>
+</body>
+</html>
