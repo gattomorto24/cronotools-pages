@@ -35,38 +35,192 @@
     showPreviews(selectedFiles);
   }
 
+  function getThemeVars() {
+    const root = document.documentElement;
+    return {
+      bg: getComputedStyle(root).getPropertyValue('--bg-card') || '#fff',
+      accent: getComputedStyle(root).getPropertyValue('--accent') || '#007aff',
+      accentDim: getComputedStyle(root).getPropertyValue('--accent-dim') || '#eaf3ff',
+      shadow: getComputedStyle(root).getPropertyValue('--shadow') || '0 4px 24px #007aff11',
+      text: getComputedStyle(root).getPropertyValue('--text-main') || '#222',
+      border: getComputedStyle(root).getPropertyValue('--separator') || '#e0e0e0',
+    };
+  }
+
+  function styleDropZone() {
+    const t = getThemeVars();
+    dropZone.style.background = `linear-gradient(135deg,${t.bg.trim()} 60%,${t.accentDim.trim()} 100%)`;
+    dropZone.style.border = `2.5px dashed ${t.accent.trim()}`;
+    dropZone.style.borderRadius = '28px';
+    dropZone.style.boxShadow = t.shadow;
+    dropZone.style.transition = 'box-shadow 0.18s cubic-bezier(.4,0,.2,1), border-color 0.18s cubic-bezier(.4,0,.2,1)';
+    dropZone.onmouseenter = () => { dropZone.style.boxShadow = '0 8px 32px ' + t.accent + '22'; };
+    dropZone.onmouseleave = () => { dropZone.style.boxShadow = t.shadow; };
+    dropZone.addEventListener('dragover', () => { dropZone.style.borderColor = '#32d74b'; });
+    dropZone.addEventListener('dragleave', () => { dropZone.style.borderColor = t.accent; });
+    dropZone.addEventListener('drop', () => { dropZone.style.borderColor = t.accent; });
+  }
+
+  // Overlay preview
+  function createImageOverlay(src) {
+    // Rimuovi overlay esistente se presente
+    const old = document.getElementById('img-overlay');
+    if(old) old.remove();
+    const overlay = document.createElement('div');
+    overlay.id = 'img-overlay';
+    overlay.style.position = 'fixed';
+    overlay.style.top = 0;
+    overlay.style.left = 0;
+    overlay.style.width = '100vw';
+    overlay.style.height = '100vh';
+    overlay.style.background = 'rgba(0,0,0,0.72)';
+    overlay.style.backdropFilter = 'blur(6px)';
+    overlay.style.display = 'flex';
+    overlay.style.alignItems = 'center';
+    overlay.style.justifyContent = 'center';
+    overlay.style.zIndex = 99999;
+    overlay.style.transition = 'background 0.2s';
+    overlay.onclick = function(e) {
+      if(e.target === overlay) overlay.remove();
+    };
+    const imgBox = document.createElement('div');
+    imgBox.style.position = 'relative';
+    imgBox.style.background = 'var(--dz-bg, #fff)';
+    imgBox.style.borderRadius = '32px';
+    imgBox.style.boxShadow = '0 8px 32px #0008';
+    imgBox.style.padding = '24px';
+    imgBox.style.maxWidth = '90vw';
+    imgBox.style.maxHeight = '90vh';
+    imgBox.style.display = 'flex';
+    imgBox.style.alignItems = 'center';
+    imgBox.style.justifyContent = 'center';
+    imgBox.onclick = e => e.stopPropagation();
+    const img = document.createElement('img');
+    img.src = src;
+    img.style.maxWidth = '80vw';
+    img.style.maxHeight = '80vh';
+    img.style.borderRadius = '24px';
+    img.style.boxShadow = '0 4px 24px #007aff22, 0 1.5px 8px #0002';
+    img.style.background = 'var(--dz-bg, #fff)';
+    imgBox.appendChild(img);
+    // Bottone chiudi
+    const close = document.createElement('button');
+    close.textContent = '✕';
+    close.style.position = 'absolute';
+    close.style.top = '12px';
+    close.style.right = '18px';
+    close.style.background = 'rgba(0,0,0,0.18)';
+    close.style.color = '#fff';
+    close.style.fontSize = '2rem';
+    close.style.border = 'none';
+    close.style.borderRadius = '50%';
+    close.style.width = '44px';
+    close.style.height = '44px';
+    close.style.cursor = 'pointer';
+    close.style.backdropFilter = 'blur(2px)';
+    close.style.display = 'flex';
+    close.style.alignItems = 'center';
+    close.style.justifyContent = 'center';
+    close.style.transition = 'background 0.18s';
+    close.onmouseenter = () => { close.style.background = 'rgba(0,0,0,0.32)'; };
+    close.onmouseleave = () => { close.style.background = 'rgba(0,0,0,0.18)'; };
+    close.onclick = () => overlay.remove();
+    imgBox.appendChild(close);
+    overlay.appendChild(imgBox);
+    document.body.appendChild(overlay);
+  }
+
   function showPreviews(files) {
+    const t = getThemeVars ? getThemeVars() : {};
     const preview = document.getElementById('preview-area') || document.createElement('div');
     preview.id = 'preview-area';
     preview.style.display = 'flex';
     preview.style.flexWrap = 'wrap';
-    preview.style.gap = '12px';
-    preview.style.margin = '18px 0 0 0';
+    preview.style.gap = '24px';
+    preview.style.margin = '24px 0 0 0';
+    preview.style.justifyContent = 'center';
     preview.innerHTML = '';
     files.forEach(f => {
       let el;
       if(f.type.startsWith('image/')) {
         el = document.createElement('img');
         el.src = URL.createObjectURL(f);
-        el.style.maxWidth = '90px';
-        el.style.maxHeight = '90px';
-        el.style.borderRadius = '12px';
-        el.style.boxShadow = '0 2px 8px #0004';
+        el.style.maxWidth = '210px';
+        el.style.maxHeight = '210px';
+        el.style.borderRadius = '28px';
+        el.style.boxShadow = 'var(--ios-shadow, 0 8px 32px #007aff18, 0 1.5px 8px #0001)';
+        el.style.background = 'var(--dz-bg, #fff)';
+        el.style.padding = '14px';
+        el.style.margin = '0 8px';
+        el.style.transition = 'transform 0.18s, box-shadow 0.18s';
+        el.onclick = () => createImageOverlay(el.src);
+        el.onmouseenter = () => {
+          el.style.transform = 'scale(1.08)';
+          el.style.boxShadow = '0 12px 36px #007aff33, 0 2px 12px #0003';
+        };
+        el.onmouseleave = () => {
+          el.style.transform = 'scale(1)';
+          el.style.boxShadow = 'var(--ios-shadow, 0 8px 32px #007aff18, 0 1.5px 8px #0001)';
+        };
       } else {
         el = document.createElement('div');
         el.textContent = f.name;
-        el.style.background = '#222';
-        el.style.color = '#fff';
-        el.style.padding = '10px 14px';
-        el.style.borderRadius = '10px';
+        el.style.background = `linear-gradient(90deg,${t.bg?.trim()||'#fff'} 60%,${t.accentDim?.trim()||'#eaf3ff'} 100%)`;
+        el.style.color = t.accent||'#007aff';
+        el.style.padding = '18px 24px';
+        el.style.borderRadius = '16px';
+        el.style.fontWeight = '600';
+        el.style.fontSize = '1.1em';
+        el.style.boxShadow = t.shadow||'0 2px 8px #007aff11';
       }
       preview.appendChild(el);
     });
     dropZone.parentNode.insertBefore(preview, formatsList);
   }
 
+  function updateDropZoneThemeVars() {
+    const html = document.documentElement;
+    let bg, border, shadow, color;
+    const theme = html.getAttribute('data-theme') || 'light';
+    if(theme === 'dark') {
+      bg = '#232326'; border = '#333'; shadow = '0 2px 8px #0004'; color = '#f2f2f7';
+    } else if(theme === 'gold') {
+      bg = '#fffbe6'; border = '#ffe066'; shadow = '0 2px 8px #ffd70033'; color = '#bfa100';
+    } else if(theme === 'cyber') {
+      bg = '#0a0a1a'; border = '#00f3ff'; shadow = '0 2px 8px #00f3ff22'; color = '#00f3ff';
+    } else {
+      bg = '#f6f7f9'; border = '#e0e0e0'; shadow = '0 2px 8px #007aff11'; color = '#222';
+    }
+    html.style.setProperty('--dz-bg', bg);
+    html.style.setProperty('--dz-border', border);
+    html.style.setProperty('--dz-shadow', shadow);
+    html.style.setProperty('--dz-color', color);
+  }
+  updateDropZoneThemeVars();
+  if(window.UI && window.UI.setTheme) {
+    document.addEventListener('crono-pref-sync', updateDropZoneThemeVars);
+  }
+
+  // Migliora grafica pre-caricamento
+  const loadingDiv = document.createElement('div');
+  loadingDiv.id = 'loading-indicator';
+  loadingDiv.style.display = 'none';
+  loadingDiv.style.justifyContent = 'center';
+  loadingDiv.style.alignItems = 'center';
+  loadingDiv.style.margin = '32px 0';
+  loadingDiv.innerHTML = `<div style="width:48px;height:48px;border-radius:50%;border:4px solid #eaf3ff;border-top:4px solid #007aff;animation:spin 1s linear infinite;"></div>`;
+  document.body.appendChild(loadingDiv);
+  const style = document.createElement('style');
+  style.textContent = `@keyframes spin{0%{transform:rotate(0deg);}100%{transform:rotate(360deg);}}`;
+  document.head.appendChild(style);
+  // Mostra/hide loading
+  function showLoading(show) {
+    loadingDiv.style.display = show ? 'flex' : 'none';
+  }
+
   convertBtn.addEventListener('click', async () => {
     if (!selectedFiles.length) return;
+    showLoading(true);
     resultArea.innerHTML = 'Conversione in corso...';
     const outFormat = selectedFormat.toLowerCase();
     let results = [];
@@ -182,5 +336,46 @@
         }
       };
     });
+    // Applica stile iOS ai toggle formato
+    function styleFormatToggles() {
+      formatsList.querySelectorAll('label').forEach(label => {
+        label.style.background = 'rgba(255,255,255,0.7)';
+        label.style.backdropFilter = 'blur(10px)';
+        label.style.webkitBackdropFilter = 'blur(10px)';
+        label.style.border = '1.5px solid #e0e0e0';
+        label.style.borderRadius = '14px';
+        label.style.padding = '7px 18px';
+        label.style.fontWeight = '600';
+        label.style.fontSize = '15px';
+        label.style.color = '#007aff';
+        label.style.cursor = 'pointer';
+        label.style.transition = 'all 0.18s cubic-bezier(.4,0,.2,1)';
+        label.style.boxShadow = '0 2px 8px 0 rgba(0,0,0,0.07)';
+        label.style.position = 'relative';
+        label.onmouseenter = () => {
+          label.style.background = 'rgba(245,245,255,0.95)';
+          label.style.color = '#0051a8';
+          label.style.transform = 'scale(1.045)';
+        };
+        label.onmouseleave = () => {
+          label.style.background = 'rgba(255,255,255,0.7)';
+          label.style.color = '#007aff';
+          label.style.transform = 'scale(1)';
+        };
+        // Animazione selezione
+        const input = label.querySelector('input[type="radio"]');
+        if(input) {
+          input.onchange = () => {
+            label.animate([
+              { boxShadow: '0 0 0 0 #007aff44' },
+              { boxShadow: '0 0 0 8px #007aff22' },
+              { boxShadow: '0 0 0 0 #007aff00' }
+            ], { duration: 420, easing: 'cubic-bezier(.4,0,.2,1)' });
+          };
+        }
+      });
+    }
+    // Dopo aver generato i label dei formati (dopo la creazione dinamica)
+    setTimeout(styleFormatToggles, 0);
   });
 })();

@@ -6,6 +6,56 @@
   <title>Converti Immagini e File | CronoTools</title>
   <link rel="stylesheet" href="../css/style.css" />
   <style>
+    :root {
+      --ios-bg-light: rgba(255,255,255,0.72);
+      --ios-bg-dark: rgba(28,28,30,0.72);
+      --ios-blur: blur(18px);
+      --ios-shadow-light: 0 8px 32px #007aff18, 0 1.5px 8px #0001;
+      --ios-shadow-dark: 0 8px 32px #0008, 0 1.5px 8px #0004;
+      --ios-border-light: 1.5px solid #e0e0e0;
+      --ios-border-dark: 1.5px solid #222;
+      --ios-pill-radius: 22px;
+      --ios-pill-padding: 10px 28px;
+      --ios-pill-font: 1.08rem;
+      --ios-drop-light: #f6f7f9;
+      --ios-drop-dark: #232326;
+      --ios-drop-gold: #fffbe6;
+      --ios-drop-cyber: #0a0a1a;
+    }
+    html[data-theme="dark"] {
+      --ios-bg: var(--ios-bg-dark);
+      --ios-shadow: var(--ios-shadow-dark);
+      --ios-border: var(--ios-border-dark);
+    }
+    html:not([data-theme="dark"]) {
+      --ios-bg: var(--ios-bg-light);
+      --ios-shadow: var(--ios-shadow-light);
+      --ios-border: var(--ios-border-light);
+    }
+    html[data-theme="dark"] .drop-zone {
+      background: var(--ios-drop-dark);
+      border: 1.5px solid #333;
+      box-shadow: 0 2px 8px #0004;
+      color: #f2f2f7;
+    }
+    html[data-theme="gold"] .drop-zone {
+      background: var(--ios-drop-gold);
+      border: 1.5px solid #ffe066;
+      box-shadow: 0 2px 8px #ffd70033;
+      color: #bfa100;
+    }
+    html[data-theme="cyber"] .drop-zone {
+      background: var(--ios-drop-cyber);
+      border: 1.5px solid #00f3ff;
+      box-shadow: 0 2px 8px #00f3ff22;
+      color: #00f3ff;
+    }
+    html:not([data-theme="dark"]):not([data-theme="gold"]):not([data-theme="cyber"]) .drop-zone {
+      background: var(--ios-drop-light);
+      border: 1.5px solid #e0e0e0;
+      box-shadow: 0 2px 8px #007aff11;
+      color: #222;
+    }
     .converti-main {
       max-width: 600px;
       margin: 0 auto;
@@ -15,70 +65,123 @@
       align-items: center;
     }
     .drop-zone {
-      width: 100%;
-      min-height: 180px;
-      border: 2px dashed var(--accent);
-      border-radius: 24px;
-      background: var(--bg-soft);
+      background: var(--dz-bg, #f6f7f9);
+      border: 1.5px solid var(--dz-border, #e0e0e0);
+      box-shadow: var(--dz-shadow, 0 2px 8px #007aff11);
+      color: var(--dz-color, #222);
+      border-radius: 32px;
+      font-size: 1.15rem;
+      font-weight: 600;
+      min-height: 200px;
+      transition: box-shadow 0.18s, border-color 0.18s, background 0.18s;
+      margin-bottom: 28px;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      color: var(--text-dim);
-      font-size: 1.1rem;
-      margin-bottom: 24px;
-      transition: border-color 0.2s;
+      position: relative;
+      overflow: hidden;
     }
     .drop-zone.dragover {
       border-color: #32d74b;
-      background: #e6ffe6;
+      box-shadow: 0 8px 32px #32d74b33, 0 2px 12px #0003;
+      background: linear-gradient(120deg, var(--dz-bg, #f6f7f9) 60%, #eaf3ff 100%);
+    }
+    .drop-zone label {
+      color: var(--accent);
+      font-weight: 700;
+      cursor: pointer;
+      text-decoration: underline;
     }
     .drop-zone input[type="file"] {
       display: none;
+    }
+    .formats-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 18px;
+      margin: 24px 0 0 0;
+      justify-content: center;
+    }
+    .formats-list label {
+      background: var(--ios-bg);
+      backdrop-filter: var(--ios-blur);
+      -webkit-backdrop-filter: var(--ios-blur);
+      border: var(--ios-border);
+      border-radius: var(--ios-pill-radius);
+      padding: var(--ios-pill-padding);
+      font-weight: 600;
+      font-size: var(--ios-pill-font);
+      color: var(--accent);
+      cursor: pointer;
+      box-shadow: var(--ios-shadow);
+      transition: all 0.18s cubic-bezier(.4,0,.2,1);
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .formats-list label:hover, .formats-list label:focus-within {
+      background: rgba(0,122,255,0.08);
+      color: #0051a8;
+      transform: scale(1.045);
+      box-shadow: 0 8px 32px #007aff22, 0 2px 12px #0003;
+    }
+    .formats-list input[type="radio"] {
+      accent-color: var(--accent);
+      margin-right: 6px;
+      width: 1.1em;
+      height: 1.1em;
     }
     .convert-btn {
       background: var(--accent);
       color: #fff;
       font-weight: 700;
-      padding: 12px 28px;
+      padding: 16px 44px;
       border: none;
       border-radius: 999px;
-      font-size: 1.1rem;
+      font-size: 1.18rem;
       cursor: pointer;
-      margin-top: 18px;
+      margin-top: 32px;
+      box-shadow: 0 4px 24px #007aff22, 0 1.5px 8px #0002;
+      transition: background 0.18s, box-shadow 0.18s, transform 0.18s;
+      letter-spacing: 0.01em;
     }
     .convert-btn:disabled {
       background: #aaa;
       cursor: not-allowed;
+      box-shadow: none;
     }
-    .formats-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin: 18px 0 0 0;
-      justify-content: center;
-    }
-    .formats-list label {
-      background: var(--bg-card);
-      border: 1px solid var(--separator);
-      border-radius: 999px;
-      padding: 7px 16px;
-      cursor: pointer;
-      font-size: 1rem;
-    }
-    .formats-list input[type="radio"] {
-      margin-right: 6px;
+    .convert-btn:hover:not(:disabled) {
+      background: #0051a8;
+      transform: scale(1.04);
+      box-shadow: 0 8px 32px #007aff33, 0 2px 12px #0003;
     }
     .result-area {
-      margin-top: 32px;
+      margin-top: 36px;
       text-align: center;
     }
     .result-link {
       display: inline-block;
-      margin-top: 12px;
+      margin-top: 16px;
       color: var(--accent);
       font-weight: 700;
       text-decoration: underline;
+      font-size: 1.08em;
+    }
+    #preview-area img {
+      max-width: 210px;
+      max-height: 210px;
+      border-radius: 28px;
+      box-shadow: var(--ios-shadow);
+      background: var(--ios-bg);
+      padding: 14px;
+      margin: 0 8px;
+      transition: transform 0.18s, box-shadow 0.18s;
+    }
+    #preview-area img:hover {
+      transform: scale(1.08);
+      box-shadow: 0 12px 36px #007aff33, 0 2px 12px #0003;
     }
   </style>
 </head>
@@ -91,7 +194,7 @@
       <input type="file" id="file-input" multiple />
       <div style="font-size:0.95rem;margin-top:8px;" data-i18n="convert.maxsize">Fino a 5GB. Formati: JPG, PNG, BASE64, PDF, SVG, JPEG, TIFF, BMP, GIF, HEIC, ICO</div>
     </div>
-    <div class="formats-list" id="formats-list">
+    <div class="formats-list" id="formats-list" style="position:relative;z-index:2;gap:16px;flex-wrap:wrap;justify-content:center;">
       <!-- Formati generati da JS -->
     </div>
     <button class="convert-btn" id="convert-btn" disabled data-i18n="convert.button">Converti</button>
